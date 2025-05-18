@@ -1,0 +1,2385 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="eBuyDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Neighborhood" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCustomer" Type="int" Nullable="false" />
+          <Property Name="CreatedAt" Type="date" Nullable="false" />
+          <Property Name="UpdatedAt" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CartItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCart" Type="int" Nullable="false" />
+          <Property Name="IdProduct" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="UnitPrice" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="300" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUser" Type="int" Nullable="false" />
+          <Property Name="Document" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="BornDate" Type="date" Nullable="false" />
+          <Property Name="Phone" Type="int" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUser" Type="int" Nullable="false" />
+          <Property Name="IdBranch" Type="int" Nullable="false" />
+          <Property Name="Document" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="BornDate" Type="date" Nullable="false" />
+          <Property Name="Phone" Type="int" Nullable="false" />
+          <Property Name="AssignedBranch" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InStorePayment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdInStoreSaleInvoice" Type="int" Nullable="false" />
+          <Property Name="PaymentDate" Type="date" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="PaymentMethod" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="ReferenceNumber" Type="int" Nullable="false" />
+          <Property Name="PaymentStatus" Type="nvarchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InStoreSale">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdSale" Type="int" Nullable="false" />
+          <Property Name="IdBranch" Type="int" Nullable="false" />
+          <Property Name="BranchName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InStoreSaleDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdInStoreSale" Type="int" Nullable="false" />
+          <Property Name="IdProduct" Type="int" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="UnitPrice" Type="money" Nullable="false" />
+          <Property Name="TotalPrice" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InStoreSaleInvoice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdInStoreSale" Type="int" Nullable="false" />
+          <Property Name="TotalAmount" Type="money" Nullable="false" />
+          <Property Name="InvoiceNumber" Type="int" Nullable="false" />
+          <Property Name="PaymentMethod" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="BranchName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="BranchAddress" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InStoreWarranty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdInStoreSaleDetail" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+          <Property Name="ClaimReason" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Resolution" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="WarrantyStatus" Type="nvarchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Inventory">
+          <Key>
+            <PropertyRef Name="IdProduct" />
+            <PropertyRef Name="IdBranch" />
+          </Key>
+          <Property Name="IdProduct" Type="int" Nullable="false" />
+          <Property Name="IdBranch" Type="int" Nullable="false" />
+          <Property Name="CurrentStock" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OnlineListing">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdProduct" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Price" Type="money" Nullable="false" />
+          <Property Name="AvailableQuantity" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedAt" Type="date" Nullable="false" />
+          <Property Name="UpdatedAt" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OnlineListingBySupplier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdOnlineListing" Type="int" Nullable="false" />
+          <Property Name="IdSupplier" Type="int" Nullable="false" />
+          <Property Name="SupplierName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SupplierEmail" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SupplierPhone" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OnlineListingOwn">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdOnlineListing" Type="int" Nullable="false" />
+          <Property Name="IdEmployee" Type="int" Nullable="false" />
+          <Property Name="EmployeeName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="EmployeeAssignedBranch" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OnlinePayment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdOnlineSaleInvoice" Type="int" Nullable="false" />
+          <Property Name="PaymentDate" Type="date" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="PaymentMethod" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="ReferenceNumber" Type="int" Nullable="false" />
+          <Property Name="PaymentStatus" Type="nvarchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OnlineSale">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdSale" Type="int" Nullable="false" />
+          <Property Name="PaymentStatus" Type="bit" Nullable="false" />
+          <Property Name="TrackingNumber" Type="int" Nullable="false" />
+          <Property Name="ShippingAddress" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OnlineSaleDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdOnlineSale" Type="int" Nullable="false" />
+          <Property Name="IdProduct" Type="int" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="UnitPrice" Type="money" Nullable="false" />
+          <Property Name="TotalPrice" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OnlineSaleInvoice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdOnlineSale" Type="int" Nullable="false" />
+          <Property Name="TotalAmount" Type="money" Nullable="false" />
+          <Property Name="InvoiceNumber" Type="int" Nullable="false" />
+          <Property Name="PaymentMethod" Type="nvarchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OnlineWarranty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdOnlineSaleDetail" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+          <Property Name="ClaimReason" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Resolution" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="WarrantyStatus" Type="nvarchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OnlineWarrantyClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdOnlineWarranty" Type="int" Nullable="false" />
+          <Property Name="ClaimDate" Type="date" Nullable="false" />
+          <Property Name="ResolutionDate" Type="date" Nullable="false" />
+          <Property Name="Resolution" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="TechnicalNotes" Type="nvarchar" MaxLength="300" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCategory" Type="int" Nullable="false" />
+          <Property Name="IdBrand" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="CostPrice" Type="money" Nullable="false" />
+          <Property Name="SalePrice" Type="money" Nullable="false" />
+          <Property Name="Stock" Type="int" Nullable="false" />
+          <Property Name="WarrantyMonths" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductImage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdProduct" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Purchase">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdSupplier" Type="int" Nullable="false" />
+          <Property Name="PurchaseDate" Type="date" Nullable="false" />
+          <Property Name="PaymentStatus" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="TotalAmount" Type="money" Nullable="false" />
+          <Property Name="PaymentMethod" Type="nvarchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PurchaseDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdProduct" Type="int" Nullable="false" />
+          <Property Name="IdPurchase" Type="int" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="UnitCost" Type="money" Nullable="false" />
+          <Property Name="TotalCost" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PurchaseInvoice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPurchase" Type="int" Nullable="false" />
+          <Property Name="TotalAmount" Type="money" Nullable="false" />
+          <Property Name="InvoiceNumber" Type="int" Nullable="false" />
+          <Property Name="PaymentMethod" Type="nvarchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sale">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCustomer" Type="int" Nullable="false" />
+          <Property Name="SaleDate" Type="date" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="TotalAmount" Type="money" Nullable="false" />
+          <Property Name="PaymentMethod" Type="nvarchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUser" Type="int" Nullable="false" />
+          <Property Name="Document" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="BornDate" Type="date" Nullable="false" />
+          <Property Name="Phone" Type="int" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Salt" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Cart__IdCustomer__6C190EBB">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="IdCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CartItems__IdCar__6EF57B66">
+          <End Role="Cart" Type="Self.Cart" Multiplicity="1" />
+          <End Role="CartItems" Type="Self.CartItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cart">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CartItems">
+              <PropertyRef Name="IdCart" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CartItems__IdPro__6FE99F9F">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="CartItems" Type="Self.CartItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CartItems">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Customer__IdUser__5070F446">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee__IdBran__5EBF139D">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="IdBranch" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee__IdUser__5DCAEF64">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InStorePa__IdInS__2EDAF651">
+          <End Role="InStoreSaleInvoice" Type="Self.InStoreSaleInvoice" Multiplicity="1" />
+          <End Role="InStorePayment" Type="Self.InStorePayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InStoreSaleInvoice">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InStorePayment">
+              <PropertyRef Name="IdInStoreSaleInvoice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InStoreSa__IdBra__1F98B2C1">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="1" />
+          <End Role="InStoreSale" Type="Self.InStoreSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InStoreSale">
+              <PropertyRef Name="IdBranch" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InStoreSa__IdInS__22751F6C">
+          <End Role="InStoreSale" Type="Self.InStoreSale" Multiplicity="1" />
+          <End Role="InStoreSaleDetail" Type="Self.InStoreSaleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InStoreSale">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InStoreSaleDetail">
+              <PropertyRef Name="IdInStoreSale" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InStoreSa__IdInS__2B0A656D">
+          <End Role="InStoreSale" Type="Self.InStoreSale" Multiplicity="1" />
+          <End Role="InStoreSaleInvoice" Type="Self.InStoreSaleInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InStoreSale">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InStoreSaleInvoice">
+              <PropertyRef Name="IdInStoreSale" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InStoreSa__IdPro__236943A5">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="InStoreSaleDetail" Type="Self.InStoreSaleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InStoreSaleDetail">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InStoreSa__IdSal__1EA48E88">
+          <End Role="Sale" Type="Self.Sale" Multiplicity="1" />
+          <End Role="InStoreSale" Type="Self.InStoreSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sale">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InStoreSale">
+              <PropertyRef Name="IdSale" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InStoreWa__IdInS__2645B050">
+          <End Role="InStoreSaleDetail" Type="Self.InStoreSaleDetail" Multiplicity="1" />
+          <End Role="InStoreWarranty" Type="Self.InStoreWarranty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InStoreSaleDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InStoreWarranty">
+              <PropertyRef Name="IdInStoreSaleDetail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inventory__IdBra__73BA3083">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="IdBranch" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inventory__IdPro__72C60C4A">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineLis__IdEmp__7B5B524B">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="OnlineListingOwn" Type="Self.OnlineListingOwn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineListingOwn">
+              <PropertyRef Name="IdEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineLis__IdOnl__7A672E12">
+          <End Role="OnlineListing" Type="Self.OnlineListing" Multiplicity="1" />
+          <End Role="OnlineListingOwn" Type="Self.OnlineListingOwn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OnlineListing">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineListingOwn">
+              <PropertyRef Name="IdOnlineListing" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineLis__IdOnl__7E37BEF6">
+          <End Role="OnlineListing" Type="Self.OnlineListing" Multiplicity="1" />
+          <End Role="OnlineListingBySupplier" Type="Self.OnlineListingBySupplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OnlineListing">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineListingBySupplier">
+              <PropertyRef Name="IdOnlineListing" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineLis__IdPro__76969D2E">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="OnlineListing" Type="Self.OnlineListing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineListing">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineLis__IdSup__7F2BE32F">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="OnlineListingBySupplier" Type="Self.OnlineListingBySupplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineListingBySupplier">
+              <PropertyRef Name="IdSupplier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlinePay__IdOnl__19DFD96B">
+          <End Role="OnlineSaleInvoice" Type="Self.OnlineSaleInvoice" Multiplicity="1" />
+          <End Role="OnlinePayment" Type="Self.OnlinePayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OnlineSaleInvoice">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlinePayment">
+              <PropertyRef Name="IdOnlineSaleInvoice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineSal__IdOnl__0A9D95DB">
+          <End Role="OnlineSale" Type="Self.OnlineSale" Multiplicity="1" />
+          <End Role="OnlineSaleDetail" Type="Self.OnlineSaleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OnlineSale">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineSaleDetail">
+              <PropertyRef Name="IdOnlineSale" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineSal__IdOnl__160F4887">
+          <End Role="OnlineSale" Type="Self.OnlineSale" Multiplicity="1" />
+          <End Role="OnlineSaleInvoice" Type="Self.OnlineSaleInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OnlineSale">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineSaleInvoice">
+              <PropertyRef Name="IdOnlineSale" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineSal__IdPro__0B91BA14">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="OnlineSaleDetail" Type="Self.OnlineSaleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineSaleDetail">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineSal__IdSal__06CD04F7">
+          <End Role="Sale" Type="Self.Sale" Multiplicity="1" />
+          <End Role="OnlineSale" Type="Self.OnlineSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sale">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineSale">
+              <PropertyRef Name="IdSale" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineWar__IdOnl__0E6E26BF">
+          <End Role="OnlineSaleDetail" Type="Self.OnlineSaleDetail" Multiplicity="1" />
+          <End Role="OnlineWarranty" Type="Self.OnlineWarranty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OnlineSaleDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineWarranty">
+              <PropertyRef Name="IdOnlineSaleDetail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineWar__IdOnl__1332DBDC">
+          <End Role="OnlineWarranty" Type="Self.OnlineWarranty" Multiplicity="1" />
+          <End Role="OnlineWarrantyClaim" Type="Self.OnlineWarrantyClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OnlineWarranty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineWarrantyClaim">
+              <PropertyRef Name="IdOnlineWarranty" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__IdBrand__693CA210">
+          <End Role="Brand" Type="Self.Brand" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="IdBrand" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__IdCateg__68487DD7">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="IdCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductIm__IdPro__40F9A68C">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductImage" Type="Self.ProductImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductImage">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Purchase__IdSupp__339FAB6E">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Purchase">
+              <PropertyRef Name="IdSupplier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PurchaseD__IdPro__3C34F16F">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="PurchaseDetail" Type="Self.PurchaseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseDetail">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PurchaseD__IdPur__3D2915A8">
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="1" />
+          <End Role="PurchaseDetail" Type="Self.PurchaseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Purchase">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseDetail">
+              <PropertyRef Name="IdPurchase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PurchaseI__IdPur__3864608B">
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="1" />
+          <End Role="PurchaseInvoice" Type="Self.PurchaseInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Purchase">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseInvoice">
+              <PropertyRef Name="IdPurchase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sale__IdCustomer__02084FDA">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="IdCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Supplier__IdUser__59063A47">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Supplier">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="eBuyDBModelStoreContainer">
+          <EntitySet Name="Branch" EntityType="Self.Branch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Brand" EntityType="Self.Brand" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CartItems" EntityType="Self.CartItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InStorePayment" EntityType="Self.InStorePayment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InStoreSale" EntityType="Self.InStoreSale" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InStoreSaleDetail" EntityType="Self.InStoreSaleDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InStoreSaleInvoice" EntityType="Self.InStoreSaleInvoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InStoreWarranty" EntityType="Self.InStoreWarranty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OnlineListing" EntityType="Self.OnlineListing" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OnlineListingBySupplier" EntityType="Self.OnlineListingBySupplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OnlineListingOwn" EntityType="Self.OnlineListingOwn" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OnlinePayment" EntityType="Self.OnlinePayment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OnlineSale" EntityType="Self.OnlineSale" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OnlineSaleDetail" EntityType="Self.OnlineSaleDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OnlineSaleInvoice" EntityType="Self.OnlineSaleInvoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OnlineWarranty" EntityType="Self.OnlineWarranty" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OnlineWarrantyClaim" EntityType="Self.OnlineWarrantyClaim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductImage" EntityType="Self.ProductImage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Purchase" EntityType="Self.Purchase" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseDetail" EntityType="Self.PurchaseDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseInvoice" EntityType="Self.PurchaseInvoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sale" EntityType="Self.Sale" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Cart__IdCustomer__6C190EBB" Association="Self.FK__Cart__IdCustomer__6C190EBB">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CartItems__IdCar__6EF57B66" Association="Self.FK__CartItems__IdCar__6EF57B66">
+            <End Role="Cart" EntitySet="Cart" />
+            <End Role="CartItems" EntitySet="CartItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CartItems__IdPro__6FE99F9F" Association="Self.FK__CartItems__IdPro__6FE99F9F">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="CartItems" EntitySet="CartItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Customer__IdUser__5070F446" Association="Self.FK__Customer__IdUser__5070F446">
+            <End Role="User" EntitySet="User" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__IdBran__5EBF139D" Association="Self.FK__Employee__IdBran__5EBF139D">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__IdUser__5DCAEF64" Association="Self.FK__Employee__IdUser__5DCAEF64">
+            <End Role="User" EntitySet="User" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InStorePa__IdInS__2EDAF651" Association="Self.FK__InStorePa__IdInS__2EDAF651">
+            <End Role="InStoreSaleInvoice" EntitySet="InStoreSaleInvoice" />
+            <End Role="InStorePayment" EntitySet="InStorePayment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InStoreSa__IdBra__1F98B2C1" Association="Self.FK__InStoreSa__IdBra__1F98B2C1">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="InStoreSale" EntitySet="InStoreSale" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InStoreSa__IdInS__22751F6C" Association="Self.FK__InStoreSa__IdInS__22751F6C">
+            <End Role="InStoreSale" EntitySet="InStoreSale" />
+            <End Role="InStoreSaleDetail" EntitySet="InStoreSaleDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InStoreSa__IdInS__2B0A656D" Association="Self.FK__InStoreSa__IdInS__2B0A656D">
+            <End Role="InStoreSale" EntitySet="InStoreSale" />
+            <End Role="InStoreSaleInvoice" EntitySet="InStoreSaleInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InStoreSa__IdPro__236943A5" Association="Self.FK__InStoreSa__IdPro__236943A5">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="InStoreSaleDetail" EntitySet="InStoreSaleDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InStoreSa__IdSal__1EA48E88" Association="Self.FK__InStoreSa__IdSal__1EA48E88">
+            <End Role="Sale" EntitySet="Sale" />
+            <End Role="InStoreSale" EntitySet="InStoreSale" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InStoreWa__IdInS__2645B050" Association="Self.FK__InStoreWa__IdInS__2645B050">
+            <End Role="InStoreSaleDetail" EntitySet="InStoreSaleDetail" />
+            <End Role="InStoreWarranty" EntitySet="InStoreWarranty" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inventory__IdBra__73BA3083" Association="Self.FK__Inventory__IdBra__73BA3083">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inventory__IdPro__72C60C4A" Association="Self.FK__Inventory__IdPro__72C60C4A">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineLis__IdEmp__7B5B524B" Association="Self.FK__OnlineLis__IdEmp__7B5B524B">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="OnlineListingOwn" EntitySet="OnlineListingOwn" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineLis__IdOnl__7A672E12" Association="Self.FK__OnlineLis__IdOnl__7A672E12">
+            <End Role="OnlineListing" EntitySet="OnlineListing" />
+            <End Role="OnlineListingOwn" EntitySet="OnlineListingOwn" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineLis__IdOnl__7E37BEF6" Association="Self.FK__OnlineLis__IdOnl__7E37BEF6">
+            <End Role="OnlineListing" EntitySet="OnlineListing" />
+            <End Role="OnlineListingBySupplier" EntitySet="OnlineListingBySupplier" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineLis__IdPro__76969D2E" Association="Self.FK__OnlineLis__IdPro__76969D2E">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="OnlineListing" EntitySet="OnlineListing" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineLis__IdSup__7F2BE32F" Association="Self.FK__OnlineLis__IdSup__7F2BE32F">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="OnlineListingBySupplier" EntitySet="OnlineListingBySupplier" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlinePay__IdOnl__19DFD96B" Association="Self.FK__OnlinePay__IdOnl__19DFD96B">
+            <End Role="OnlineSaleInvoice" EntitySet="OnlineSaleInvoice" />
+            <End Role="OnlinePayment" EntitySet="OnlinePayment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineSal__IdOnl__0A9D95DB" Association="Self.FK__OnlineSal__IdOnl__0A9D95DB">
+            <End Role="OnlineSale" EntitySet="OnlineSale" />
+            <End Role="OnlineSaleDetail" EntitySet="OnlineSaleDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineSal__IdOnl__160F4887" Association="Self.FK__OnlineSal__IdOnl__160F4887">
+            <End Role="OnlineSale" EntitySet="OnlineSale" />
+            <End Role="OnlineSaleInvoice" EntitySet="OnlineSaleInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineSal__IdPro__0B91BA14" Association="Self.FK__OnlineSal__IdPro__0B91BA14">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="OnlineSaleDetail" EntitySet="OnlineSaleDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineSal__IdSal__06CD04F7" Association="Self.FK__OnlineSal__IdSal__06CD04F7">
+            <End Role="Sale" EntitySet="Sale" />
+            <End Role="OnlineSale" EntitySet="OnlineSale" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineWar__IdOnl__0E6E26BF" Association="Self.FK__OnlineWar__IdOnl__0E6E26BF">
+            <End Role="OnlineSaleDetail" EntitySet="OnlineSaleDetail" />
+            <End Role="OnlineWarranty" EntitySet="OnlineWarranty" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineWar__IdOnl__1332DBDC" Association="Self.FK__OnlineWar__IdOnl__1332DBDC">
+            <End Role="OnlineWarranty" EntitySet="OnlineWarranty" />
+            <End Role="OnlineWarrantyClaim" EntitySet="OnlineWarrantyClaim" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__IdBrand__693CA210" Association="Self.FK__Product__IdBrand__693CA210">
+            <End Role="Brand" EntitySet="Brand" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__IdCateg__68487DD7" Association="Self.FK__Product__IdCateg__68487DD7">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductIm__IdPro__40F9A68C" Association="Self.FK__ProductIm__IdPro__40F9A68C">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductImage" EntitySet="ProductImage" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Purchase__IdSupp__339FAB6E" Association="Self.FK__Purchase__IdSupp__339FAB6E">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="Purchase" EntitySet="Purchase" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PurchaseD__IdPro__3C34F16F" Association="Self.FK__PurchaseD__IdPro__3C34F16F">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="PurchaseDetail" EntitySet="PurchaseDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PurchaseD__IdPur__3D2915A8" Association="Self.FK__PurchaseD__IdPur__3D2915A8">
+            <End Role="Purchase" EntitySet="Purchase" />
+            <End Role="PurchaseDetail" EntitySet="PurchaseDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PurchaseI__IdPur__3864608B" Association="Self.FK__PurchaseI__IdPur__3864608B">
+            <End Role="Purchase" EntitySet="Purchase" />
+            <End Role="PurchaseInvoice" EntitySet="PurchaseInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sale__IdCustomer__02084FDA" Association="Self.FK__Sale__IdCustomer__02084FDA">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Supplier__IdUser__59063A47" Association="Self.FK__Supplier__IdUser__59063A47">
+            <End Role="User" EntitySet="User" />
+            <End Role="Supplier" EntitySet="Supplier" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="eBuyDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Neighborhood" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK__Employee__IdBran__5EBF139D" FromRole="Branch" ToRole="Employee" />
+          <NavigationProperty Name="InStoreSales" Relationship="Self.FK__InStoreSa__IdBra__1F98B2C1" FromRole="Branch" ToRole="InStoreSale" />
+          <NavigationProperty Name="Inventories" Relationship="Self.FK__Inventory__IdBra__73BA3083" FromRole="Branch" ToRole="Inventory" />
+        </EntityType>
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Product__IdBrand__693CA210" FromRole="Brand" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCustomer" Type="Int32" Nullable="false" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Cart__IdCustomer__6C190EBB" FromRole="Cart" ToRole="Customer" />
+          <NavigationProperty Name="CartItems" Relationship="Self.FK__CartItems__IdCar__6EF57B66" FromRole="Cart" ToRole="CartItems" />
+        </EntityType>
+        <EntityType Name="CartItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCart" Type="Int32" Nullable="false" />
+          <Property Name="IdProduct" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Cart" Relationship="Self.FK__CartItems__IdCar__6EF57B66" FromRole="CartItems" ToRole="Cart" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__CartItems__IdPro__6FE99F9F" FromRole="CartItems" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Product__IdCateg__68487DD7" FromRole="Category" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUser" Type="Int32" Nullable="false" />
+          <Property Name="Document" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BornDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Phone" Type="Int32" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Carts" Relationship="Self.FK__Cart__IdCustomer__6C190EBB" FromRole="Customer" ToRole="Cart" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Customer__IdUser__5070F446" FromRole="Customer" ToRole="User" />
+          <NavigationProperty Name="Sales" Relationship="Self.FK__Sale__IdCustomer__02084FDA" FromRole="Customer" ToRole="Sale" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUser" Type="Int32" Nullable="false" />
+          <Property Name="IdBranch" Type="Int32" Nullable="false" />
+          <Property Name="Document" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BornDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Phone" Type="Int32" Nullable="false" />
+          <Property Name="AssignedBranch" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Branch" Relationship="Self.FK__Employee__IdBran__5EBF139D" FromRole="Employee" ToRole="Branch" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Employee__IdUser__5DCAEF64" FromRole="Employee" ToRole="User" />
+          <NavigationProperty Name="OnlineListingOwns" Relationship="Self.FK__OnlineLis__IdEmp__7B5B524B" FromRole="Employee" ToRole="OnlineListingOwn" />
+        </EntityType>
+        <EntityType Name="InStorePayment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdInStoreSaleInvoice" Type="Int32" Nullable="false" />
+          <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="PaymentMethod" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ReferenceNumber" Type="Int32" Nullable="false" />
+          <Property Name="PaymentStatus" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="InStoreSaleInvoice" Relationship="Self.FK__InStorePa__IdInS__2EDAF651" FromRole="InStorePayment" ToRole="InStoreSaleInvoice" />
+        </EntityType>
+        <EntityType Name="InStoreSale">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdSale" Type="Int32" Nullable="false" />
+          <Property Name="IdBranch" Type="Int32" Nullable="false" />
+          <Property Name="BranchName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Branch" Relationship="Self.FK__InStoreSa__IdBra__1F98B2C1" FromRole="InStoreSale" ToRole="Branch" />
+          <NavigationProperty Name="InStoreSaleDetails" Relationship="Self.FK__InStoreSa__IdInS__22751F6C" FromRole="InStoreSale" ToRole="InStoreSaleDetail" />
+          <NavigationProperty Name="InStoreSaleInvoices" Relationship="Self.FK__InStoreSa__IdInS__2B0A656D" FromRole="InStoreSale" ToRole="InStoreSaleInvoice" />
+          <NavigationProperty Name="Sale" Relationship="Self.FK__InStoreSa__IdSal__1EA48E88" FromRole="InStoreSale" ToRole="Sale" />
+        </EntityType>
+        <EntityType Name="InStoreSaleDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdInStoreSale" Type="Int32" Nullable="false" />
+          <Property Name="IdProduct" Type="Int32" Nullable="false" />
+          <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="InStoreSale" Relationship="Self.FK__InStoreSa__IdInS__22751F6C" FromRole="InStoreSaleDetail" ToRole="InStoreSale" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__InStoreSa__IdPro__236943A5" FromRole="InStoreSaleDetail" ToRole="Product" />
+          <NavigationProperty Name="InStoreWarranties" Relationship="Self.FK__InStoreWa__IdInS__2645B050" FromRole="InStoreSaleDetail" ToRole="InStoreWarranty" />
+        </EntityType>
+        <EntityType Name="InStoreSaleInvoice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdInStoreSale" Type="Int32" Nullable="false" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="InvoiceNumber" Type="Int32" Nullable="false" />
+          <Property Name="PaymentMethod" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BranchName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BranchAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="InStorePayments" Relationship="Self.FK__InStorePa__IdInS__2EDAF651" FromRole="InStoreSaleInvoice" ToRole="InStorePayment" />
+          <NavigationProperty Name="InStoreSale" Relationship="Self.FK__InStoreSa__IdInS__2B0A656D" FromRole="InStoreSaleInvoice" ToRole="InStoreSale" />
+        </EntityType>
+        <EntityType Name="InStoreWarranty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdInStoreSaleDetail" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ClaimReason" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Resolution" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="WarrantyStatus" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="InStoreSaleDetail" Relationship="Self.FK__InStoreWa__IdInS__2645B050" FromRole="InStoreWarranty" ToRole="InStoreSaleDetail" />
+        </EntityType>
+        <EntityType Name="Inventory">
+          <Key>
+            <PropertyRef Name="IdProduct" />
+            <PropertyRef Name="IdBranch" />
+          </Key>
+          <Property Name="IdProduct" Type="Int32" Nullable="false" />
+          <Property Name="IdBranch" Type="Int32" Nullable="false" />
+          <Property Name="CurrentStock" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Branch" Relationship="Self.FK__Inventory__IdBra__73BA3083" FromRole="Inventory" ToRole="Branch" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__Inventory__IdPro__72C60C4A" FromRole="Inventory" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="OnlineListing">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdProduct" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="AvailableQuantity" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="OnlineListingOwns" Relationship="Self.FK__OnlineLis__IdOnl__7A672E12" FromRole="OnlineListing" ToRole="OnlineListingOwn" />
+          <NavigationProperty Name="OnlineListingBySuppliers" Relationship="Self.FK__OnlineLis__IdOnl__7E37BEF6" FromRole="OnlineListing" ToRole="OnlineListingBySupplier" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__OnlineLis__IdPro__76969D2E" FromRole="OnlineListing" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="OnlineListingBySupplier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdOnlineListing" Type="Int32" Nullable="false" />
+          <Property Name="IdSupplier" Type="Int32" Nullable="false" />
+          <Property Name="SupplierName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SupplierEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SupplierPhone" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OnlineListing" Relationship="Self.FK__OnlineLis__IdOnl__7E37BEF6" FromRole="OnlineListingBySupplier" ToRole="OnlineListing" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK__OnlineLis__IdSup__7F2BE32F" FromRole="OnlineListingBySupplier" ToRole="Supplier" />
+        </EntityType>
+        <EntityType Name="OnlineListingOwn">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdOnlineListing" Type="Int32" Nullable="false" />
+          <Property Name="IdEmployee" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmployeeAssignedBranch" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK__OnlineLis__IdEmp__7B5B524B" FromRole="OnlineListingOwn" ToRole="Employee" />
+          <NavigationProperty Name="OnlineListing" Relationship="Self.FK__OnlineLis__IdOnl__7A672E12" FromRole="OnlineListingOwn" ToRole="OnlineListing" />
+        </EntityType>
+        <EntityType Name="OnlinePayment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdOnlineSaleInvoice" Type="Int32" Nullable="false" />
+          <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="PaymentMethod" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ReferenceNumber" Type="Int32" Nullable="false" />
+          <Property Name="PaymentStatus" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="OnlineSaleInvoice" Relationship="Self.FK__OnlinePay__IdOnl__19DFD96B" FromRole="OnlinePayment" ToRole="OnlineSaleInvoice" />
+        </EntityType>
+        <EntityType Name="OnlineSale">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdSale" Type="Int32" Nullable="false" />
+          <Property Name="PaymentStatus" Type="Boolean" Nullable="false" />
+          <Property Name="TrackingNumber" Type="Int32" Nullable="false" />
+          <Property Name="ShippingAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="OnlineSaleDetails" Relationship="Self.FK__OnlineSal__IdOnl__0A9D95DB" FromRole="OnlineSale" ToRole="OnlineSaleDetail" />
+          <NavigationProperty Name="OnlineSaleInvoices" Relationship="Self.FK__OnlineSal__IdOnl__160F4887" FromRole="OnlineSale" ToRole="OnlineSaleInvoice" />
+          <NavigationProperty Name="Sale" Relationship="Self.FK__OnlineSal__IdSal__06CD04F7" FromRole="OnlineSale" ToRole="Sale" />
+        </EntityType>
+        <EntityType Name="OnlineSaleDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdOnlineSale" Type="Int32" Nullable="false" />
+          <Property Name="IdProduct" Type="Int32" Nullable="false" />
+          <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="OnlineSale" Relationship="Self.FK__OnlineSal__IdOnl__0A9D95DB" FromRole="OnlineSaleDetail" ToRole="OnlineSale" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__OnlineSal__IdPro__0B91BA14" FromRole="OnlineSaleDetail" ToRole="Product" />
+          <NavigationProperty Name="OnlineWarranties" Relationship="Self.FK__OnlineWar__IdOnl__0E6E26BF" FromRole="OnlineSaleDetail" ToRole="OnlineWarranty" />
+        </EntityType>
+        <EntityType Name="OnlineSaleInvoice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdOnlineSale" Type="Int32" Nullable="false" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="InvoiceNumber" Type="Int32" Nullable="false" />
+          <Property Name="PaymentMethod" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="OnlinePayments" Relationship="Self.FK__OnlinePay__IdOnl__19DFD96B" FromRole="OnlineSaleInvoice" ToRole="OnlinePayment" />
+          <NavigationProperty Name="OnlineSale" Relationship="Self.FK__OnlineSal__IdOnl__160F4887" FromRole="OnlineSaleInvoice" ToRole="OnlineSale" />
+        </EntityType>
+        <EntityType Name="OnlineWarranty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdOnlineSaleDetail" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ClaimReason" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Resolution" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="WarrantyStatus" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="OnlineSaleDetail" Relationship="Self.FK__OnlineWar__IdOnl__0E6E26BF" FromRole="OnlineWarranty" ToRole="OnlineSaleDetail" />
+          <NavigationProperty Name="OnlineWarrantyClaims" Relationship="Self.FK__OnlineWar__IdOnl__1332DBDC" FromRole="OnlineWarranty" ToRole="OnlineWarrantyClaim" />
+        </EntityType>
+        <EntityType Name="OnlineWarrantyClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdOnlineWarranty" Type="Int32" Nullable="false" />
+          <Property Name="ClaimDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ResolutionDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Resolution" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TechnicalNotes" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="OnlineWarranty" Relationship="Self.FK__OnlineWar__IdOnl__1332DBDC" FromRole="OnlineWarrantyClaim" ToRole="OnlineWarranty" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCategory" Type="Int32" Nullable="false" />
+          <Property Name="IdBrand" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CostPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="SalePrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Stock" Type="Int32" Nullable="false" />
+          <Property Name="WarrantyMonths" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Brand" Relationship="Self.FK__Product__IdBrand__693CA210" FromRole="Product" ToRole="Brand" />
+          <NavigationProperty Name="CartItems" Relationship="Self.FK__CartItems__IdPro__6FE99F9F" FromRole="Product" ToRole="CartItems" />
+          <NavigationProperty Name="Category" Relationship="Self.FK__Product__IdCateg__68487DD7" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="InStoreSaleDetails" Relationship="Self.FK__InStoreSa__IdPro__236943A5" FromRole="Product" ToRole="InStoreSaleDetail" />
+          <NavigationProperty Name="Inventories" Relationship="Self.FK__Inventory__IdPro__72C60C4A" FromRole="Product" ToRole="Inventory" />
+          <NavigationProperty Name="OnlineListings" Relationship="Self.FK__OnlineLis__IdPro__76969D2E" FromRole="Product" ToRole="OnlineListing" />
+          <NavigationProperty Name="OnlineSaleDetails" Relationship="Self.FK__OnlineSal__IdPro__0B91BA14" FromRole="Product" ToRole="OnlineSaleDetail" />
+          <NavigationProperty Name="ProductImages" Relationship="Self.FK__ProductIm__IdPro__40F9A68C" FromRole="Product" ToRole="ProductImage" />
+          <NavigationProperty Name="PurchaseDetails" Relationship="Self.FK__PurchaseD__IdPro__3C34F16F" FromRole="Product" ToRole="PurchaseDetail" />
+        </EntityType>
+        <EntityType Name="ProductImage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdProduct" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__ProductIm__IdPro__40F9A68C" FromRole="ProductImage" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Purchase">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdSupplier" Type="Int32" Nullable="false" />
+          <Property Name="PurchaseDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PaymentStatus" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="PaymentMethod" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK__Purchase__IdSupp__339FAB6E" FromRole="Purchase" ToRole="Supplier" />
+          <NavigationProperty Name="PurchaseDetails" Relationship="Self.FK__PurchaseD__IdPur__3D2915A8" FromRole="Purchase" ToRole="PurchaseDetail" />
+          <NavigationProperty Name="PurchaseInvoices" Relationship="Self.FK__PurchaseI__IdPur__3864608B" FromRole="Purchase" ToRole="PurchaseInvoice" />
+        </EntityType>
+        <EntityType Name="PurchaseDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdProduct" Type="Int32" Nullable="false" />
+          <Property Name="IdPurchase" Type="Int32" Nullable="false" />
+          <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="UnitCost" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="TotalCost" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__PurchaseD__IdPro__3C34F16F" FromRole="PurchaseDetail" ToRole="Product" />
+          <NavigationProperty Name="Purchase" Relationship="Self.FK__PurchaseD__IdPur__3D2915A8" FromRole="PurchaseDetail" ToRole="Purchase" />
+        </EntityType>
+        <EntityType Name="PurchaseInvoice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPurchase" Type="Int32" Nullable="false" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="InvoiceNumber" Type="Int32" Nullable="false" />
+          <Property Name="PaymentMethod" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Purchase" Relationship="Self.FK__PurchaseI__IdPur__3864608B" FromRole="PurchaseInvoice" ToRole="Purchase" />
+        </EntityType>
+        <EntityType Name="Sale">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCustomer" Type="Int32" Nullable="false" />
+          <Property Name="SaleDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Status" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="PaymentMethod" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Sale__IdCustomer__02084FDA" FromRole="Sale" ToRole="Customer" />
+          <NavigationProperty Name="InStoreSales" Relationship="Self.FK__InStoreSa__IdSal__1EA48E88" FromRole="Sale" ToRole="InStoreSale" />
+          <NavigationProperty Name="OnlineSales" Relationship="Self.FK__OnlineSal__IdSal__06CD04F7" FromRole="Sale" ToRole="OnlineSale" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUser" Type="Int32" Nullable="false" />
+          <Property Name="Document" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BornDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Phone" Type="Int32" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="OnlineListingBySuppliers" Relationship="Self.FK__OnlineLis__IdSup__7F2BE32F" FromRole="Supplier" ToRole="OnlineListingBySupplier" />
+          <NavigationProperty Name="Purchases" Relationship="Self.FK__Purchase__IdSupp__339FAB6E" FromRole="Supplier" ToRole="Purchase" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Supplier__IdUser__59063A47" FromRole="Supplier" ToRole="User" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Salt" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Role" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK__Customer__IdUser__5070F446" FromRole="User" ToRole="Customer" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK__Employee__IdUser__5DCAEF64" FromRole="User" ToRole="Employee" />
+          <NavigationProperty Name="Suppliers" Relationship="Self.FK__Supplier__IdUser__59063A47" FromRole="User" ToRole="Supplier" />
+        </EntityType>
+        <Association Name="FK__Employee__IdBran__5EBF139D">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="IdBranch" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InStoreSa__IdBra__1F98B2C1">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="1" />
+          <End Role="InStoreSale" Type="Self.InStoreSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InStoreSale">
+              <PropertyRef Name="IdBranch" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inventory__IdBra__73BA3083">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="IdBranch" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__IdBrand__693CA210">
+          <End Role="Brand" Type="Self.Brand" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="IdBrand" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cart__IdCustomer__6C190EBB">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="IdCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CartItems__IdCar__6EF57B66">
+          <End Role="Cart" Type="Self.Cart" Multiplicity="1" />
+          <End Role="CartItems" Type="Self.CartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cart">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CartItems">
+              <PropertyRef Name="IdCart" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CartItems__IdPro__6FE99F9F">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="CartItems" Type="Self.CartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CartItems">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__IdCateg__68487DD7">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="IdCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Customer__IdUser__5070F446">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sale__IdCustomer__02084FDA">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="IdCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employee__IdUser__5DCAEF64">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineLis__IdEmp__7B5B524B">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="OnlineListingOwn" Type="Self.OnlineListingOwn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineListingOwn">
+              <PropertyRef Name="IdEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InStorePa__IdInS__2EDAF651">
+          <End Role="InStoreSaleInvoice" Type="Self.InStoreSaleInvoice" Multiplicity="1" />
+          <End Role="InStorePayment" Type="Self.InStorePayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InStoreSaleInvoice">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InStorePayment">
+              <PropertyRef Name="IdInStoreSaleInvoice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InStoreSa__IdInS__22751F6C">
+          <End Role="InStoreSale" Type="Self.InStoreSale" Multiplicity="1" />
+          <End Role="InStoreSaleDetail" Type="Self.InStoreSaleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InStoreSale">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InStoreSaleDetail">
+              <PropertyRef Name="IdInStoreSale" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InStoreSa__IdInS__2B0A656D">
+          <End Role="InStoreSale" Type="Self.InStoreSale" Multiplicity="1" />
+          <End Role="InStoreSaleInvoice" Type="Self.InStoreSaleInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InStoreSale">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InStoreSaleInvoice">
+              <PropertyRef Name="IdInStoreSale" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InStoreSa__IdSal__1EA48E88">
+          <End Role="Sale" Type="Self.Sale" Multiplicity="1" />
+          <End Role="InStoreSale" Type="Self.InStoreSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sale">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InStoreSale">
+              <PropertyRef Name="IdSale" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InStoreSa__IdPro__236943A5">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="InStoreSaleDetail" Type="Self.InStoreSaleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InStoreSaleDetail">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InStoreWa__IdInS__2645B050">
+          <End Role="InStoreSaleDetail" Type="Self.InStoreSaleDetail" Multiplicity="1" />
+          <End Role="InStoreWarranty" Type="Self.InStoreWarranty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InStoreSaleDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InStoreWarranty">
+              <PropertyRef Name="IdInStoreSaleDetail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inventory__IdPro__72C60C4A">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineLis__IdOnl__7A672E12">
+          <End Role="OnlineListing" Type="Self.OnlineListing" Multiplicity="1" />
+          <End Role="OnlineListingOwn" Type="Self.OnlineListingOwn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OnlineListing">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineListingOwn">
+              <PropertyRef Name="IdOnlineListing" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineLis__IdOnl__7E37BEF6">
+          <End Role="OnlineListing" Type="Self.OnlineListing" Multiplicity="1" />
+          <End Role="OnlineListingBySupplier" Type="Self.OnlineListingBySupplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OnlineListing">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineListingBySupplier">
+              <PropertyRef Name="IdOnlineListing" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineLis__IdPro__76969D2E">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="OnlineListing" Type="Self.OnlineListing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineListing">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineLis__IdSup__7F2BE32F">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="OnlineListingBySupplier" Type="Self.OnlineListingBySupplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineListingBySupplier">
+              <PropertyRef Name="IdSupplier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlinePay__IdOnl__19DFD96B">
+          <End Role="OnlineSaleInvoice" Type="Self.OnlineSaleInvoice" Multiplicity="1" />
+          <End Role="OnlinePayment" Type="Self.OnlinePayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OnlineSaleInvoice">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlinePayment">
+              <PropertyRef Name="IdOnlineSaleInvoice" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineSal__IdOnl__0A9D95DB">
+          <End Role="OnlineSale" Type="Self.OnlineSale" Multiplicity="1" />
+          <End Role="OnlineSaleDetail" Type="Self.OnlineSaleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OnlineSale">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineSaleDetail">
+              <PropertyRef Name="IdOnlineSale" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineSal__IdOnl__160F4887">
+          <End Role="OnlineSale" Type="Self.OnlineSale" Multiplicity="1" />
+          <End Role="OnlineSaleInvoice" Type="Self.OnlineSaleInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OnlineSale">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineSaleInvoice">
+              <PropertyRef Name="IdOnlineSale" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineSal__IdSal__06CD04F7">
+          <End Role="Sale" Type="Self.Sale" Multiplicity="1" />
+          <End Role="OnlineSale" Type="Self.OnlineSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sale">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineSale">
+              <PropertyRef Name="IdSale" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineSal__IdPro__0B91BA14">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="OnlineSaleDetail" Type="Self.OnlineSaleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineSaleDetail">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineWar__IdOnl__0E6E26BF">
+          <End Role="OnlineSaleDetail" Type="Self.OnlineSaleDetail" Multiplicity="1" />
+          <End Role="OnlineWarranty" Type="Self.OnlineWarranty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OnlineSaleDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineWarranty">
+              <PropertyRef Name="IdOnlineSaleDetail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OnlineWar__IdOnl__1332DBDC">
+          <End Role="OnlineWarranty" Type="Self.OnlineWarranty" Multiplicity="1" />
+          <End Role="OnlineWarrantyClaim" Type="Self.OnlineWarrantyClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OnlineWarranty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OnlineWarrantyClaim">
+              <PropertyRef Name="IdOnlineWarranty" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProductIm__IdPro__40F9A68C">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductImage" Type="Self.ProductImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductImage">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PurchaseD__IdPro__3C34F16F">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="PurchaseDetail" Type="Self.PurchaseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseDetail">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Purchase__IdSupp__339FAB6E">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Purchase">
+              <PropertyRef Name="IdSupplier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PurchaseD__IdPur__3D2915A8">
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="1" />
+          <End Role="PurchaseDetail" Type="Self.PurchaseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Purchase">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseDetail">
+              <PropertyRef Name="IdPurchase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PurchaseI__IdPur__3864608B">
+          <End Role="Purchase" Type="Self.Purchase" Multiplicity="1" />
+          <End Role="PurchaseInvoice" Type="Self.PurchaseInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Purchase">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseInvoice">
+              <PropertyRef Name="IdPurchase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Supplier__IdUser__59063A47">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Supplier">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="eBuyDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Branches" EntityType="Self.Branch" />
+          <EntitySet Name="Brands" EntityType="Self.Brand" />
+          <EntitySet Name="Carts" EntityType="Self.Cart" />
+          <EntitySet Name="CartItems" EntityType="Self.CartItem" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="InStorePayments" EntityType="Self.InStorePayment" />
+          <EntitySet Name="InStoreSales" EntityType="Self.InStoreSale" />
+          <EntitySet Name="InStoreSaleDetails" EntityType="Self.InStoreSaleDetail" />
+          <EntitySet Name="InStoreSaleInvoices" EntityType="Self.InStoreSaleInvoice" />
+          <EntitySet Name="InStoreWarranties" EntityType="Self.InStoreWarranty" />
+          <EntitySet Name="Inventories" EntityType="Self.Inventory" />
+          <EntitySet Name="OnlineListings" EntityType="Self.OnlineListing" />
+          <EntitySet Name="OnlineListingBySuppliers" EntityType="Self.OnlineListingBySupplier" />
+          <EntitySet Name="OnlineListingOwns" EntityType="Self.OnlineListingOwn" />
+          <EntitySet Name="OnlinePayments" EntityType="Self.OnlinePayment" />
+          <EntitySet Name="OnlineSales" EntityType="Self.OnlineSale" />
+          <EntitySet Name="OnlineSaleDetails" EntityType="Self.OnlineSaleDetail" />
+          <EntitySet Name="OnlineSaleInvoices" EntityType="Self.OnlineSaleInvoice" />
+          <EntitySet Name="OnlineWarranties" EntityType="Self.OnlineWarranty" />
+          <EntitySet Name="OnlineWarrantyClaims" EntityType="Self.OnlineWarrantyClaim" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="ProductImages" EntityType="Self.ProductImage" />
+          <EntitySet Name="Purchases" EntityType="Self.Purchase" />
+          <EntitySet Name="PurchaseDetails" EntityType="Self.PurchaseDetail" />
+          <EntitySet Name="PurchaseInvoices" EntityType="Self.PurchaseInvoice" />
+          <EntitySet Name="Sales" EntityType="Self.Sale" />
+          <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__Employee__IdBran__5EBF139D" Association="Self.FK__Employee__IdBran__5EBF139D">
+            <End Role="Branch" EntitySet="Branches" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InStoreSa__IdBra__1F98B2C1" Association="Self.FK__InStoreSa__IdBra__1F98B2C1">
+            <End Role="Branch" EntitySet="Branches" />
+            <End Role="InStoreSale" EntitySet="InStoreSales" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inventory__IdBra__73BA3083" Association="Self.FK__Inventory__IdBra__73BA3083">
+            <End Role="Branch" EntitySet="Branches" />
+            <End Role="Inventory" EntitySet="Inventories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__IdBrand__693CA210" Association="Self.FK__Product__IdBrand__693CA210">
+            <End Role="Brand" EntitySet="Brands" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cart__IdCustomer__6C190EBB" Association="Self.FK__Cart__IdCustomer__6C190EBB">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Cart" EntitySet="Carts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CartItems__IdCar__6EF57B66" Association="Self.FK__CartItems__IdCar__6EF57B66">
+            <End Role="Cart" EntitySet="Carts" />
+            <End Role="CartItems" EntitySet="CartItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CartItems__IdPro__6FE99F9F" Association="Self.FK__CartItems__IdPro__6FE99F9F">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="CartItems" EntitySet="CartItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__IdCateg__68487DD7" Association="Self.FK__Product__IdCateg__68487DD7">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Customer__IdUser__5070F446" Association="Self.FK__Customer__IdUser__5070F446">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sale__IdCustomer__02084FDA" Association="Self.FK__Sale__IdCustomer__02084FDA">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Sale" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employee__IdUser__5DCAEF64" Association="Self.FK__Employee__IdUser__5DCAEF64">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineLis__IdEmp__7B5B524B" Association="Self.FK__OnlineLis__IdEmp__7B5B524B">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="OnlineListingOwn" EntitySet="OnlineListingOwns" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InStorePa__IdInS__2EDAF651" Association="Self.FK__InStorePa__IdInS__2EDAF651">
+            <End Role="InStoreSaleInvoice" EntitySet="InStoreSaleInvoices" />
+            <End Role="InStorePayment" EntitySet="InStorePayments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InStoreSa__IdInS__22751F6C" Association="Self.FK__InStoreSa__IdInS__22751F6C">
+            <End Role="InStoreSale" EntitySet="InStoreSales" />
+            <End Role="InStoreSaleDetail" EntitySet="InStoreSaleDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InStoreSa__IdInS__2B0A656D" Association="Self.FK__InStoreSa__IdInS__2B0A656D">
+            <End Role="InStoreSale" EntitySet="InStoreSales" />
+            <End Role="InStoreSaleInvoice" EntitySet="InStoreSaleInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InStoreSa__IdSal__1EA48E88" Association="Self.FK__InStoreSa__IdSal__1EA48E88">
+            <End Role="Sale" EntitySet="Sales" />
+            <End Role="InStoreSale" EntitySet="InStoreSales" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InStoreSa__IdPro__236943A5" Association="Self.FK__InStoreSa__IdPro__236943A5">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="InStoreSaleDetail" EntitySet="InStoreSaleDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InStoreWa__IdInS__2645B050" Association="Self.FK__InStoreWa__IdInS__2645B050">
+            <End Role="InStoreSaleDetail" EntitySet="InStoreSaleDetails" />
+            <End Role="InStoreWarranty" EntitySet="InStoreWarranties" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inventory__IdPro__72C60C4A" Association="Self.FK__Inventory__IdPro__72C60C4A">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Inventory" EntitySet="Inventories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineLis__IdOnl__7A672E12" Association="Self.FK__OnlineLis__IdOnl__7A672E12">
+            <End Role="OnlineListing" EntitySet="OnlineListings" />
+            <End Role="OnlineListingOwn" EntitySet="OnlineListingOwns" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineLis__IdOnl__7E37BEF6" Association="Self.FK__OnlineLis__IdOnl__7E37BEF6">
+            <End Role="OnlineListing" EntitySet="OnlineListings" />
+            <End Role="OnlineListingBySupplier" EntitySet="OnlineListingBySuppliers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineLis__IdPro__76969D2E" Association="Self.FK__OnlineLis__IdPro__76969D2E">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="OnlineListing" EntitySet="OnlineListings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineLis__IdSup__7F2BE32F" Association="Self.FK__OnlineLis__IdSup__7F2BE32F">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="OnlineListingBySupplier" EntitySet="OnlineListingBySuppliers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlinePay__IdOnl__19DFD96B" Association="Self.FK__OnlinePay__IdOnl__19DFD96B">
+            <End Role="OnlineSaleInvoice" EntitySet="OnlineSaleInvoices" />
+            <End Role="OnlinePayment" EntitySet="OnlinePayments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineSal__IdOnl__0A9D95DB" Association="Self.FK__OnlineSal__IdOnl__0A9D95DB">
+            <End Role="OnlineSale" EntitySet="OnlineSales" />
+            <End Role="OnlineSaleDetail" EntitySet="OnlineSaleDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineSal__IdOnl__160F4887" Association="Self.FK__OnlineSal__IdOnl__160F4887">
+            <End Role="OnlineSale" EntitySet="OnlineSales" />
+            <End Role="OnlineSaleInvoice" EntitySet="OnlineSaleInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineSal__IdSal__06CD04F7" Association="Self.FK__OnlineSal__IdSal__06CD04F7">
+            <End Role="Sale" EntitySet="Sales" />
+            <End Role="OnlineSale" EntitySet="OnlineSales" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineSal__IdPro__0B91BA14" Association="Self.FK__OnlineSal__IdPro__0B91BA14">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="OnlineSaleDetail" EntitySet="OnlineSaleDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineWar__IdOnl__0E6E26BF" Association="Self.FK__OnlineWar__IdOnl__0E6E26BF">
+            <End Role="OnlineSaleDetail" EntitySet="OnlineSaleDetails" />
+            <End Role="OnlineWarranty" EntitySet="OnlineWarranties" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OnlineWar__IdOnl__1332DBDC" Association="Self.FK__OnlineWar__IdOnl__1332DBDC">
+            <End Role="OnlineWarranty" EntitySet="OnlineWarranties" />
+            <End Role="OnlineWarrantyClaim" EntitySet="OnlineWarrantyClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProductIm__IdPro__40F9A68C" Association="Self.FK__ProductIm__IdPro__40F9A68C">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductImage" EntitySet="ProductImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PurchaseD__IdPro__3C34F16F" Association="Self.FK__PurchaseD__IdPro__3C34F16F">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="PurchaseDetail" EntitySet="PurchaseDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Purchase__IdSupp__339FAB6E" Association="Self.FK__Purchase__IdSupp__339FAB6E">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Purchase" EntitySet="Purchases" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PurchaseD__IdPur__3D2915A8" Association="Self.FK__PurchaseD__IdPur__3D2915A8">
+            <End Role="Purchase" EntitySet="Purchases" />
+            <End Role="PurchaseDetail" EntitySet="PurchaseDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PurchaseI__IdPur__3864608B" Association="Self.FK__PurchaseI__IdPur__3864608B">
+            <End Role="Purchase" EntitySet="Purchases" />
+            <End Role="PurchaseInvoice" EntitySet="PurchaseInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Supplier__IdUser__59063A47" Association="Self.FK__Supplier__IdUser__59063A47">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Supplier" EntitySet="Suppliers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="eBuyDBModelStoreContainer" CdmEntityContainer="eBuyDBEntities">
+          <EntitySetMapping Name="Branches">
+            <EntityTypeMapping TypeName="eBuyDBModel.Branch">
+              <MappingFragment StoreEntitySet="Branch">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Neighborhood" ColumnName="Neighborhood" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Brands">
+            <EntityTypeMapping TypeName="eBuyDBModel.Brand">
+              <MappingFragment StoreEntitySet="Brand">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Carts">
+            <EntityTypeMapping TypeName="eBuyDBModel.Cart">
+              <MappingFragment StoreEntitySet="Cart">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdCustomer" ColumnName="IdCustomer" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CartItems">
+            <EntityTypeMapping TypeName="eBuyDBModel.CartItem">
+              <MappingFragment StoreEntitySet="CartItems">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdCart" ColumnName="IdCart" />
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="eBuyDBModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="eBuyDBModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="Document" ColumnName="Document" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BornDate" ColumnName="BornDate" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="eBuyDBModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="IdBranch" ColumnName="IdBranch" />
+                <ScalarProperty Name="Document" ColumnName="Document" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BornDate" ColumnName="BornDate" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="AssignedBranch" ColumnName="AssignedBranch" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InStorePayments">
+            <EntityTypeMapping TypeName="eBuyDBModel.InStorePayment">
+              <MappingFragment StoreEntitySet="InStorePayment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdInStoreSaleInvoice" ColumnName="IdInStoreSaleInvoice" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+                <ScalarProperty Name="ReferenceNumber" ColumnName="ReferenceNumber" />
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InStoreSales">
+            <EntityTypeMapping TypeName="eBuyDBModel.InStoreSale">
+              <MappingFragment StoreEntitySet="InStoreSale">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdSale" ColumnName="IdSale" />
+                <ScalarProperty Name="IdBranch" ColumnName="IdBranch" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InStoreSaleDetails">
+            <EntityTypeMapping TypeName="eBuyDBModel.InStoreSaleDetail">
+              <MappingFragment StoreEntitySet="InStoreSaleDetail">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdInStoreSale" ColumnName="IdInStoreSale" />
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InStoreSaleInvoices">
+            <EntityTypeMapping TypeName="eBuyDBModel.InStoreSaleInvoice">
+              <MappingFragment StoreEntitySet="InStoreSaleInvoice">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdInStoreSale" ColumnName="IdInStoreSale" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
+                <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="BranchAddress" ColumnName="BranchAddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InStoreWarranties">
+            <EntityTypeMapping TypeName="eBuyDBModel.InStoreWarranty">
+              <MappingFragment StoreEntitySet="InStoreWarranty">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdInStoreSaleDetail" ColumnName="IdInStoreSaleDetail" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="ClaimReason" ColumnName="ClaimReason" />
+                <ScalarProperty Name="Resolution" ColumnName="Resolution" />
+                <ScalarProperty Name="WarrantyStatus" ColumnName="WarrantyStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inventories">
+            <EntityTypeMapping TypeName="eBuyDBModel.Inventory">
+              <MappingFragment StoreEntitySet="Inventory">
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+                <ScalarProperty Name="IdBranch" ColumnName="IdBranch" />
+                <ScalarProperty Name="CurrentStock" ColumnName="CurrentStock" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OnlineListings">
+            <EntityTypeMapping TypeName="eBuyDBModel.OnlineListing">
+              <MappingFragment StoreEntitySet="OnlineListing">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="AvailableQuantity" ColumnName="AvailableQuantity" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OnlineListingBySuppliers">
+            <EntityTypeMapping TypeName="eBuyDBModel.OnlineListingBySupplier">
+              <MappingFragment StoreEntitySet="OnlineListingBySupplier">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdOnlineListing" ColumnName="IdOnlineListing" />
+                <ScalarProperty Name="IdSupplier" ColumnName="IdSupplier" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="SupplierEmail" ColumnName="SupplierEmail" />
+                <ScalarProperty Name="SupplierPhone" ColumnName="SupplierPhone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OnlineListingOwns">
+            <EntityTypeMapping TypeName="eBuyDBModel.OnlineListingOwn">
+              <MappingFragment StoreEntitySet="OnlineListingOwn">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdOnlineListing" ColumnName="IdOnlineListing" />
+                <ScalarProperty Name="IdEmployee" ColumnName="IdEmployee" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="EmployeeAssignedBranch" ColumnName="EmployeeAssignedBranch" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OnlinePayments">
+            <EntityTypeMapping TypeName="eBuyDBModel.OnlinePayment">
+              <MappingFragment StoreEntitySet="OnlinePayment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdOnlineSaleInvoice" ColumnName="IdOnlineSaleInvoice" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+                <ScalarProperty Name="ReferenceNumber" ColumnName="ReferenceNumber" />
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OnlineSales">
+            <EntityTypeMapping TypeName="eBuyDBModel.OnlineSale">
+              <MappingFragment StoreEntitySet="OnlineSale">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdSale" ColumnName="IdSale" />
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+                <ScalarProperty Name="TrackingNumber" ColumnName="TrackingNumber" />
+                <ScalarProperty Name="ShippingAddress" ColumnName="ShippingAddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OnlineSaleDetails">
+            <EntityTypeMapping TypeName="eBuyDBModel.OnlineSaleDetail">
+              <MappingFragment StoreEntitySet="OnlineSaleDetail">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdOnlineSale" ColumnName="IdOnlineSale" />
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OnlineSaleInvoices">
+            <EntityTypeMapping TypeName="eBuyDBModel.OnlineSaleInvoice">
+              <MappingFragment StoreEntitySet="OnlineSaleInvoice">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdOnlineSale" ColumnName="IdOnlineSale" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
+                <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OnlineWarranties">
+            <EntityTypeMapping TypeName="eBuyDBModel.OnlineWarranty">
+              <MappingFragment StoreEntitySet="OnlineWarranty">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdOnlineSaleDetail" ColumnName="IdOnlineSaleDetail" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="ClaimReason" ColumnName="ClaimReason" />
+                <ScalarProperty Name="Resolution" ColumnName="Resolution" />
+                <ScalarProperty Name="WarrantyStatus" ColumnName="WarrantyStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OnlineWarrantyClaims">
+            <EntityTypeMapping TypeName="eBuyDBModel.OnlineWarrantyClaim">
+              <MappingFragment StoreEntitySet="OnlineWarrantyClaim">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdOnlineWarranty" ColumnName="IdOnlineWarranty" />
+                <ScalarProperty Name="ClaimDate" ColumnName="ClaimDate" />
+                <ScalarProperty Name="ResolutionDate" ColumnName="ResolutionDate" />
+                <ScalarProperty Name="Resolution" ColumnName="Resolution" />
+                <ScalarProperty Name="TechnicalNotes" ColumnName="TechnicalNotes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="eBuyDBModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />
+                <ScalarProperty Name="IdBrand" ColumnName="IdBrand" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
+                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="WarrantyMonths" ColumnName="WarrantyMonths" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductImages">
+            <EntityTypeMapping TypeName="eBuyDBModel.ProductImage">
+              <MappingFragment StoreEntitySet="ProductImage">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Purchases">
+            <EntityTypeMapping TypeName="eBuyDBModel.Purchase">
+              <MappingFragment StoreEntitySet="Purchase">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdSupplier" ColumnName="IdSupplier" />
+                <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseDetails">
+            <EntityTypeMapping TypeName="eBuyDBModel.PurchaseDetail">
+              <MappingFragment StoreEntitySet="PurchaseDetail">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+                <ScalarProperty Name="IdPurchase" ColumnName="IdPurchase" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="UnitCost" ColumnName="UnitCost" />
+                <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseInvoices">
+            <EntityTypeMapping TypeName="eBuyDBModel.PurchaseInvoice">
+              <MappingFragment StoreEntitySet="PurchaseInvoice">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdPurchase" ColumnName="IdPurchase" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
+                <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sales">
+            <EntityTypeMapping TypeName="eBuyDBModel.Sale">
+              <MappingFragment StoreEntitySet="Sale">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdCustomer" ColumnName="IdCustomer" />
+                <ScalarProperty Name="SaleDate" ColumnName="SaleDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="eBuyDBModel.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="Document" ColumnName="Document" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BornDate" ColumnName="BornDate" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="eBuyDBModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="eBuyDBModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
