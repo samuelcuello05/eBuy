@@ -173,16 +173,26 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Clases\clsBranch.cs" />
     <Compile Include="Clases\clsBrand.cs" />
     <Compile Include="Clases\clsCart.cs" />
     <Compile Include="Clases\clsCategory.cs" />
     <Compile Include="Clases\clsCustomer.cs" />
     <Compile Include="Clases\clsCypher.cs" />
+    <Compile Include="Clases\clsEmployee.cs" />
     <Compile Include="Clases\clsLogin.cs" />
+    <Compile Include="Clases\clsOnlineListingBySupplier.cs" />
     <Compile Include="Clases\clsProduct.cs" />
+    <Compile Include="Clases\clsSupplier.cs" />
     <Compile Include="Clases\clsUser.cs" />
-    <Compile Include="Clases\clsUserCustomerDTO.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Clases\DTOS\clsUserCustomerDTO.cs" />
+    <Compile Include="Clases\DTOS\clsUserEmployeeDTO.cs" />
+    <Compile Include="Clases\DTOS\clsUserSupplierDTO.cs" />
+    <Compile Include="Controllers\CustomersController.cs" />
+    <Compile Include="Controllers\EmployeesController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SuppliersController.cs" />
+    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -6,12 +6,11 @@ using System.Web;
 
 namespace eBuy.Clases
 {
-    public class clsCustomer
+    public class clsSupplier
     {
         private eBuyDBEntities eBuyDB = new eBuyDBEntities();
-        public clsCart cart { get; set; }
 
-        public string CreateCustomer(User userBD, Customer customerBD)
+        public string CreateSupplier(User userBD, Supplier supplierBD)
         {
             try
             {
@@ -21,8 +20,8 @@ namespace eBuy.Clases
                     if (userBD == null)
                         return "Error: User data is missing.";
 
-                    if (customerBD == null)
-                        return "Error: Customer data is missing.";
+                    if (supplierBD == null)
+                        return "Error: Supplier data is missing.";
 
                     if (eBuyDB.Users.Any(u => u.Email == userBD.Email))
                         return "Error: User already exists.";
@@ -40,25 +39,20 @@ namespace eBuy.Clases
 
                     userBD.Password = cypher.PasswordCifrado;
                     userBD.Salt = cypher.Salt;
-                    userBD.Role = "Customer";
+                    userBD.Role = "Supplier";
                     userBD.Status = true;
 
                     eBuyDB.Users.Add(userBD);
                     eBuyDB.SaveChanges();
 
-                    customerBD.IdUser = userBD.Id;
-                    eBuyDB.Customers.Add(customerBD);
+                    supplierBD.IdUser = userBD.Id;
+                    eBuyDB.Suppliers.Add(supplierBD);
                     eBuyDB.SaveChanges();
 
-                    cart.cart = new Cart();
-                    string cartResult = cart.CreateCart(customerBD.Id);
-
-                    if (cartResult.StartsWith("Error"))
-                        throw new Exception(cartResult); // Forzar rollback si hay error en la creacion del carrito de compras para el usuario
                     transaction.Commit();
 
 
-                    return "Customer successfully registered.";
+                    return "Supplier successfully registered.";
                 }
             }
             catch (Exception ex)

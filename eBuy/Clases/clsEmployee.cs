@@ -6,12 +6,12 @@ using System.Web;
 
 namespace eBuy.Clases
 {
-    public class clsCustomer
+    public class clsEmployee
     {
         private eBuyDBEntities eBuyDB = new eBuyDBEntities();
-        public clsCart cart { get; set; }
+        public Employee employee { get; set; }
 
-        public string CreateCustomer(User userBD, Customer customerBD)
+        public string CreateEmployee(User userBD, Employee employeeBD, string branchName)
         {
             try
             {
@@ -21,8 +21,14 @@ namespace eBuy.Clases
                     if (userBD == null)
                         return "Error: User data is missing.";
 
-                    if (customerBD == null)
-                        return "Error: Customer data is missing.";
+                    if (employeeBD == null)
+                        return "Error: Employee data is missing.";
+
+                    var branch = eBuyDB.Branches.FirstOrDefault(b => b.Name.Equals(branchName, StringComparison.OrdinalIgnoreCase));
+                    if (branch == null)
+                    {
+                        return "Error: Branch not found";
+                    }
 
                     if (eBuyDB.Users.Any(u => u.Email == userBD.Email))
                         return "Error: User already exists.";
@@ -40,25 +46,21 @@ namespace eBuy.Clases
 
                     userBD.Password = cypher.PasswordCifrado;
                     userBD.Salt = cypher.Salt;
-                    userBD.Role = "Customer";
+                    userBD.Role = "Employee";
                     userBD.Status = true;
 
                     eBuyDB.Users.Add(userBD);
                     eBuyDB.SaveChanges();
 
-                    customerBD.IdUser = userBD.Id;
-                    eBuyDB.Customers.Add(customerBD);
+                    employeeBD.IdUser = userBD.Id;
+                    employeeBD.IdBranch = branch.Id;
+                    eBuyDB.Employees.Add(employeeBD);
                     eBuyDB.SaveChanges();
 
-                    cart.cart = new Cart();
-                    string cartResult = cart.CreateCart(customerBD.Id);
-
-                    if (cartResult.StartsWith("Error"))
-                        throw new Exception(cartResult); // Forzar rollback si hay error en la creacion del carrito de compras para el usuario
                     transaction.Commit();
 
 
-                    return "Customer successfully registered.";
+                    return "Employee successfully registered.";
                 }
             }
             catch (Exception ex)
