@@ -185,8 +185,10 @@
     <Compile Include="Clases\clsOnlineListingBySupplier.cs" />
     <Compile Include="Clases\clsOnlineSale.cs" />
     <Compile Include="Clases\clsProduct.cs" />
+    <Compile Include="Clases\clsProductImage.cs" />
     <Compile Include="Clases\clsPurchase.cs" />
     <Compile Include="Clases\clsSupplier.cs" />
+    <Compile Include="Clases\clsUpload.cs" />
     <Compile Include="Clases\clsUser.cs" />
     <Compile Include="Clases\DTOS\clsInStoreSaleDTO.cs" />
     <Compile Include="Clases\DTOS\clsOnlineSaleDTO.cs" />
@@ -202,6 +204,7 @@
     <Compile Include="Controllers\OnlineSalesController.cs" />
     <Compile Include="Controllers\PurchasesController.cs" />
     <Compile Include="Controllers\SuppliersController.cs" />
+    <Compile Include="Controllers\UploadFilesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

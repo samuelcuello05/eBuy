@@ -9,7 +9,7 @@ namespace eBuy.Clases
 {
     public class clsInStoreSale
     {
-        eBuyDBEntities eBuyDB = new eBuyDBEntities();
+        private eBuyDBEntities eBuyDB = new eBuyDBEntities();
 
         List<string> paymentMethods = new List<string>
         {
