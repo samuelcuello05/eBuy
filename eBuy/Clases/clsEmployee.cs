@@ -9,8 +9,6 @@ namespace eBuy.Clases
     public class clsEmployee
     {
         private eBuyDBEntities eBuyDB = new eBuyDBEntities();
-        public Employee employee { get; set; }
-
         public string CreateEmployee(User userBD, Employee employeeBD, string branchName)
         {
             try

@@ -12,7 +12,6 @@ namespace eBuy.Clases
     {
         private eBuyDBEntities eBuyDB = new eBuyDBEntities();
         public Product product { get; set; }
-
         public string InsertProduct()
         {
             try

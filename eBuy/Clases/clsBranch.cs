@@ -89,10 +89,9 @@ namespace eBuy.Clases
             {
                 return "Error: " + ex.Message;
             }
-
         }
 
-        public string AddItemToInventory(string branchName, string productName, int quantity)
+        public string UpdateOrAddItemToInventory(string branchName, string productName, int quantity)
         {
             try
             {

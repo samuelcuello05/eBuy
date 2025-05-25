@@ -11,8 +11,6 @@ namespace eBuy.Clases
         private eBuyDBEntities eBuyDB = new eBuyDBEntities();
         public Cart cart { get; set; } = new Cart();
 
-        public CartItem cartItem { get; set; }
-
         public string CreateCart(int IdCustomer)
         {
             try
