@@ -197,11 +197,16 @@
     <Compile Include="Clases\DTOS\clsUserEmployeeDTO.cs" />
     <Compile Include="Clases\DTOS\clsUserSupplierDTO.cs" />
     <Compile Include="Clases\clsOnlineListingOwn.cs" />
+    <Compile Include="Controllers\BranchControllers.cs" />
+    <Compile Include="Controllers\BrandController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InStoreSalesController.cs" />
     <Compile Include="Controllers\OnlineSalesController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\PurchasesController.cs" />
     <Compile Include="Controllers\SuppliersController.cs" />
     <Compile Include="Controllers\UploadFilesController.cs" />
