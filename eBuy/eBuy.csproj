@@ -191,6 +191,8 @@
     <Compile Include="Clases\clsUpload.cs" />
     <Compile Include="Clases\clsUser.cs" />
     <Compile Include="Clases\DTOS\clsInStoreSaleDTO.cs" />
+    <Compile Include="Clases\DTOS\clsOnlineListingBySupplierDTO.cs" />
+    <Compile Include="Clases\DTOS\clsOnlineListingOwnDTO.cs" />
     <Compile Include="Clases\DTOS\clsOnlineSaleDTO.cs" />
     <Compile Include="Clases\DTOS\clsPurchaseRequestDTO.cs" />
     <Compile Include="Clases\DTOS\clsUserCustomerDTO.cs" />
@@ -205,6 +207,8 @@
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InStoreSalesController.cs" />
+    <Compile Include="Controllers\OnlineListingBySupplierController.cs" />
+    <Compile Include="Controllers\OnlineListingOwnController.cs" />
     <Compile Include="Controllers\OnlineSalesController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\PurchasesController.cs" />
