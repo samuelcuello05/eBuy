@@ -9,8 +9,8 @@ using System.Web.Http;
 
 namespace eBuy.Controllers
 {
-    [RoutePrefix("api/Branch")]
-    public class BranchControllers : ApiController
+    [RoutePrefix("api/Branches")]
+    public class BranchesController : ApiController
     {
         [HttpPost]
         [Route("Insert")]
@@ -54,23 +54,19 @@ namespace eBuy.Controllers
             return Branch.DeleteBranch(name);
         }
 
-        //En duda si es necesario el from body
         [HttpPut]
         [Route("UpdateOrAddItemToInventory")]
-        public string UpdateOrAddItemToInventory([FromBody] Branch branch ,string branchName, string productName, int quantity)
+        public string UpdateOrAddItemToInventory(string branchName, string productName, int quantity)
         {
             clsBranch Branch = new clsBranch();
-            Branch.branch = branch;
             return Branch.UpdateOrAddItemToInventory(branchName, productName, quantity);
         }
 
-        //En duda si es necesario el from body
         [HttpPut]
         [Route("UpdateInventory")]
-        public string UpdateInventory([FromBody] Branch branch, string branchName, string productName, int quantity)
+        public string UpdateInventory(string branchName, string productName, int quantity)
         {
             clsBranch Branch = new clsBranch();
-            Branch.branch = branch;
             return Branch.UpdateInventory(branchName, productName, quantity);
         }
 

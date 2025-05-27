@@ -62,6 +62,5 @@ namespace eBuy.Clases
                 return $"Error: {ex.Message}";
             }
         }
-
     }
 }

@@ -9,8 +9,8 @@ using System.Web.Http;
 
 namespace eBuy.Controllers
 {
-    [RoutePrefix("api/Cart")]
-    public class CartController : ApiController
+    [RoutePrefix("api/Carts")]
+    public class CartsController : ApiController
     {
         [HttpPost]
         [Route("Create")]

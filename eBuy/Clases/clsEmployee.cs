@@ -32,10 +32,11 @@ namespace eBuy.Clases
                         return "Error: User already exists.";
 
                     clsCypher cypher = new clsCypher();
-                    string EncryptedPassword;
+                    cypher.Password = userBD.Password;
                     if (cypher.CifrarClave())
                     {
-                        EncryptedPassword = cypher.PasswordCifrado;
+                        string EncryptedPassword = cypher.PasswordCifrado;
+
                     }
                     else
                     {
@@ -52,6 +53,7 @@ namespace eBuy.Clases
 
                     employeeBD.IdUser = userBD.Id;
                     employeeBD.IdBranch = branch.Id;
+                    employeeBD.AssignedBranch = branchName;
                     eBuyDB.Employees.Add(employeeBD);
                     eBuyDB.SaveChanges();
 

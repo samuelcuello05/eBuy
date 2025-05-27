@@ -10,8 +10,8 @@ using eBuy.Clases.DTOS;
 
 namespace eBuy.Controllers
 {
-    [RoutePrefix("api/OnlineListingBySupplier")]
-    public class OnlineListingBySupplierController : ApiController
+    [RoutePrefix("api/OnlineListingBySuppliers")]
+    public class OnlineListingBySuppliersController : ApiController
     {
         [HttpPost]
         [Route("Add")]
@@ -27,7 +27,7 @@ namespace eBuy.Controllers
         }
 
         [HttpGet]
-        [Route("List/{IdSupplier}")]
+        [Route("List")]
         public IEnumerable<object> ListOnlineListingBySupplier(int IdSupplier)
         {
             clsOnlineListingBySupplier onlineListingBySupplier = new clsOnlineListingBySupplier();
@@ -45,12 +45,12 @@ namespace eBuy.Controllers
         }
      
         [HttpDelete]
-        [Route("Delete/{id}")]
-        public string DeleteOnlineListingBySupplier(int id)
+        [Route("Delete")]
+        public string DeleteOnlineListingBySupplier(int IdOnlineListingBySupplier)
         {
             clsOnlineListingBySupplier onlineListingBySupplier = new clsOnlineListingBySupplier();
 
-            return onlineListingBySupplier.DeleteOnlineListingBySupplier(id);
+            return onlineListingBySupplier.DeleteOnlineListingBySupplier(IdOnlineListingBySupplier);
         }
     }
 }

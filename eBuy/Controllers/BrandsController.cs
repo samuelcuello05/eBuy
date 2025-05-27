@@ -10,11 +10,12 @@ using System.Web.Http;
 namespace eBuy.Controllers
 {
     [RoutePrefix("api/Brands")]
-    public class BrandController : ApiController
+    public class BrandsController : ApiController
     {
         
         [HttpPost]
         [Route("Insert")]
+        [Authorize]
         public string InsertBrand([FromBody] Brand brand)
         {
             clsBrand Brand = new clsBrand();

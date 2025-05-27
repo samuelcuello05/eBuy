@@ -9,8 +9,8 @@ using System.Web.Http;
 
 namespace eBuy.Controllers
 {
-    [RoutePrefix("api/OnlineListingOwn")]
-    public class OnlineListingOwnController : ApiController
+    [RoutePrefix("api/OnlineListingOwns")]
+    public class OnlineListingOwnsController : ApiController
     {
         [HttpPost]
         [Route("Add")]
