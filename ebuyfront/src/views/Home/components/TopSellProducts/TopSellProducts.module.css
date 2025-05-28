@@ -1,24 +1,33 @@
-.carousel{
-    width: 1380px;
+.top-sell-products{
+    width: 100%;
     height: 720px;
     display: flex;
-    justify-self: center;
-    margin-top: 20px;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
 }
-
+.carousel{
+    width: calc(100% - 185px);
+    height: 720px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    
+}
+ 
 .carousel div{
     border-radius: 10px;
     overflow: hidden;
 }
-
+ 
 .carousel-item-image{
-    width: 1380px;
+    width: 100%;
     height: 720px;
     border-radius: 10px;
     position: relative;
-    left: calc(50% - 690px);
-    bottom: 1.25rem;
     margin-top: 1.25rem;
-    object-fit: fill;
+    object-fit: cover;
 }
-

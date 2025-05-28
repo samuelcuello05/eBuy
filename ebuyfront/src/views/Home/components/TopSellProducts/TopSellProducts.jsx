@@ -4,17 +4,20 @@ import skinCareImage from '../../../../images/skincare.png'
 import consolesImages from '../../../../images/console.png'
 import gadgets from '../../../../images/gadgets.png'
 import Styles from './TopSellProducts.module.css';
-
+ 
 function TopSellProducts() {
   const [index, setIndex] = useState(0);
-
+ 
   const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex);
   };
-
+ 
   return (
+    <div className={Styles["top-sell-products"]}>
+        
+    
     <Carousel className={Styles["carousel"]} activeIndex={index} onSelect={handleSelect}>
-      <Carousel.Item className={Styles["carousel-item"]}> 
+      <Carousel.Item className={Styles["carousel-item"]}>
         <img src={skinCareImage} alt="" className={Styles["carousel-item-image"]}/>
         <Carousel.Caption>
           <h3>First slide label</h3>
@@ -38,7 +41,8 @@ function TopSellProducts() {
         </Carousel.Caption>
       </Carousel.Item>
     </Carousel>
+    </div>
   );
 }
-
+ 
 export default TopSellProducts;

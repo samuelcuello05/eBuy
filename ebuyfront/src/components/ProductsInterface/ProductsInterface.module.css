@@ -7,7 +7,7 @@
 }
 
 .products-container {
-    width: 1380px;
+    width: calc(100% - 100px);;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -30,11 +30,16 @@
     flex-direction: column;
     justify-content: center;
 }
+
+.card-body p{
+    height: 40px;
+}
 .card-body div{
     color: var(--accent-color);
 }
 .price{
     font-size: large;
+    max-height: 27px;
 }
 
 .add-button{
