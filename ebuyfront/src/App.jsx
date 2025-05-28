@@ -1,9 +1,12 @@
 import './App.css';
+import Topbar from './components/Topbar/Topbar'
+import Home from './views/Home';
 
 function App() {
   return (
     <div className="App">
-      <h1>hola</h1>
+      <Topbar/>
+      <Home />
     </div>
   );
 }
