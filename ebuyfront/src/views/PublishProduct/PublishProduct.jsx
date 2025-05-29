@@ -58,9 +58,9 @@ export default function PublishProduct() {
         <Form.Control type="text" placeholder="Enter a Description" />
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="image">
-        <Form.Label>Product Image</Form.Label>
-        <Form.Control type="url" placeholder="Image URL" />
+       <Form.Group controlId="images" className="mb-3">
+        <Form.Label>Upload product images</Form.Label>
+        <Form.Control type="file" multiple />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="costPrice">

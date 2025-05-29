@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
 import Leftbar from "../../components/Leftbar/Leftbar";
-import Styles from "./Employee.module.css";
+import Styles from "./Supplier.module.css";
 
-export default function Employee() {
+export default function supplier() {
   return (
-    <section className={Styles["employee"]}>
-      <Leftbar rol="employee" />
+    <section className={Styles["supplier"]}>
+      <Leftbar rol="supplier" />
       <div className={Styles["content"]}>
         <Outlet />
       </div>
