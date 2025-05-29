@@ -5,6 +5,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import cart from '../../images/cart.svg';
 import Styles from './Topbar.module.css';
 import { ReactComponent as CartIcon } from '../../images/cart.svg';
+import { NavLink, resolvePath } from "react-router-dom";
 
 
 function Topbar() {
@@ -25,9 +26,9 @@ function Topbar() {
                 </NavDropdown>
             </div>
             <div className={Styles["last-container"]} >
-                <a href="#login" className={Styles["log-in"]}>
-                        <p>Log in</p>
-                </a>
+                <NavLink to={"/login" } className={Styles["log-in"]}>
+                    <p>Log in</p>
+                </NavLink>
                 <div className={Styles["cart-container"]}>
                 <CartIcon className={Styles["cart-icon"]} />
                     

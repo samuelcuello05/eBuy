@@ -24,7 +24,7 @@ export default function PublishProduct() {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
+    <div style={{ padding: '2rem', height: '100%' }}>
       <h2>📦 Publish a New Product</h2>
       <form onSubmit={handleSubmit}>
       <Form.Group className='mb-3' controlId="category">
