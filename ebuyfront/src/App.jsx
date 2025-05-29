@@ -8,6 +8,8 @@ import ViewProducts from './views/ViewProducts/ViewProducts.jsx';
 import Supplier from './views/Supplier/Supplier.jsx';
 import AdminHome from './components/AdminHome/AdminHome.jsx';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Login from './views/Login/Login.jsx';
+import Register from './views/Register/Register.jsx';
 
 
 function App() {
@@ -15,7 +17,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home/>} />
-
+        <Route path="/login" element={<Login/>} />
+        <Route path="/register" element={<Register />} />
         <Route path="/employee" element={<Employee />}>
           <Route index element={<Navigate to="home" replace />} />
           <Route path="home" element={<AdminHome />} />
