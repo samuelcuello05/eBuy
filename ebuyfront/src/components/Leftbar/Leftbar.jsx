@@ -5,14 +5,14 @@ import Styles from "./Leftbar.module.css";
 export default function Leftbar({ rol }) {
   const menuItems = rol === "employee"
     ? [
-        { id: '', label: '🏠 Home' },
+        { id: 'home', label: '🏠 Home' },
         { id: 'publish', label: '📦 Publish Product' },
         { id: 'place-order', label: '🛒 Place an order' },
         { id: 'register-sale', label: '💰 Register a Sale' },
         { id: 'view-products', label: '👀 View Products' },
       ]
     : [
-        { id: '', label: '🏠 Home' },
+        { id: 'home', label: '🏠 Home' },
         { id: 'publish', label: '📦 Publish a Product' },
         { id: 'view-products', label: '👀 View Products' },
       ];
@@ -35,6 +35,18 @@ export default function Leftbar({ rol }) {
             </li>
           ))}
         </ul>
+          <hr />
+
+            <div>
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  `${Styles.linkItem} ${isActive ? Styles.active : ""}`
+                }
+              >
+                ⬅️ Log out
+              </NavLink>
+            </div>
       </div>
     </aside>
   );

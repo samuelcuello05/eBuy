@@ -7,7 +7,8 @@ import RegisterSale from './views/RegisterSale/RegisterSale.jsx';
 import ViewProducts from './views/ViewProducts/ViewProducts.jsx';
 import Supplier from './views/Supplier/Supplier.jsx';
 import AdminHome from './components/AdminHome/AdminHome.jsx';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
         <Route path="/" element={<Home/>} />
 
         <Route path="/employee" element={<Employee />}>
-          <Route path="" element={<AdminHome />} />
+          <Route index element={<Navigate to="home" replace />} />
+          <Route path="home" element={<AdminHome />} />
           <Route path="publish" element={<PublishProduct />} />
           <Route path="place-order" element={<PlaceOrder />} />
           <Route path="register-sale" element={<RegisterSale />} />
@@ -24,7 +26,8 @@ function App() {
         </Route>
 
         <Route path="/supplier" element={<Supplier />}>
-          <Route path="" element={<AdminHome />} />
+          <Route index element={<Navigate to="home" replace />} />
+          <Route path="home" element={<AdminHome />} />
           <Route path="publish" element={<PublishProduct />} />
           <Route path="view-products" element={<ViewProducts />} />
         </Route>
