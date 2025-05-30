@@ -5,12 +5,17 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import cart from '../../images/cart.svg';
 import Styles from './Topbar.module.css';
 import { ReactComponent as CartIcon } from '../../images/cart.svg';
+import { useNavigate } from "react-router-dom";
 import { NavLink, resolvePath } from "react-router-dom";
 
 
 function Topbar() {
     //Change this component when the user is logged in to show his name and change their view
+    const navigate = useNavigate();
     let price = 100;
+    function handleCartClick() {
+        navigate("/cart");
+    }
   return (
     <nav className={Styles["topbar"]}>
         <div className={Styles["topbar-content"]}>
@@ -32,11 +37,11 @@ function Topbar() {
                 <NavLink to={"/login" } className={Styles["log-in"]}>
                     <p>Log in</p>
                 </NavLink>
-                <div className={Styles["cart-container"]}>
-                <CartIcon className={Styles["cart-icon"]} />
-                    
+                <div className={Styles["cart-container"]} onClick={handleCartClick}>
+           
+                        <CartIcon className={Styles["cart-icon"]} />
                         <p className={Styles["price"]}>{price>99 ? (99+"+"):price}</p>
-                    
+               
                 </div>
                  
               
