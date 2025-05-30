@@ -7,6 +7,7 @@ import RegisterSale from './views/RegisterSale/RegisterSale.jsx';
 import ViewProducts from './views/ViewProducts/ViewProducts.jsx';
 import Supplier from './views/Supplier/Supplier.jsx';
 import AdminHome from './components/AdminHome/AdminHome.jsx';
+import ProductDetail from './views/ProductDetail/ProductDetail.jsx';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './views/Login/Login.jsx';
 import Register from './views/Register/Register.jsx';
@@ -34,6 +35,8 @@ function App() {
           <Route path="publish" element={<PublishProduct />} />
           <Route path="view-products" element={<ViewProducts />} />
         </Route>
+
+        <Route path="/product/:id" element={<ProductDetail />} />
       </Routes>
   </Router>
   );
