@@ -32,7 +32,10 @@
 }
 
 .card-body p{
-    height: 40px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
 }
 .card-body div{
     color: var(--accent-color);

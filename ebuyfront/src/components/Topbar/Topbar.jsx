@@ -15,7 +15,10 @@ function Topbar() {
     <nav className={Styles["topbar"]}>
         <div className={Styles["topbar-content"]}>
             <div className={Styles["first-container"]}>
-                <h1 className={Styles["eBuy"]}>eBuy</h1>
+                <NavLink to={"/" } className={Styles["navlink-ebuy"]}>
+                    <h1 className={Styles["eBuy"]}>eBuy</h1>
+                </NavLink>
+                
 
                 <NavDropdown title="Categories" id="basic-nav-dropdown" className={Styles["categories-dropdown"]}>
                     <NavDropdown.Item href="#category-1">Cateory 1</NavDropdown.Item>
