@@ -19,15 +19,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    max-width: 900px;
+    max-width: 720px;
+    max-height: 620px;
     width: 100%;
-    margin-bottom: 2rem;
+    height: 75%;
 }
 
 .lightboxContainer__imageContainer {
     width: 100%;
-    max-width: 630px;
-    height: auto;
+    max-width: 495px;
+    max-height: 470px;
+    height: 100%;
     overflow: hidden;
     border-radius: 15px;    
     display: flex;
@@ -43,8 +45,8 @@
 
 .lightboxContainer__closeButton {
     position: absolute;
-    top: -50px;
-    right: 0;
+    align-self: baseline;
+    right: 60px;
     background: transparent;
     color: white;
     font-size: 40px;

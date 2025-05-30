@@ -4,6 +4,7 @@ import { productos } from '../../products';
 import { useState } from 'react';
 import Topbar from '../../components/Topbar/Topbar';
 import ProductImage from './components/ProductImages/ProductImages';
+import ProductInfo from './components/ProductInfo/ProductInfo';
 
 export default function ProductDetail() {
     const { id } = useParams();
@@ -18,6 +19,7 @@ export default function ProductDetail() {
             <Topbar />
             <section className={Styles["content"]}>
                  <ProductImage productInformation={product.images} />  
+                 <ProductInfo product={product} />
             </section>
            
         </article>
