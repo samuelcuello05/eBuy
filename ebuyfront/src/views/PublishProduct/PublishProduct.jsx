@@ -60,7 +60,7 @@ export default function PublishProduct() {
 
        <Form.Group controlId="images" className="mb-3">
         <Form.Label>Upload product images</Form.Label>
-        <Form.Control type="file" multiple />
+        <Form.Control type="file" multiple accept="image/png, image/jpeg" />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="costPrice">
