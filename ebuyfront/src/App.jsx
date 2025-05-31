@@ -8,6 +8,7 @@ import ViewProducts from './views/ViewProducts/ViewProducts.jsx';
 import Supplier from './views/Supplier/Supplier.jsx';
 import AdminHome from './components/AdminHome/AdminHome.jsx';
 import ProductDetail from './views/ProductDetail/ProductDetail.jsx';
+import Cart from './views/Cart/Cart.jsx';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './views/Login/Login.jsx';
 import Register from './views/Register/Register.jsx';
@@ -37,6 +38,7 @@ function App() {
         </Route>
 
         <Route path="/product/:id" element={<ProductDetail />} />
+         <Route path="/cart" element={<Cart />} />
       </Routes>
   </Router>
   );
