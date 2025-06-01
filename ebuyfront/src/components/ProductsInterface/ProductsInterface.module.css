@@ -21,6 +21,8 @@
 
 .product-card img{
     height: 160px;
+    object-fit: contain;
+    background-color: white;
 }
 
 .card-body{

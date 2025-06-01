@@ -4,21 +4,18 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useState } from "react";
 import { NavLink, resolvePath } from "react-router-dom";
-import { productos } from "../../products";
 
-
-
-//When the .NET API is ready, start to create helpers to fetch the products by category
-export default function ProductsInterface({category, title}) {
+export default function ProductsInterface({category, title, products, images}) {
     return(
         <section className={Styles["products-interface"]}>
             <Subtitle text={title}/>
-            <Products category={category}/>
+            <Products category={category} products={products}/>
         </section>
     );
 }
 
-function Products({category}){ //This array should be replaced by a fetch to the .NET API
+function Products({category, products}){ //This array should be replaced by a fetch to the .NET API
+    
     function handleInactivateSale(index) {
         alert("Sale inactivated successfully!");
         setProducts(prevProducts =>{
@@ -36,20 +33,24 @@ function Products({category}){ //This array should be replaced by a fetch to the
             return updatedProducts;
         });
     }
-    const [products, setProducts] = useState(productos);
+    const [productss, setProducts] = useState();
         
     if(category === "employee" || category === "supplier"){
         return(
         <section className={Styles["products-container"]}>
             {products.map((product, index) => (
                 <Card key={index} style={{ width: '18rem' }} className={Styles["product-card"]}>
-                    <Card.Img variant="top" src={product.images[1]} />
+                    <Card.Img
+                        variant="top"
+                        src={product.images[0] || "https://via.placeholder.com/300x200?text=No+Image"}
+                    />
+
                     <Card.Body className={Styles["card-body"]}>
-                        <Card.Title>{product.name}</Card.Title>
+                        <Card.Title>{product.Name}</Card.Title>
                         <Card.Text>
-                            {product.description}
+                            {product.Description}
                         </Card.Text>
-                        <p className={Styles["price"]}>$299</p>
+                        <p className={Styles["price"]}>${product.SalePrice}</p>
                         {product.status 
                             ? <Button variant="outline-danger" className={Styles["inactivate-sale"]} onClick={() => handleInactivateSale(index)} >Inactivate sale</Button>
                             : <Button variant="outline-secondary" className={Styles["inactivate-sale"]} onClick={() => handlePutOnSale(index)} >Put on sale</Button>}
@@ -64,17 +65,20 @@ function Products({category}){ //This array should be replaced by a fetch to the
         {products.map((product, index) => (
             product.status &&(
             <Card key={index} style={{ width: '18rem' }} className={Styles["product-card"]}>
-                <Card.Img variant="top" src={product.images[1]} />
+                        <Card.Img
+                        variant="top"
+                        src={product.images[0] || "https://via.placeholder.com/300x200?text=No+Image"
+                        }
+                    />
                 <Card.Body className={Styles["card-body"]}>
-                    <Card.Title>{product.name}</Card.Title>
+                    <Card.Title>{product.Name}</Card.Title>
                     <Card.Text>
-                        {product.description}
+                        {product.Description}
                     </Card.Text>
-                    <p className={Styles["price"]}>$299</p>
-                    <NavLink to={`/product/${index+1}`} >
-                        <Button variant="outline-warning" className={Styles["add-button"]} >Add to cart</Button>
-                    </NavLink>
-                    
+                        <p className={Styles["price"]}>${product.SalePrice}</p>
+                        <NavLink to={`/product/${encodeURIComponent(product.Name)}`}>
+                            <Button variant="outline-warning" className={Styles["add-button"]}>Add to cart</Button>
+                        </NavLink>
                 </Card.Body>
             </Card>)
         ))}
