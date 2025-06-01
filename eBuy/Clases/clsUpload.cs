@@ -132,7 +132,7 @@ namespace eBuy.Clases
         {
             switch (Proccess.ToUpper())
             {
-                case "Product":
+                case "PRODUCT":
                     clsProductImage ProductImages = new clsProductImage();
                     ProductImages.IdProduct = Data; //Debe venir la información que se procesa en la base de datos, para nuestro caso, el código de la foto
                     ProductImages.Archives = Archivos;

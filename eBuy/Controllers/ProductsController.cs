@@ -39,7 +39,7 @@ namespace eBuy.Controllers
         }
 
         [HttpGet]
-        [Route("SearchAll")]
+        [Route("List")]
         public List<Product> SearchAllProduct()
         {
             clsProduct Product = new clsProduct();

@@ -41,7 +41,7 @@ namespace eBuy.Controllers
         }
 
         [HttpGet]
-        [Route("SearchAll")]
+        [Route("List")]
         public List<Brand> SearchAllBrands()
         {
             clsBrand Brand = new clsBrand();

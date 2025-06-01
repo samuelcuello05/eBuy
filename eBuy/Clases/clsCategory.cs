@@ -17,6 +17,8 @@ namespace eBuy.Clases
         {
             try
             {
+                if (category.Description.Length > 300)
+                    return "Error: description contains more than 300 characters";
                 eBuyDB.Categories.Add(category);
                 eBuyDB.SaveChanges();
                 return "Category added successfully";
