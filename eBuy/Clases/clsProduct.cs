@@ -22,7 +22,18 @@ namespace eBuy.Clases
             }
             catch (Exception ex)
             {
-                return "Error: " + ex.Message;
+                string errorMessage = ex.Message;
+
+                if (ex.InnerException != null)
+                {
+                    errorMessage += " | Inner: " + ex.InnerException.Message;
+                    if (ex.InnerException.InnerException != null)
+                    {
+                        errorMessage += " | Inner2: " + ex.InnerException.InnerException.Message;
+                    }
+                }
+
+                return "Error: " + errorMessage;
             }
         }
 
@@ -30,7 +41,7 @@ namespace eBuy.Clases
         {
             try
             {
-                Product Product = SearchProduct(product.Name);
+                Product Product = SearchProduct(product.Id);
                 if (Product == null)
                 {
                     return "Product not found";
@@ -45,11 +56,11 @@ namespace eBuy.Clases
             }
         }
 
-        public Product SearchProduct(string name)
+        public Product SearchProduct(int id)
         {
             try
             {
-                Product Product = eBuyDB.Products.FirstOrDefault(p => string.Equals(p.Name,name, StringComparison.OrdinalIgnoreCase));
+                Product Product = eBuyDB.Products.FirstOrDefault(p => p.Id == id);
                 return Product;
             }
             catch (Exception ex)
@@ -72,11 +83,11 @@ namespace eBuy.Clases
             }
         }
 
-        public string DeleteProduct(string name)
+        public string DeleteProduct(int id)
         {
             try
             {
-                Product Product = SearchProduct(name);
+                Product Product = SearchProduct(id);
                 if (Product == null)
                 {
                     return "Product not found";

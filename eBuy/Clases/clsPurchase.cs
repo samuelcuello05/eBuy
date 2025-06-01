@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 
@@ -54,7 +55,7 @@ namespace eBuy.Clases
                     {
                         IdSupplier = supplier.Id,
                         PurchaseDate = DateTime.Now,
-                        PaymentStatus = "Complete",
+                        PaymentStatus = "Completed",
                         PaymentMethod = paymentMethod,
                         PurchaseDetails = new List<PurchaseDetail>()
                     };
@@ -83,14 +84,40 @@ namespace eBuy.Clases
                             product.IdBrand = brand.Id;
                             product.Stock = quantity;
 
-                            clsProduct productToInsert = new clsProduct { product = product };
-                            string result = productToInsert.InsertProduct();
-                            if (result != "Product added successfully")
-                                return result;
 
-                            idProduct = product.Id;
+                            var newProduct = new Product
+                            {
+                                Name = product.Name,
+                                Description = product.Description,
+                                IdCategory = product.IdCategory,
+                                IdBrand = product.IdBrand,
+                                Stock = product.Stock,
+                                CostPrice = product.CostPrice,
+                                SalePrice = product.SalePrice,
+                                WarrantyMonths = product.WarrantyMonths
+                            };
 
-                            ClsBranch.UpdateOrAddItemToInventory(branchName, product.Name, quantity);
+                            eBuyDB.Products.Add(newProduct);
+                            eBuyDB.SaveChanges();
+
+                            idProduct = newProduct.Id;
+
+                            var existingItem = eBuyDB.Inventories.FirstOrDefault(i => i.IdBranch == branch.Id && i.IdProduct == idProduct);
+                            if (existingItem != null)
+                            {
+                                existingItem.CurrentStock += quantity;
+                            }
+                            else
+                            {
+                                Inventory newItem = new Inventory
+                                {
+                                    IdBranch = branch.Id,
+                                    IdProduct = idProduct,
+                                    CurrentStock = quantity
+                                };
+                                eBuyDB.Inventories.Add(newItem);
+                            }
+                            eBuyDB.SaveChanges();
                         }
                         else
                         {
@@ -98,7 +125,22 @@ namespace eBuy.Clases
                             eBuyDB.SaveChanges();
                             idProduct = productExists.Id;
 
-                            ClsBranch.UpdateOrAddItemToInventory(branchName, productExists.Name, quantity);
+                            var existingItem = eBuyDB.Inventories.FirstOrDefault(i => i.IdBranch == branch.Id && i.IdProduct == productExists.Id);
+                            if (existingItem != null)
+                            {
+                                existingItem.CurrentStock += quantity;
+                            }
+                            else
+                            {
+                                Inventory newItem = new Inventory
+                                {
+                                    IdBranch = branch.Id,
+                                    IdProduct = idProduct,
+                                    CurrentStock = quantity
+                                };
+                                eBuyDB.Inventories.Add(newItem);
+                            }
+                            eBuyDB.SaveChanges();
                         }
 
                         var productPurchased = eBuyDB.Products.FirstOrDefault(p => p.Id == idProduct);
@@ -117,6 +159,7 @@ namespace eBuy.Clases
                         purchase.PurchaseDetails.Add(purchaseDetail);
                         totalAmount += totalCost;
                     }
+                    eBuyDB.SaveChanges();
 
                     purchase.TotalAmount = totalAmount;
 
@@ -138,6 +181,17 @@ namespace eBuy.Clases
 
                     return "Purchase added successfully";
                 }
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var errorMessages = ex.EntityValidationErrors
+                    .SelectMany(x => x.ValidationErrors)
+                    .Select(x => x.ErrorMessage);
+
+                var fullErrorMessage = string.Join("; ", errorMessages);
+                var exceptionMessage = string.Concat(ex.Message, " Validation errors: ", fullErrorMessage);
+
+                return "Error: " + exceptionMessage;
             }
             catch (Exception ex)
             {

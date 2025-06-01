@@ -32,10 +32,10 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("Search")]
-        public Product SearchProduct(string name)
+        public Product SearchProduct(int id)
         {
             clsProduct Product = new clsProduct();
-            return Product.SearchProduct(name);
+            return Product.SearchProduct(id);
         }
 
         [HttpGet]
@@ -48,10 +48,10 @@ namespace eBuy.Controllers
 
         [HttpDelete]
         [Route("Delete")]
-        public string DeleteProduct(string name)
+        public string DeleteProduct(int id)
         {
             clsProduct Product = new clsProduct();
-            return Product.DeleteProduct(name);
+            return Product.DeleteProduct(id);
         }
     }
 }

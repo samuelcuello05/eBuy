@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace eBuy
 {
@@ -10,6 +11,10 @@ namespace eBuy
     {
         public static void Register(HttpConfiguration config)
         {
+            // Habilita CORS globalmente
+            var cors = new EnableCorsAttribute("http://localhost:3000", "*", "*");
+            config.EnableCors(cors);
+
             // Web API configuration and services
             config.MessageHandlers.Add(new TokenValidationHandler());
 

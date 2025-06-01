@@ -178,5 +178,37 @@ namespace eBuy.Clases
             }
 
         }
+
+        public object GetImagesByProduct(string productName)
+        {
+            clsProductImage clsProductImg = new clsProductImage();
+            var imageNames = clsProductImg.GetImagesByProductName(productName);
+
+            List<object> imagesList = new List<object>();
+            string folderPath = HttpContext.Current.Server.MapPath("~/Files");
+
+            foreach (var imageName in imageNames)
+            {
+                string filePath = Path.Combine(folderPath, imageName);
+                if (File.Exists(filePath))
+                {
+                    byte[] imageBytes = File.ReadAllBytes(filePath);
+                    string base64Image = Convert.ToBase64String(imageBytes);
+
+                    imagesList.Add(new
+                    {
+                        FileName = imageName,
+                        Content = base64Image
+                    });
+                }
+            }
+
+            return new
+            {
+                ProductName = productName,
+                Images = imagesList
+            };
+        }
+
     }
 }

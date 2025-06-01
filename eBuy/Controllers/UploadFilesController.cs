@@ -45,5 +45,15 @@ namespace eBuy.Controllers
             clsUpload upload = new clsUpload();
             return upload.EliminarFoto(ImageName);
         }
+
+        [HttpGet]
+        [Route("GetImagesByProduct")]
+        public IHttpActionResult GetImagesByProduct(string productName)
+        {
+            clsUpload upload = new clsUpload();
+            var result = upload.GetImagesByProduct(productName);
+            return Ok(result);
+        }
+
     }
 }

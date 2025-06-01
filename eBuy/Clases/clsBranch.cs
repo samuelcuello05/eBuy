@@ -91,23 +91,18 @@ namespace eBuy.Clases
             }
         }
 
-        public string UpdateOrAddItemToInventory(string branchName, string productName, int quantity)
+        public string UpdateOrAddItemToInventory(string branchName, int IdProduct, int quantity)
         {
             try
             {
+
                 var branch = eBuyDB.Branches.FirstOrDefault(b => b.Name.Equals(branchName, StringComparison.OrdinalIgnoreCase));
                 if (branch == null)
                 {
                     return "Error: Branch not found";
                 }
 
-                var product = eBuyDB.Products.FirstOrDefault(p => p.Name.Equals(productName, StringComparison.OrdinalIgnoreCase));
-                if (product == null)
-                {
-                    return "Error: Product not found";
-                }
-
-                var existingItem = eBuyDB.Inventories.FirstOrDefault(i => i.IdBranch == branch.Id && i.IdProduct == product.Id);
+                var existingItem = eBuyDB.Inventories.FirstOrDefault(i => i.IdBranch == branch.Id && i.IdProduct == IdProduct);
                 if (existingItem != null)
                 {
                     existingItem.CurrentStock += quantity;
@@ -117,13 +112,12 @@ namespace eBuy.Clases
                     Inventory newItem = new Inventory
                     {
                         IdBranch = branch.Id,
-                        IdProduct = product.Id,
+                        IdProduct = IdProduct,
                         CurrentStock = quantity
                     };
                     eBuyDB.Inventories.Add(newItem);
                 }
 
-                eBuyDB.SaveChanges();
                 return "Item added to inventory successfully";
             }
             catch (Exception ex)

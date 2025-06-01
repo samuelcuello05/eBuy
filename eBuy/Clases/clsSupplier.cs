@@ -26,11 +26,16 @@ namespace eBuy.Clases
                     if (eBuyDB.Users.Any(u => u.Email == userBD.Email))
                         return "Error: User already exists.";
 
+                    if(eBuyDB.Suppliers.Any(s => s.Document == supplierBD.Document))
+                        return "Error: Supplier with this document already exists.";
+
                     clsCypher cypher = new clsCypher();
+                    cypher.Password = userBD.Password;
                     string EncryptedPassword;
+
                     if (cypher.CifrarClave())
                     {
-                        EncryptedPassword = cypher.PasswordCifrado;
+                         EncryptedPassword = cypher.PasswordCifrado;
                     }
                     else
                     {

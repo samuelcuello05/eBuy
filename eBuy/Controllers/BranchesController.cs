@@ -56,10 +56,10 @@ namespace eBuy.Controllers
 
         [HttpPut]
         [Route("UpdateOrAddItemToInventory")]
-        public string UpdateOrAddItemToInventory(string branchName, string productName, int quantity)
+        public string UpdateOrAddItemToInventory(string branchName, int IdProduct, int quantity)
         {
             clsBranch Branch = new clsBranch();
-            return Branch.UpdateOrAddItemToInventory(branchName, productName, quantity);
+            return Branch.UpdateOrAddItemToInventory(branchName, IdProduct, quantity);
         }
 
         [HttpPut]
