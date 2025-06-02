@@ -1,5 +1,6 @@
 ﻿using eBuy.Clases;
 using eBuy.Clases.DTOS;
+using eBuy.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,22 @@ namespace eBuy.Controllers
         {
             clsSupplier supplier = new clsSupplier();
             return supplier.CreateSupplier(dto.User, dto.Supplier);
+        }
+
+        [HttpGet]
+        [Route("List")]
+        public List<Supplier> GetAllSuppliers()
+        {
+            clsSupplier supplier = new clsSupplier();
+            return supplier.GetAllSuppliers();
+        }
+
+        [HttpGet]
+        [Route("GetById")]
+        public Supplier GetSupplierById(int IdSupplier)
+        {
+            clsSupplier supplier = new clsSupplier();
+            return supplier.GetSupplierById(IdSupplier);
         }
     }
     

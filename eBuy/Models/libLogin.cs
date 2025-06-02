@@ -13,6 +13,7 @@ namespace eBuy.Models
     }
     public class LoginRespuesta
     {
+        public int Id { get; set; }
         public int IdUser { get; set; }
         public string Email { get; set; }
         public string Role { get; set; }

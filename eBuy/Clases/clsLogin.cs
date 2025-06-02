@@ -78,17 +78,30 @@ namespace eBuy.Clases
 
                 // Identificar tipo de usuario
                 string userType = "";
+                int specificId = 0; // ID específico según el tipo de usuario
                 if (eBuyDB.Customers.Any(c => c.IdUser == usuario.Id))
                 {
                     userType = "Customer";
+                    specificId = eBuyDB.Customers
+                        .Where(c => c.IdUser == usuario.Id)
+                        .Select(c => c.Id)
+                        .FirstOrDefault();
                 }
                 else if (eBuyDB.Employees.Any(e => e.IdUser == usuario.Id))
                 {
                     userType = "Employee";
+                    specificId = eBuyDB.Employees
+                        .Where(e => e.IdUser == usuario.Id)
+                        .Select(e => e.Id)
+                        .FirstOrDefault();
                 }
                 else if (eBuyDB.Suppliers.Any(s => s.IdUser == usuario.Id))
                 {
                     userType = "Supplier";
+                    specificId = eBuyDB.Suppliers
+                        .Where(s => s.IdUser == usuario.Id)
+                        .Select(s => s.Id)
+                        .FirstOrDefault();
                 }
                 else
                 {
@@ -101,10 +114,10 @@ namespace eBuy.Clases
                 switch (userType)
                 {
                     case "Customer":
-                        startPage = "/customer/home";
+                        startPage = "/";
                         break;
                     case "Employee":
-                        startPage = "/employee/dashboard";
+                        startPage = "/employee/home";
                         break;
                     case "Supplier":
                         startPage = "/supplier/overview";
@@ -117,6 +130,7 @@ namespace eBuy.Clases
                 // Armar respuesta
                 loginRespuesta.Auth = true;
                 loginRespuesta.Message = "Login successful.";
+                loginRespuesta.Id = specificId;
                 loginRespuesta.IdUser = usuario.Id;
                 loginRespuesta.Email = usuario.Email;
                 loginRespuesta.Role = usuario.Role;

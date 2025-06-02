@@ -37,6 +37,13 @@ namespace eBuy.Clases
                     OnlineListing.CreatedAt = DateTime.Now;
                     OnlineListing.UpdatedAt = DateTime.Now;
                     OnlineListing.IsActive = true;
+
+                    var onlineListingBySupplierExists = eBuyDB.OnlineListingBySuppliers.Any(ols => ols.IdSupplier == IdSupplier && ols.OnlineListing.IdProduct == OnlineListing.IdProduct);
+                    if (onlineListingBySupplierExists)
+                    {
+                        return "Error: You have already published this product.";
+                    }
+
                     eBuyDB.OnlineListings.Add(OnlineListing);
                     eBuyDB.SaveChanges();
 

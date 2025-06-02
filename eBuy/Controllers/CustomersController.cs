@@ -1,5 +1,6 @@
 ﻿using eBuy.Clases;
 using eBuy.Clases.DTOS;
+using eBuy.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,22 @@ namespace eBuy.Controllers
         {
             clsCustomer customer = new clsCustomer();
             return customer.CreateCustomer(dto.User, dto.Customer);
+        }
+
+        [HttpGet]
+        [Route("List")]
+        public List<Customer> GetAllCustomers()
+        {
+            clsCustomer customer = new clsCustomer();
+            return customer.GetAllCustomers();
+        }
+
+        [HttpGet]
+        [Route("GetById")]
+        public Customer GetCustomerById(int IdCustomer)
+        {
+            clsCustomer customer = new clsCustomer();
+            return customer.GetCustomerById(IdCustomer);
         }
     }
 }

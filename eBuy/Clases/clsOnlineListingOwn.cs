@@ -42,6 +42,12 @@ namespace eBuy.Clases
                         UpdatedAt = DateTime.Now
                     };
 
+                    var onlineListingOwnExists = eBuyDB.OnlineListingOwns.Any(olo => olo.EmployeeAssignedBranch == employeeExists.AssignedBranch && olo.OnlineListing.IdProduct == OnlineListing.IdProduct);
+                    if (onlineListingOwnExists)
+                    {
+                        return "Error: This product is already registered for this branch.";
+                    }
+
                     eBuyDB.OnlineListings.Add(OnlineListing);
                     eBuyDB.SaveChanges();
 

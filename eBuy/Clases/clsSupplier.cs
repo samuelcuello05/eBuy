@@ -65,5 +65,29 @@ namespace eBuy.Clases
                 return "Error: " + ex.Message;
             }
         }
+
+        public List<Supplier> GetAllSuppliers()
+        {
+            try
+            {
+                return eBuyDB.Suppliers.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving suppliers: " + ex.Message);
+            }
+        }
+
+        public Supplier GetSupplierById(int id)
+        {
+            try
+            {
+                return eBuyDB.Suppliers.FirstOrDefault(s => s.Id == id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving supplier: " + ex.Message);
+            }
+        }
     }
 }

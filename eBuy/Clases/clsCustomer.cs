@@ -74,5 +74,29 @@ namespace eBuy.Clases
                 return "Error: " + ex.Message;
             }
         }
+
+        public List<Customer> GetAllCustomers()
+        {
+            try
+            {
+                return eBuyDB.Customers.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving customers: " + ex.Message);
+            }
+        }
+
+        public Customer GetCustomerById(int id)
+        {
+            try
+            {
+                return eBuyDB.Customers.FirstOrDefault(c => c.Id == id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving customer: " + ex.Message);
+            }
+        }
     }
 }

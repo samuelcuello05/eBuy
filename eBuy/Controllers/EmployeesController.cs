@@ -1,5 +1,6 @@
 ﻿using eBuy.Clases;
 using eBuy.Clases.DTOS;
+using eBuy.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,22 @@ namespace eBuy.Controllers
         {
             clsEmployee employee = new clsEmployee();
             return employee.CreateEmployee(dto.User, dto.Employee, branchName);
+        }
+
+        [HttpGet]
+        [Route("List")]
+        public List<Employee> GetAllEmployees()
+        {
+            clsEmployee employee = new clsEmployee();
+            return employee.GetAllEmployees();
+        }
+
+        [HttpGet]
+        [Route("GetById")]
+        public Employee GetEmployeeById(int IdEmployee)
+        {
+            clsEmployee employee = new clsEmployee();
+            return employee.GetEmployeeById(IdEmployee);
         }
     }
 }

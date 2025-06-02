@@ -68,5 +68,29 @@ namespace eBuy.Clases
                 return "Error: " + ex.Message;
             }
         }
+
+        public List<Employee> GetAllEmployees()
+        {
+            try
+            {
+                return eBuyDB.Employees.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving employees: " + ex.Message);
+            }
+        }
+
+        public Employee GetEmployeeById(int id)
+        {
+            try
+            {
+                return eBuyDB.Employees.FirstOrDefault(e => e.Id == id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving employee: " + ex.Message);
+            }
+        }
     }
 }
