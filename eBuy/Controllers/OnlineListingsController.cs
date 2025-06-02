@@ -65,5 +65,45 @@ namespace eBuy.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("Deactivate")]
+        public IHttpActionResult ActivateAndDeactivateOnlineListing(int IdOnlineListing)
+        {
+            try
+            {
+                clsOnlineListing onlineListing = new clsOnlineListing();
+                var result = onlineListing.ActivateAndDeactivateOnlineListing(IdOnlineListing);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpDelete]
+        [Route("Delete")]
+        public IHttpActionResult DeleteOnlineListing(int IdOnlineListing)
+        {
+            try
+            {
+                clsOnlineListing onlineListing = new clsOnlineListing();
+                var result = onlineListing.DeleteOnlineListing(IdOnlineListing);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
     }
 }
