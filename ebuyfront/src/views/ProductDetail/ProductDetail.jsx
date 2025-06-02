@@ -4,42 +4,36 @@ import { useEffect, useState } from 'react';
 import Topbar from '../../components/Topbar/Topbar';
 import ProductImage from './components/ProductImages/ProductImages';
 import ProductInfo from './components/ProductInfo/ProductInfo';
-import { getProductByName, getProductImages } from '../../helpers/product/productService';
-
-
-function decodeNameFromURL(urlParam) {
-  try {
-    return decodeURIComponent(urlParam.replace(/-/g, ' '));
-  } catch (e) {
-    console.error("❌ Error decoding URL:", e);
-    return urlParam;
-  }
-}
-
+import { getProductById, getProductImages } from '../../helpers/product/productService';
+import { getOnlineListing } from '../../helpers/product/onlineLIsting';
 
 export default function ProductDetail() {
-   const { productName } = useParams();
-  const [product, setProduct] = useState(null);
+    const { id } = useParams();
+    const [product, setProduct] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      const decodedName = decodeNameFromURL(productName);
-      console.log('🔍 Decoded product name from URL:', decodedName);
+    useEffect(() => {
+        const fetchProduct = async () => {
+            const listenings = await getOnlineListing();
+            const productData = listenings.find(product => product.Id === parseInt(id));
+            const imageData = await getProductImages(productData.IdProduct);
 
-      const productFromApi = await getProductByName(decodedName);
-      console.log('📦 Producto retornado por el backend:', productFromApi);
+            const processedProduct = {
+                ...productData,
+                name: productData.Title,
+                description: productData.Description,
+                images: imageData?.Images?.map(img => `data:image/jpeg;base64,${img.Content}`) || []
+            };
 
-      if (!productFromApi) {
-        console.warn('⚠️ No se encontró el producto con nombre:', decodedName);
-      }
+            setProduct(processedProduct);
+            setLoading(false);
+        };
 
-      setProduct(productFromApi);
-    };
+        fetchProduct();
+    }, [id]);
 
-    fetchProduct();
-  }, [productName]);
-
-  if (!product) return <div>Producto no encontrado.</div>;
+    if (loading) return <h1>Loading...</h1>;
+    if (!product) return <h1>Product not found</h1>;
 
     return (
         <article className={Styles["product-detail"]}>

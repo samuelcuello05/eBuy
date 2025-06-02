@@ -12,9 +12,9 @@ export async function getProducts() {
     }
 }
 
-export async function getProductImages(productName) {
+export async function getProductImages(productId) {
     try {
-        const url = `http://ebuy.runasp.net/api/UploadFiles/GetImagesByProduct?productName=${encodeURIComponent(productName)}`;
+        const url = `http://ebuy.runasp.net/api/UploadFiles/GetImagesByProductId?IdProduct=${productId}`;
         console.log("📸 Fetching product images:", url);
 
         const response = await fetch(url);
@@ -26,26 +26,9 @@ export async function getProductImages(productName) {
     }
 }
 
-
-export async function getProductByName(name) {
-  const encodedName = encodeURIComponent(name.trim());
-  const url = `${API_BASE_URL}/Search?name=${encodedName}`;
-  console.log('🌐 Fetching product by name:', url);
-
-  try {
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      console.error('❌ Error en la respuesta del servidor:', response.status, response.statusText);
-      return null;
-    }
-
-    const product = await response.json();
-    console.log('✅ Producto recibido del backend:', product);
-
-    return product;
-  } catch (error) {
-    console.error('❌ Error fetching product:', error);
-    return null;
-  }
+export async function getProductById(id) {
+    const response = await fetch(`${API_BASE_URL}/Search?id=${id}`);
+    const data = await response.json();
+    return data;
 }
+

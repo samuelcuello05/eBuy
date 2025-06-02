@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 import { useState } from "react";
 import { NavLink, resolvePath } from "react-router-dom";
 
-export default function ProductsInterface({category, title, products, images}) {
+export default function ProductsInterface({category, title, products}) {
     return(
         <section className={Styles["products-interface"]}>
             <Subtitle text={title}/>
@@ -46,11 +46,11 @@ function Products({category, products}){ //This array should be replaced by a fe
                     />
 
                     <Card.Body className={Styles["card-body"]}>
-                        <Card.Title>{product.Name}</Card.Title>
+                        <Card.Title>{product.name}</Card.Title>
                         <Card.Text>
                             {product.Description}
                         </Card.Text>
-                        <p className={Styles["price"]}>${product.SalePrice}</p>
+                        <p className={Styles["price"]}>${product.price}</p>
                         {product.status 
                             ? <Button variant="outline-danger" className={Styles["inactivate-sale"]} onClick={() => handleInactivateSale(index)} >Inactivate sale</Button>
                             : <Button variant="outline-secondary" className={Styles["inactivate-sale"]} onClick={() => handlePutOnSale(index)} >Put on sale</Button>}
@@ -71,12 +71,12 @@ function Products({category, products}){ //This array should be replaced by a fe
                         }
                     />
                 <Card.Body className={Styles["card-body"]}>
-                    <Card.Title>{product.Name}</Card.Title>
+                    <Card.Title>{product.name}</Card.Title>
                     <Card.Text>
                         {product.Description}
                     </Card.Text>
-                        <p className={Styles["price"]}>${product.SalePrice}</p>
-                        <NavLink to={`/product/${encodeURIComponent(product.Name)}`}>
+                        <p className={Styles["price"]}>${product.price}</p>
+                        <NavLink to={`/product/${product.Id}`}>
                             <Button variant="outline-warning" className={Styles["add-button"]}>Add to cart</Button>
                         </NavLink>
                 </Card.Body>

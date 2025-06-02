@@ -7,11 +7,10 @@
 }
 
 .products-container {
-    width: calc(100% - 100px);;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-
+  width: calc(100% - 100px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; 
 }
 
 .product-card{
