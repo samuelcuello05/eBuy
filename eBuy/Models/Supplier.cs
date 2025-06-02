@@ -9,6 +9,7 @@
 
 namespace eBuy.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -32,9 +33,12 @@ namespace eBuy.Models
         public string Country { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [JsonIgnore]
         public virtual ICollection<OnlineListingBySupplier> OnlineListingBySuppliers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [JsonIgnore]
         public virtual ICollection<Purchase> Purchases { get; set; }
+        [JsonIgnore]
         public virtual User User { get; set; }
     }
 }

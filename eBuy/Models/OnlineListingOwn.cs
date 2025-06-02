@@ -9,6 +9,7 @@
 
 namespace eBuy.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -19,8 +20,10 @@ namespace eBuy.Models
         public int IdEmployee { get; set; }
         public string EmployeeName { get; set; }
         public string EmployeeAssignedBranch { get; set; }
-    
+
+        [JsonIgnore]
         public virtual Employee Employee { get; set; }
+        [JsonIgnore]
         public virtual OnlineListing OnlineListing { get; set; }
     }
 }

@@ -9,6 +9,7 @@
 
 namespace eBuy.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -21,8 +22,10 @@ namespace eBuy.Models
         public int Quantity { get; set; }
         public decimal UnitCost { get; set; }
         public decimal TotalCost { get; set; }
-    
+
+        [JsonIgnore]
         public virtual Product Product { get; set; }
+        [JsonIgnore]
         public virtual Purchase Purchase { get; set; }
     }
 }

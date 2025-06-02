@@ -46,7 +46,6 @@ namespace eBuy.Models
         public virtual DbSet<OnlineSaleDetail> OnlineSaleDetails { get; set; }
         public virtual DbSet<OnlineSaleInvoice> OnlineSaleInvoices { get; set; }
         public virtual DbSet<OnlineWarranty> OnlineWarranties { get; set; }
-        public virtual DbSet<OnlineWarrantyClaim> OnlineWarrantyClaims { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductImage> ProductImages { get; set; }
         public virtual DbSet<Purchase> Purchases { get; set; }

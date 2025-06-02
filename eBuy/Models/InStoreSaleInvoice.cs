@@ -9,6 +9,7 @@
 
 namespace eBuy.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -29,7 +30,9 @@ namespace eBuy.Models
         public string BranchAddress { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [JsonIgnore]
         public virtual ICollection<InStorePayment> InStorePayments { get; set; }
+        [JsonIgnore]
         public virtual InStoreSale InStoreSale { get; set; }
     }
 }

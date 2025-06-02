@@ -228,6 +228,7 @@
     <Compile Include="Clases\clsEmployee.cs" />
     <Compile Include="Clases\clsInStoreSale.cs" />
     <Compile Include="Clases\clsLogin.cs" />
+    <Compile Include="Clases\clsOnlineListing.cs" />
     <Compile Include="Clases\clsOnlineListingBySupplier.cs" />
     <Compile Include="Clases\clsOnlineSale.cs" />
     <Compile Include="Clases\clsProduct.cs" />
@@ -237,8 +238,6 @@
     <Compile Include="Clases\clsUpload.cs" />
     <Compile Include="Clases\clsUser.cs" />
     <Compile Include="Clases\DTOS\clsInStoreSaleDTO.cs" />
-    <Compile Include="Clases\DTOS\clsOnlineListingBySupplierDTO.cs" />
-    <Compile Include="Clases\DTOS\clsOnlineListingOwnDTO.cs" />
     <Compile Include="Clases\DTOS\clsOnlineSaleDTO.cs" />
     <Compile Include="Clases\DTOS\clsPurchaseRequestDTO.cs" />
     <Compile Include="Clases\DTOS\clsUserCustomerDTO.cs" />
@@ -258,6 +257,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\OnlineListingBySuppliersController.cs" />
     <Compile Include="Controllers\OnlineListingOwnsController.cs" />
+    <Compile Include="Controllers\OnlineListingsController.cs" />
     <Compile Include="Controllers\OnlineSalesController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\PurchasesController.cs" />
@@ -344,9 +344,6 @@
       <DependentUpon>eBuyDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OnlineWarranty.cs">
-      <DependentUpon>eBuyDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\OnlineWarrantyClaim.cs">
       <DependentUpon>eBuyDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Product.cs">

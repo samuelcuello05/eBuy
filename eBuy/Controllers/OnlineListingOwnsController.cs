@@ -14,15 +14,20 @@ namespace eBuy.Controllers
     {
         [HttpPost]
         [Route("Add")]
-        public string AddOnlineListingOwn([FromBody] clsOnlineListingOwnDTO data)
+        public string AddOnlineListingOwn(int IdEmployee, string productName)
         {
             clsOnlineListingOwn onlineListingOwn = new clsOnlineListingOwn();
 
-            return onlineListingOwn.AddOnlineListingOwn(
-                data.OnlineListing,
-                data.Employee,
-                data.ProductName
-            );
+            return onlineListingOwn.AddOnlineListingOwn(IdEmployee, productName);
+        }
+
+        [HttpGet]
+        [Route("List")]
+        public IEnumerable<object> ListOnlineListingOwn()
+        {
+            clsOnlineListingOwn OnlineListingOwn = new clsOnlineListingOwn();
+
+            return OnlineListingOwn.ListOnlineListingOwn();
         }
     }
 }

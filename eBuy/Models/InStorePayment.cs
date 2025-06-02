@@ -9,6 +9,7 @@
 
 namespace eBuy.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -21,7 +22,8 @@ namespace eBuy.Models
         public string PaymentMethod { get; set; }
         public int ReferenceNumber { get; set; }
         public string PaymentStatus { get; set; }
-    
+
+        [JsonIgnore]
         public virtual InStoreSaleInvoice InStoreSaleInvoice { get; set; }
     }
 }

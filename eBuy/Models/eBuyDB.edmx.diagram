@@ -26,7 +26,6 @@
         <EntityTypeShape EntityType="eBuyDBModel.OnlineSaleDetail" Width="1.5" PointX="5.25" PointY="17.125" IsExpanded="true" />
         <EntityTypeShape EntityType="eBuyDBModel.OnlineSaleInvoice" Width="1.5" PointX="5.25" PointY="36.375" IsExpanded="true" />
         <EntityTypeShape EntityType="eBuyDBModel.OnlineWarranty" Width="1.5" PointX="7.5" PointY="17.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="eBuyDBModel.OnlineWarrantyClaim" Width="1.5" PointX="9.75" PointY="17.375" IsExpanded="true" />
         <EntityTypeShape EntityType="eBuyDBModel.Product" Width="1.5" PointX="3" PointY="12.25" IsExpanded="true" />
         <EntityTypeShape EntityType="eBuyDBModel.ProductImage" Width="1.5" PointX="5.25" PointY="28.875" IsExpanded="true" />
         <EntityTypeShape EntityType="eBuyDBModel.Purchase" Width="1.5" PointX="6" PointY="6.125" IsExpanded="true" />
@@ -65,7 +64,6 @@
         <AssociationConnector Association="eBuyDBModel.FK__OnlineSal__IdSal__06CD04F7" ManuallyRouted="false" />
         <AssociationConnector Association="eBuyDBModel.FK__OnlineSal__IdPro__0B91BA14" ManuallyRouted="false" />
         <AssociationConnector Association="eBuyDBModel.FK__OnlineWar__IdOnl__0E6E26BF" ManuallyRouted="false" />
-        <AssociationConnector Association="eBuyDBModel.FK__OnlineWar__IdOnl__1332DBDC" ManuallyRouted="false" />
         <AssociationConnector Association="eBuyDBModel.FK__ProductIm__IdPro__40F9A68C" ManuallyRouted="false" />
         <AssociationConnector Association="eBuyDBModel.FK__PurchaseD__IdPro__3C34F16F" ManuallyRouted="false" />
         <AssociationConnector Association="eBuyDBModel.FK__Purchase__IdSupp__339FAB6E" ManuallyRouted="false" />

@@ -9,6 +9,7 @@
 
 namespace eBuy.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -28,10 +29,13 @@ namespace eBuy.Models
         public System.DateTime BornDate { get; set; }
         public int Phone { get; set; }
         public string AssignedBranch { get; set; }
-    
+
+        [JsonIgnore]
         public virtual Branch Branch { get; set; }
+        [JsonIgnore]
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [JsonIgnore]
         public virtual ICollection<OnlineListingOwn> OnlineListingOwns { get; set; }
     }
 }

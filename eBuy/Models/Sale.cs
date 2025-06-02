@@ -9,6 +9,7 @@
 
 namespace eBuy.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -27,11 +28,14 @@ namespace eBuy.Models
         public string Status { get; set; }
         public decimal TotalAmount { get; set; }
         public string PaymentMethod { get; set; }
-    
+
+        [JsonIgnore]
         public virtual Customer Customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [JsonIgnore]
         public virtual ICollection<InStoreSale> InStoreSales { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [JsonIgnore]
         public virtual ICollection<OnlineSale> OnlineSales { get; set; }
     }
 }

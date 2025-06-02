@@ -10,7 +10,7 @@ namespace eBuy.Clases
     {
         private eBuyDBEntities eBuyDB = new eBuyDBEntities();
 
-        public string AddOnlineListingBySupplier(OnlineListing OnlineListing, Supplier supplier, string productName)
+        public string AddOnlineListingBySupplier(OnlineListing OnlineListing, int IdSupplier, string productName)
         {
             try
             {
@@ -20,10 +20,7 @@ namespace eBuy.Clases
                     if (OnlineListing == null)
                         return "Error: Online listing data is missing.";
 
-                    if (supplier == null)
-                        return "Error: Supplier data is missing.";
-
-                    var supplierExists = eBuyDB.Suppliers.FirstOrDefault(s => s.Id == supplier.Id);
+                    var supplierExists = eBuyDB.Suppliers.FirstOrDefault(s => s.Id == IdSupplier);
                     if (supplierExists == null)
                     {
                         return "Error: Supplier not found";
@@ -35,6 +32,7 @@ namespace eBuy.Clases
                         return "Error: Product not found";
                     }
 
+                    OnlineListing.Title = product.Name;
                     OnlineListing.IdProduct = product.Id;
                     OnlineListing.CreatedAt = DateTime.Now;
                     OnlineListing.UpdatedAt = DateTime.Now;
@@ -45,9 +43,9 @@ namespace eBuy.Clases
                     OnlineListingBySupplier newOnlineListingBySupplier = new OnlineListingBySupplier
                     {
                         IdOnlineListing = OnlineListing.Id,
-                        IdSupplier = supplier.Id,
+                        IdSupplier = supplierExists.Id,
                         SupplierName = supplierExists.Name,
-                        SupplierEmail = eBuyDB.Users.FirstOrDefault(u => u.Id == supplierExists.Id).Email,
+                        SupplierEmail = eBuyDB.Users.FirstOrDefault(u => u.Id == supplierExists.IdUser).Email,
                         SupplierPhone = supplierExists.Phone
                     };
 
@@ -75,6 +73,7 @@ namespace eBuy.Clases
                     .Select(ols => new
                     {
                         ols.Id,
+                        ols.OnlineListing.IdProduct,
                         ols.OnlineListing.Title,
                         ols.OnlineListing.Description,
                         ols.OnlineListing.Price,

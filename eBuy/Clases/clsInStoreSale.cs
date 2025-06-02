@@ -44,7 +44,11 @@ namespace eBuy.Clases
             {
                 using (var transaction = eBuyDB.Database.BeginTransaction())
                 {
-                    var customer = eBuyDB.Users.FirstOrDefault(u => u.Email.Equals(customerEmail, StringComparison.OrdinalIgnoreCase));
+                    var user = eBuyDB.Users.FirstOrDefault(u => u.Email.Equals(customerEmail, StringComparison.OrdinalIgnoreCase));
+                    if (user == null || user.Role!="Customer")
+                        return "Error: Customer not found.";
+
+                    var customer = eBuyDB.Customers.FirstOrDefault(c => c.IdUser == user.Id);
                     if (customer == null)
                         return "Error: Customer not found.";
 
@@ -77,8 +81,8 @@ namespace eBuy.Clases
                         IdCustomer = customer.Id,
                         SaleDate = DateTime.Now,
                         Status = "Successful",
-                        PaymentMethod = paymentMethod,
-                        TotalAmount = 0
+                        TotalAmount = 0,
+                        PaymentMethod = paymentMethod
                     };
                     eBuyDB.Sales.Add(sale);
                     eBuyDB.SaveChanges();
@@ -95,9 +99,18 @@ namespace eBuy.Clases
                     foreach (var (product, quantity) in productsToSell)
                     {
                         var productExists = eBuyDB.Products.First(p => p.Name.Equals(product.Name, StringComparison.OrdinalIgnoreCase));
-
                         productExists.Stock -= quantity;
-                        ClsBranch.UpdateInventory(branchName, productExists.Name, productExists.Stock);
+
+                        var existingItem = eBuyDB.Inventories.FirstOrDefault(i => i.IdBranch == branch.Id && i.IdProduct == productExists.Id);
+                        if (existingItem != null)
+                        {
+                            existingItem.CurrentStock -= quantity;
+                            eBuyDB.SaveChanges();
+                        }
+                        else
+                        {
+                            return $"Error: Inventory item not found for branch {branchName}";
+                        }
 
                         decimal itemTotal = productExists.SalePrice * quantity;
                         totalAmount += itemTotal;

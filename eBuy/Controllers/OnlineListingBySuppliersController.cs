@@ -15,15 +15,11 @@ namespace eBuy.Controllers
     {
         [HttpPost]
         [Route("Add")]
-        public string AddOnlineListingBySupplier([FromBody] clsOnlineListingBySupplierDTO data)
+        public string AddOnlineListingBySupplier(OnlineListing OnlineListing, int IdSupplier, string productName)
         {
             clsOnlineListingBySupplier onlineListingBySupplier = new clsOnlineListingBySupplier();
 
-            return onlineListingBySupplier.AddOnlineListingBySupplier(
-                data.OnlineListing,
-                data.Supplier,
-                data.ProductName
-            );
+            return onlineListingBySupplier.AddOnlineListingBySupplier(OnlineListing,IdSupplier, productName);
         }
 
         [HttpGet]

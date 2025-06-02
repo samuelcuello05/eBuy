@@ -27,8 +27,13 @@ namespace eBuy.Clases
                     if (eBuyDB.Users.Any(u => u.Email == userBD.Email))
                         return "Error: User already exists.";
 
+                    if (eBuyDB.Customers.Any(c => c.Document == customerBD.Document))
+                        return "Error: Customer with this document already exists.";
+
                     clsCypher cypher = new clsCypher();
+                    cypher.Password = userBD.Password;
                     string EncryptedPassword;
+
                     if (cypher.CifrarClave())
                     {
                         EncryptedPassword = cypher.PasswordCifrado;
@@ -50,13 +55,16 @@ namespace eBuy.Clases
                     eBuyDB.Customers.Add(customerBD);
                     eBuyDB.SaveChanges();
 
-                    cart.cart = new Cart();
-                    string cartResult = cart.CreateCart(customerBD.Id);
+                    Cart cart = new Cart
+                    {
+                        IdCustomer = customerBD.Id,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now,
+                    };
+                    eBuyDB.Carts.Add(cart);
+                    eBuyDB.SaveChanges();
 
-                    if (cartResult.StartsWith("Error"))
-                        throw new Exception(cartResult); // Forzar rollback si hay error en la creacion del carrito de compras para el usuario
                     transaction.Commit();
-
 
                     return "Customer successfully registered.";
                 }

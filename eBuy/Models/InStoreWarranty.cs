@@ -18,8 +18,6 @@ namespace eBuy.Models
         public int IdInStoreSaleDetail { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
-        public string ClaimReason { get; set; }
-        public string Resolution { get; set; }
         public string WarrantyStatus { get; set; }
     
         public virtual InStoreSaleDetail InStoreSaleDetail { get; set; }

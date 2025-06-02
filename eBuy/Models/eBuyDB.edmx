@@ -130,8 +130,6 @@
           <Property Name="IdInStoreSaleDetail" Type="int" Nullable="false" />
           <Property Name="StartDate" Type="date" Nullable="false" />
           <Property Name="EndDate" Type="date" Nullable="false" />
-          <Property Name="ClaimReason" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="Resolution" Type="nvarchar" MaxLength="300" Nullable="false" />
           <Property Name="WarrantyStatus" Type="nvarchar" MaxLength="15" Nullable="false" />
         </EntityType>
         <EntityType Name="Inventory">
@@ -230,20 +228,7 @@
           <Property Name="IdOnlineSaleDetail" Type="int" Nullable="false" />
           <Property Name="StartDate" Type="date" Nullable="false" />
           <Property Name="EndDate" Type="date" Nullable="false" />
-          <Property Name="ClaimReason" Type="nvarchar" MaxLength="30" Nullable="false" />
-          <Property Name="Resolution" Type="nvarchar" MaxLength="300" Nullable="false" />
           <Property Name="WarrantyStatus" Type="nvarchar" MaxLength="15" Nullable="false" />
-        </EntityType>
-        <EntityType Name="OnlineWarrantyClaim">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdOnlineWarranty" Type="int" Nullable="false" />
-          <Property Name="ClaimDate" Type="date" Nullable="false" />
-          <Property Name="ResolutionDate" Type="date" Nullable="false" />
-          <Property Name="Resolution" Type="nvarchar" MaxLength="300" Nullable="false" />
-          <Property Name="TechnicalNotes" Type="nvarchar" MaxLength="300" Nullable="false" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -490,7 +475,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__InStoreWa__IdInS__2645B050">
+        <Association Name="FK__InStoreWa__IdInS__625A9A57">
           <End Role="InStoreSaleDetail" Type="Self.InStoreSaleDetail" Multiplicity="1" />
           <End Role="InStoreWarranty" Type="Self.InStoreWarranty" Multiplicity="*" />
           <ReferentialConstraint>
@@ -646,7 +631,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OnlineWar__IdOnl__0E6E26BF">
+        <Association Name="FK__OnlineWar__IdOnl__662B2B3B">
           <End Role="OnlineSaleDetail" Type="Self.OnlineSaleDetail" Multiplicity="1" />
           <End Role="OnlineWarranty" Type="Self.OnlineWarranty" Multiplicity="*" />
           <ReferentialConstraint>
@@ -655,18 +640,6 @@
             </Principal>
             <Dependent Role="OnlineWarranty">
               <PropertyRef Name="IdOnlineSaleDetail" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__OnlineWar__IdOnl__1332DBDC">
-          <End Role="OnlineWarranty" Type="Self.OnlineWarranty" Multiplicity="1" />
-          <End Role="OnlineWarrantyClaim" Type="Self.OnlineWarrantyClaim" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OnlineWarranty">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="OnlineWarrantyClaim">
-              <PropertyRef Name="IdOnlineWarranty" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -800,7 +773,6 @@
           <EntitySet Name="OnlineSaleDetail" EntityType="Self.OnlineSaleDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OnlineSaleInvoice" EntityType="Self.OnlineSaleInvoice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OnlineWarranty" EntityType="Self.OnlineWarranty" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="OnlineWarrantyClaim" EntityType="Self.OnlineWarrantyClaim" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductImage" EntityType="Self.ProductImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Purchase" EntityType="Self.Purchase" Schema="dbo" store:Type="Tables" />
@@ -858,7 +830,7 @@
             <End Role="Sale" EntitySet="Sale" />
             <End Role="InStoreSale" EntitySet="InStoreSale" />
           </AssociationSet>
-          <AssociationSet Name="FK__InStoreWa__IdInS__2645B050" Association="Self.FK__InStoreWa__IdInS__2645B050">
+          <AssociationSet Name="FK__InStoreWa__IdInS__625A9A57" Association="Self.FK__InStoreWa__IdInS__625A9A57">
             <End Role="InStoreSaleDetail" EntitySet="InStoreSaleDetail" />
             <End Role="InStoreWarranty" EntitySet="InStoreWarranty" />
           </AssociationSet>
@@ -910,13 +882,9 @@
             <End Role="Sale" EntitySet="Sale" />
             <End Role="OnlineSale" EntitySet="OnlineSale" />
           </AssociationSet>
-          <AssociationSet Name="FK__OnlineWar__IdOnl__0E6E26BF" Association="Self.FK__OnlineWar__IdOnl__0E6E26BF">
+          <AssociationSet Name="FK__OnlineWar__IdOnl__662B2B3B" Association="Self.FK__OnlineWar__IdOnl__662B2B3B">
             <End Role="OnlineSaleDetail" EntitySet="OnlineSaleDetail" />
             <End Role="OnlineWarranty" EntitySet="OnlineWarranty" />
-          </AssociationSet>
-          <AssociationSet Name="FK__OnlineWar__IdOnl__1332DBDC" Association="Self.FK__OnlineWar__IdOnl__1332DBDC">
-            <End Role="OnlineWarranty" EntitySet="OnlineWarranty" />
-            <End Role="OnlineWarrantyClaim" EntitySet="OnlineWarrantyClaim" />
           </AssociationSet>
           <AssociationSet Name="FK__Product__IdBrand__693CA210" Association="Self.FK__Product__IdBrand__693CA210">
             <End Role="Brand" EntitySet="Brand" />
@@ -1109,8 +1077,6 @@
           <Property Name="IdInStoreSaleDetail" Type="Int32" Nullable="false" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="ClaimReason" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Resolution" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="WarrantyStatus" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="InStoreSaleDetail" Relationship="Self.FK__InStoreWa__IdInS__2645B050" FromRole="InStoreWarranty" ToRole="InStoreSaleDetail" />
         </EntityType>
@@ -1228,23 +1194,8 @@
           <Property Name="IdOnlineSaleDetail" Type="Int32" Nullable="false" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="ClaimReason" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Resolution" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="WarrantyStatus" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="OnlineSaleDetail" Relationship="Self.FK__OnlineWar__IdOnl__0E6E26BF" FromRole="OnlineWarranty" ToRole="OnlineSaleDetail" />
-          <NavigationProperty Name="OnlineWarrantyClaims" Relationship="Self.FK__OnlineWar__IdOnl__1332DBDC" FromRole="OnlineWarranty" ToRole="OnlineWarrantyClaim" />
-        </EntityType>
-        <EntityType Name="OnlineWarrantyClaim">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdOnlineWarranty" Type="Int32" Nullable="false" />
-          <Property Name="ClaimDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="ResolutionDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Resolution" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="TechnicalNotes" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="OnlineWarranty" Relationship="Self.FK__OnlineWar__IdOnl__1332DBDC" FromRole="OnlineWarrantyClaim" ToRole="OnlineWarranty" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -1720,18 +1671,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OnlineWar__IdOnl__1332DBDC">
-          <End Role="OnlineWarranty" Type="Self.OnlineWarranty" Multiplicity="1" />
-          <End Role="OnlineWarrantyClaim" Type="Self.OnlineWarrantyClaim" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OnlineWarranty">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="OnlineWarrantyClaim">
-              <PropertyRef Name="IdOnlineWarranty" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__ProductIm__IdPro__40F9A68C">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="ProductImage" Type="Self.ProductImage" Multiplicity="*" />
@@ -1826,7 +1765,6 @@
           <EntitySet Name="OnlineSaleDetails" EntityType="Self.OnlineSaleDetail" />
           <EntitySet Name="OnlineSaleInvoices" EntityType="Self.OnlineSaleInvoice" />
           <EntitySet Name="OnlineWarranties" EntityType="Self.OnlineWarranty" />
-          <EntitySet Name="OnlineWarrantyClaims" EntityType="Self.OnlineWarrantyClaim" />
           <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="ProductImages" EntityType="Self.ProductImage" />
           <EntitySet Name="Purchases" EntityType="Self.Purchase" />
@@ -1951,10 +1889,6 @@
           <AssociationSet Name="FK__OnlineWar__IdOnl__0E6E26BF" Association="Self.FK__OnlineWar__IdOnl__0E6E26BF">
             <End Role="OnlineSaleDetail" EntitySet="OnlineSaleDetails" />
             <End Role="OnlineWarranty" EntitySet="OnlineWarranties" />
-          </AssociationSet>
-          <AssociationSet Name="FK__OnlineWar__IdOnl__1332DBDC" Association="Self.FK__OnlineWar__IdOnl__1332DBDC">
-            <End Role="OnlineWarranty" EntitySet="OnlineWarranties" />
-            <End Role="OnlineWarrantyClaim" EntitySet="OnlineWarrantyClaims" />
           </AssociationSet>
           <AssociationSet Name="FK__ProductIm__IdPro__40F9A68C" Association="Self.FK__ProductIm__IdPro__40F9A68C">
             <End Role="Product" EntitySet="Products" />
@@ -2122,8 +2056,6 @@
                 <ScalarProperty Name="IdInStoreSaleDetail" ColumnName="IdInStoreSaleDetail" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="ClaimReason" ColumnName="ClaimReason" />
-                <ScalarProperty Name="Resolution" ColumnName="Resolution" />
                 <ScalarProperty Name="WarrantyStatus" ColumnName="WarrantyStatus" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2230,21 +2162,7 @@
                 <ScalarProperty Name="IdOnlineSaleDetail" ColumnName="IdOnlineSaleDetail" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="ClaimReason" ColumnName="ClaimReason" />
-                <ScalarProperty Name="Resolution" ColumnName="Resolution" />
                 <ScalarProperty Name="WarrantyStatus" ColumnName="WarrantyStatus" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OnlineWarrantyClaims">
-            <EntityTypeMapping TypeName="eBuyDBModel.OnlineWarrantyClaim">
-              <MappingFragment StoreEntitySet="OnlineWarrantyClaim">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="IdOnlineWarranty" ColumnName="IdOnlineWarranty" />
-                <ScalarProperty Name="ClaimDate" ColumnName="ClaimDate" />
-                <ScalarProperty Name="ResolutionDate" ColumnName="ResolutionDate" />
-                <ScalarProperty Name="Resolution" ColumnName="Resolution" />
-                <ScalarProperty Name="TechnicalNotes" ColumnName="TechnicalNotes" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

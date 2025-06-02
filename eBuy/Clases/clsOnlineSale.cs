@@ -111,9 +111,18 @@ namespace eBuy.Clases
                     foreach (var (product, quantity) in productsToSell)
                     {
                         var productExists = eBuyDB.Products.First(p => p.Name.Equals(product.Name, StringComparison.OrdinalIgnoreCase));
-
                         productExists.Stock -= quantity;
-                        ClsBranch.UpdateInventory(branchName, productExists.Name, productExists.Stock);
+
+                        var existingItem = eBuyDB.Inventories.FirstOrDefault(i => i.IdBranch == branch.Id && i.IdProduct == productExists.Id);
+                        if (existingItem != null)
+                        {
+                            existingItem.CurrentStock -= quantity;
+                            eBuyDB.SaveChanges();
+                        }
+                        else
+                        {
+                            return $"Error: Inventory item not found for branch {branchName}";
+                        }
 
                         decimal itemTotal = productExists.SalePrice * quantity;
                         totalAmount += itemTotal;

@@ -9,27 +9,19 @@
 
 namespace eBuy.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
     public partial class OnlineWarranty
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public OnlineWarranty()
-        {
-            this.OnlineWarrantyClaims = new HashSet<OnlineWarrantyClaim>();
-        }
-    
         public int Id { get; set; }
         public int IdOnlineSaleDetail { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
-        public string ClaimReason { get; set; }
-        public string Resolution { get; set; }
         public string WarrantyStatus { get; set; }
-    
+
+        [JsonIgnore]
         public virtual OnlineSaleDetail OnlineSaleDetail { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OnlineWarrantyClaim> OnlineWarrantyClaims { get; set; }
     }
 }
