@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eBuy.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -179,10 +180,10 @@ namespace eBuy.Clases
 
         }
 
-        public object GetImagesByProduct(string productName)
+        public object GetImagesByProduct(int IdProduct)
         {
             clsProductImage clsProductImg = new clsProductImage();
-            var imageNames = clsProductImg.GetImagesByProductName(productName);
+            var imageNames = clsProductImg.GetImagesByProductId(IdProduct);
 
             List<object> imagesList = new List<object>();
             string folderPath = HttpContext.Current.Server.MapPath("~/Files");
@@ -205,7 +206,7 @@ namespace eBuy.Clases
 
             return new
             {
-                ProductName = productName,
+                ProductId = IdProduct,
                 Images = imagesList
             };
         }

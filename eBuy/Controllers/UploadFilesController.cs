@@ -47,11 +47,11 @@ namespace eBuy.Controllers
         }
 
         [HttpGet]
-        [Route("GetImagesByProduct")]
-        public IHttpActionResult GetImagesByProduct(string productName)
+        [Route("GetImagesByProductId")]
+        public IHttpActionResult GetImagesByProduct(int IdProduct)
         {
             clsUpload upload = new clsUpload();
-            var result = upload.GetImagesByProduct(productName);
+            var result = upload.GetImagesByProduct(IdProduct);
             return Ok(result);
         }
 

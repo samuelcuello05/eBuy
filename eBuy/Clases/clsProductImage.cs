@@ -62,21 +62,19 @@ namespace eBuy.Clases
             }
         }
 
-        public List<string> GetImagesByProductName(string productName)
+        public List<string> GetImagesByProductId(int IdProduct)
         {
             try
             {
-                var product = eBuyDB.Products.FirstOrDefault(p => p.Name == productName);
+                var productExists = eBuyDB.Products.Any(p => p.Id == IdProduct);
 
-                if (product == null)
+                if (!productExists)
                 {
                     return new List<string>();
                 }
 
-                int productId = product.Id;
-
                 var imageNames = eBuyDB.ProductImages
-                    .Where(pi => pi.IdProduct == productId)
+                    .Where(pi => pi.IdProduct == IdProduct)
                     .Select(pi => pi.Name)
                     .ToList();
 

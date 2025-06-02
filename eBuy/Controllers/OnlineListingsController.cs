@@ -24,5 +24,46 @@ namespace eBuy.Controllers
                 return new List<object> { $"Error: {ex.Message}" };
             }
         }
+
+        [HttpGet]
+        [Route("GetById")]
+        public IHttpActionResult GetOnlineListingById(int IdOnlineListing)
+        {
+            try
+            {
+                clsOnlineListing onlineListing = new clsOnlineListing();
+                var result = onlineListing.GetOnlineListingById(IdOnlineListing);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpGet]
+        [Route("GetOnlineListingPublisherName")]
+        public IHttpActionResult GetOnlineListingPublisherName(int IdOnlineListing)
+        {
+            try
+            {
+                clsOnlineListing onlineListing = new clsOnlineListing();
+                var result = onlineListing.GetOnlineListingPublisherName(IdOnlineListing);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
     }
 }
