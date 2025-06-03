@@ -81,6 +81,7 @@ namespace eBuy.Clases
                 {
                     olo.Id,
                     olo.OnlineListing.IdProduct,
+                    olo.IdOnlineListing,
                     olo.OnlineListing.Title,
                     olo.OnlineListing.Description,
                     olo.OnlineListing.Price,

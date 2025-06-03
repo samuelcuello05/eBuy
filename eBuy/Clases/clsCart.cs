@@ -144,18 +144,19 @@ namespace eBuy.Clases
             }
         }
 
-        public IEnumerable<object> GetCartProducts(int IdCart)
+        public IEnumerable<object> GetCartProducts(int idCustomer)
         {
             try
             {
-                var cart = eBuyDB.Carts.Find(IdCart);
+                var cart = eBuyDB.Carts.FirstOrDefault(c => c.IdCustomer == idCustomer);
+
                 if (cart == null)
                 {
-                    return Enumerable.Empty<object>();
+                    throw new Exception("No cart found for the customer with ID: " + idCustomer);
                 }
 
                 var products = eBuyDB.CartItems
-                    .Where(ci => ci.IdCart == IdCart)
+                    .Where(ci => ci.IdCart == cart.Id)
                     .Include(ci => ci.Product)
                     .Select(ci => new
                     {
@@ -168,9 +169,9 @@ namespace eBuy.Clases
 
                 return products;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Enumerable.Empty<object>();
+                throw new Exception("Error retrieving cart products: " + ex.Message);
             }
         }
 

@@ -46,6 +46,14 @@ namespace eBuy.Controllers
             return Product.ListProducts();
         }
 
+        [HttpGet]
+        [Route("ListByBranchName")]
+        public List<Product> ListProductByBranch(string branchName)
+        {
+            clsProduct Product = new clsProduct();
+            return Product.ListProductByBranch(branchName);
+        }
+
         [HttpDelete]
         [Route("Delete")]
         public string DeleteProduct(int id)

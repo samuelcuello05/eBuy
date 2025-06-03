@@ -74,12 +74,12 @@ namespace eBuy.Clases
                 var IsOnlineListingOwn = eBuyDB.OnlineListingOwns.FirstOrDefault(olo => olo.IdOnlineListing == idOnlineListing);
                 if (IsOnlineListingOwn != null)
                 {
-                    return $"eBuy {IsOnlineListingOwn.EmployeeAssignedBranch} branch";
+                    return IsOnlineListingOwn.EmployeeAssignedBranch;
                 }
                 var IsOnlineListingBySupplier = eBuyDB.OnlineListingBySuppliers.FirstOrDefault(ols => ols.IdOnlineListing == idOnlineListing);
                 if (IsOnlineListingBySupplier != null)
                 {
-                    return $"supplier {IsOnlineListingBySupplier.SupplierName}";
+                    return IsOnlineListingBySupplier.SupplierName;
                 }
                 return "Publisher not found for this online listing.";
             }

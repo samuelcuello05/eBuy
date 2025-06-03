@@ -47,10 +47,10 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("ListCartProducts")]
-        public IEnumerable<object> GetCartProducts(int idCart)
+        public IEnumerable<object> GetCartProducts(int idCustomer)
         {
             clsCart Cart = new clsCart();
-            return Cart.GetCartProducts(idCart);
+            return Cart.GetCartProducts(idCustomer);
         }
 
 

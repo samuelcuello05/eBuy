@@ -83,6 +83,33 @@ namespace eBuy.Clases
             }
         }
 
+        public List<Product> ListProductByBranch(string branchName)
+        {
+            try
+            {
+                var branch = eBuyDB.Branches
+                    .FirstOrDefault(b => b.Name.Equals(branchName, StringComparison.OrdinalIgnoreCase));
+
+                if (branch == null)
+                {
+                    return new List<Product>();
+                }
+
+                var productsWithStock = (from inventory in eBuyDB.Inventories
+                                         where inventory.IdBranch == branch.Id && inventory.CurrentStock > 0
+                                         join product in eBuyDB.Products on inventory.IdProduct equals product.Id
+                                         orderby product.Name
+                                         select product).ToList();
+
+                return productsWithStock;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return null;
+            }
+        }
+
         public string DeleteProduct(int id)
         {
             try
