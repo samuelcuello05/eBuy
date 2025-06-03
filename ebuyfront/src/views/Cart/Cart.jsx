@@ -58,9 +58,10 @@ export default function Cart() {
                 onChange={(e) => setPaymentMethod(e.target.value)}
                 className={Styles["select"]}
               >
-                <option value="credit">Credit Card</option>
-                <option value="paypal">PayPal</option>
-                <option value="cash">Cash on Delivery</option>
+                <option value="credit">Credit card</option>
+                  <option value="credit">Debit card</option>
+                <option value="paypal">Bank transfer</option>
+                <option value="cash">Cash</option>
               </Form.Select>
             </Form.Group>
             <Button variant="success" size="lg" className="w-100">Pay Now</Button>

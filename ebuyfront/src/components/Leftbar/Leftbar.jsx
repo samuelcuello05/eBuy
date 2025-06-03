@@ -3,7 +3,7 @@ import { NavLink, resolvePath } from "react-router-dom";
 import Styles from "./Leftbar.module.css";
 
 export default function Leftbar({ rol }) {
-  const menuItems = rol === "employee"
+  const menuItems = rol === "Employee"
     ? [
         { id: 'home', label: '🏠 Home' },
         { id: 'publish', label: '📦 Publish Product' },
@@ -40,6 +40,7 @@ export default function Leftbar({ rol }) {
             <div>
               <NavLink
                 to="/"
+                onClick={() => {localStorage.clear();}}
                 className={({ isActive }) =>
                   `${Styles.linkItem} ${isActive ? Styles.active : ""}`
                 }

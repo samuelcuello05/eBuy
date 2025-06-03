@@ -5,18 +5,20 @@ import Topbar from '../../components/Topbar/Topbar';
 import ProductImage from './components/ProductImages/ProductImages';
 import ProductInfo from './components/ProductInfo/ProductInfo';
 import { getProductById, getProductImages } from '../../helpers/product/productService';
-import { getOnlineListing } from '../../helpers/product/onlineLIsting';
+import { getOnlineListing, getPublisherName } from '../../helpers/product/onlineLIsting';
 
 export default function ProductDetail() {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [publisherName, setPublisherName] = useState('');
 
     useEffect(() => {
         const fetchProduct = async () => {
             const listenings = await getOnlineListing();
             const productData = listenings.find(product => product.Id === parseInt(id));
             const imageData = await getProductImages(productData.IdProduct);
+            const publisher = await getPublisherName(productData.Id);
 
             const processedProduct = {
                 ...productData,
@@ -27,6 +29,7 @@ export default function ProductDetail() {
 
             setProduct(processedProduct);
             setLoading(false);
+            setPublisherName(publisher);
         };
 
         fetchProduct();
@@ -40,7 +43,7 @@ export default function ProductDetail() {
             <Topbar />
             <section className={Styles["content"]}>
                 <ProductImage productInformation={product.images} />
-                <ProductInfo product={product} />
+                <ProductInfo product={product} publisherName={publisherName} />
             </section>
         </article>
     );

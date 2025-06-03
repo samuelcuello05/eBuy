@@ -18,7 +18,7 @@ useEffect(() => {
         const imagesPromises = productsData.map(async (product) => {
             const imageData = await getProductImages(product.IdProduct);
             return {
-                productName: product.Name,
+                idProduct: product.IdProduct, // 👈 aquí está la solución
                 images: imageData?.Images || []
             };
         });
@@ -26,10 +26,10 @@ useEffect(() => {
         const allImages = await Promise.all(imagesPromises);
 
         const combined = productsData.map(product => {
-            const matched = allImages.find(img => img.productName === product.Name);
+            const matched = allImages.find(img => img.idProduct === product.IdProduct);
             return {
                 ...product,
-                name: product.Title, 
+                name: product.Title,
                 description: product.Description,
                 price: product.Price,
                 images: matched?.images?.map(img => `data:image/jpeg;base64,${img.Content}`) || [],
@@ -38,11 +38,12 @@ useEffect(() => {
         });
 
         setProducts(combined);
-        setImages(allImages); // opcional, si no lo usas directamente lo puedes omitir
+      
     };
 
     fetchData();
 }, []);
+
 
     console.log(products);
     console.log(images);
@@ -55,7 +56,6 @@ useEffect(() => {
                 category="home" 
                 title="Featured Products" 
                 products={products} 
-                images={images}
                 />
         </article>
     );
