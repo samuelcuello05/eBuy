@@ -27,12 +27,16 @@ export default function Login() {
       });
 
       const data = await response.json();
+      console.log(data);
 
     if (data.Auth && data.Status) {
+        localStorage.setItem("Id", data.Id);
+        localStorage.setItem("auth", data.Auth);
         localStorage.setItem("token", data.Token);
         localStorage.setItem("role", data.Role);
         localStorage.setItem("userId", data.Id); 
         localStorage.setItem("startPage", data.StartPage);
+        localStorage.setItem("userEmail", data.Email);
 
         if (data.Role === "Supplier") {
             navigate("/supplier/home");

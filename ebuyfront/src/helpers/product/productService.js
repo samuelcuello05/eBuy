@@ -58,3 +58,14 @@ export async function getProductsByBranch(branchName) {
         return [];
     }
 }
+
+export async function getImagesByProductName(productName){
+    const data = await getProducts();
+    const product = data.find(p => p.Name === productName);
+    if (product) {
+        return getProductImages(product.Id);
+    } else {
+        console.error('Product not found:', productName);
+        return [];
+    }
+}

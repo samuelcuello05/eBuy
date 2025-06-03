@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getProducts, getProductImages } from '../../helpers/product/productService';
+import { getProductImages } from '../../helpers/product/productService';
+import { getCart } from '../../helpers/cart/cart';
 import { getOnlineListing } from '../../helpers/product/onlineLIsting';
 import TopSellProducts from './components/TopSellProducts/TopSellProducts';
 import PrincipalCategories from './components/PrincipalCategories/PrincipalCategories';
@@ -10,15 +11,21 @@ import Styles from './Home.module.css';
 export default function Home() {
     const [products, setProducts] = useState([]);
     const [images, setImages] = useState([]);
+    const [cart, setCart] = useState([]);
+    const [cartItems, setCartItems] = useState(0);
+    let token = localStorage.getItem("token");
+    let Email = localStorage.getItem("userEmail");
+    let Id = localStorage.getItem("Id");
+    let role = localStorage.getItem("role");
 
 useEffect(() => {
     const fetchData = async () => {
         const productsData = await getOnlineListing();
-
+        
         const imagesPromises = productsData.map(async (product) => {
             const imageData = await getProductImages(product.IdProduct);
             return {
-                idProduct: product.IdProduct, // 👈 aquí está la solución
+                idProduct: product.IdProduct,
                 images: imageData?.Images || []
             };
         });
@@ -37,11 +44,26 @@ useEffect(() => {
             };
         });
 
+     
         setProducts(combined);
       
     };
 
+if (Email && token && role === "Customer") {
+    const fetchCart = async () => {
+        const cartProducts = await getCart(Id);
+        const totalItems = cartProducts.reduce((sum, product) => sum + product.Quantity, 0);
+        setCartItems(totalItems);
+        setCart(cartProducts);
+    };
+    fetchCart();
+}else{
+    setCartItems(0);
+}
+
+
     fetchData();
+
 }, []);
 
 
@@ -49,7 +71,7 @@ useEffect(() => {
     console.log(images);
     return (
         <article className={Styles["home"]}>
-            <Topbar />
+            {(Email !== null && token !== null) ? <Topbar Email={Email} token={token} cart={cart} numberOfItems={cartItems}/> : <Topbar numberOfItems={cartItems}/>}
             <TopSellProducts />
             <PrincipalCategories />
             <ProductsInterface 

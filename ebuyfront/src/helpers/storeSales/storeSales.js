@@ -10,12 +10,10 @@ export const sendInStoreSale = async (payload) => {
 
     const data = await response.json();
 
-    // Si la respuesta es un string plano con el error
     if (typeof data === "string" && data.includes("Customer not found")) {
       throw new Error("Customer not found.");
     }
 
-    // Si la respuesta es un objeto con message
     if (data && typeof data.message === "string" && data.message.includes("Customer not found")) {
       throw new Error("Customer not found.");
     }

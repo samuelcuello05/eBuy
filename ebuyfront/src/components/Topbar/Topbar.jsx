@@ -7,14 +7,26 @@ import Styles from './Topbar.module.css';
 import { ReactComponent as CartIcon } from '../../images/cart.svg';
 import { useNavigate } from "react-router-dom";
 import { NavLink, resolvePath } from "react-router-dom";
+import { useState, useEffect } from 'react';
 
 
-function Topbar() {
-    //Change this component when the user is logged in to show his name and change their view
+function Topbar({Email, numberOfItems, cart}) {
     const navigate = useNavigate();
-    let price = 100;
+    const [cartItems, setCartItems] = useState(numberOfItems);
+    const role = localStorage.getItem("role");
+
+    useEffect(() => {
+        setCartItems(numberOfItems);
+    }, [numberOfItems]);
+
     function handleCartClick() {
-        navigate("/cart");
+        if(role === "Customer"){
+            navigate("/cart");
+        }
+        else{
+            localStorage.clear();
+            navigate("/login");
+        }
     }
   return (
     <nav className={Styles["topbar"]}>
@@ -34,14 +46,22 @@ function Topbar() {
                 </NavDropdown>
             </div>
             <div className={Styles["last-container"]} >
-                <NavLink to={"/login" } className={Styles["log-in"]}>
-                    <p>Log in</p>
+               {!Email &&  <NavLink to={"/login" } className={Styles["log-in"]}>
+                    <p>{"Sign in"}</p>
+                </NavLink>}
+
+        {Email &&(
+            <>
+                <p style={{marginRight: "10px"}}>{Email}</p> 
+                <NavLink to={"/login"} onClick={() => localStorage.clear()}>
+                    <p>Log out</p>
                 </NavLink>
+            </>
+                )}
+                
                 <div className={Styles["cart-container"]} onClick={handleCartClick}>
-           
-                        <CartIcon className={Styles["cart-icon"]} />
-                        <p className={Styles["price"]}>{price>99 ? (99+"+"):price}</p>
-               
+                    <CartIcon className={Styles["cart-icon"]} />
+                    <p className={Styles["price"]}>{cartItems>99 ? (99+"+"):cartItems}</p>
                 </div>
                  
               
