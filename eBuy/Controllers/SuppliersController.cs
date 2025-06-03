@@ -14,6 +14,7 @@ namespace eBuy.Controllers
     {
         [HttpPost]
         [Route("Register")]
+        [AllowAnonymous]
         public string CreateSupplier([FromBody] clsUserSupplierDTO dto)
         {
             clsSupplier supplier = new clsSupplier();
@@ -22,6 +23,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("List")]
+        [Authorize]
         public List<Supplier> GetAllSuppliers()
         {
             clsSupplier supplier = new clsSupplier();
@@ -30,6 +32,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("GetById")]
+        [Authorize]
         public Supplier GetSupplierById(int IdSupplier)
         {
             clsSupplier supplier = new clsSupplier();

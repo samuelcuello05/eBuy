@@ -14,6 +14,7 @@ namespace eBuy.Controllers
     {
         [HttpPost]
         [Route("Register")]
+        [AllowAnonymous]
         public string CreateCustomer([FromBody] clsUserCustomerDTO dto)
         {
             clsCustomer customer = new clsCustomer();
@@ -22,6 +23,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("List")]
+        [Authorize]
         public List<Customer> GetAllCustomers()
         {
             clsCustomer customer = new clsCustomer();
@@ -30,6 +32,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("GetById")]
+        [Authorize]
         public Customer GetCustomerById(int IdCustomer)
         {
             clsCustomer customer = new clsCustomer();

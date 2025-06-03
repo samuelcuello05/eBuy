@@ -15,6 +15,7 @@ namespace eBuy.Controllers
     {
         [HttpPost]
         [Route("Add")]
+        [Authorize]
         public string AddOnlineListingBySupplier(OnlineListing OnlineListing, int IdSupplier, string productName)
         {
             clsOnlineListingBySupplier onlineListingBySupplier = new clsOnlineListingBySupplier();
@@ -24,6 +25,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("List")]
+        [AllowAnonymous]
         public IEnumerable<object> ListOnlineListingBySupplier(int IdSupplier)
         {
             clsOnlineListingBySupplier onlineListingBySupplier = new clsOnlineListingBySupplier();
@@ -33,6 +35,7 @@ namespace eBuy.Controllers
       
         [HttpPut]
         [Route("Update")]
+        [Authorize]
         public string ModifyOnlineListingBySupplier([FromBody] OnlineListing updatedListing)
         {
             clsOnlineListingBySupplier onlineListingBySupplier = new clsOnlineListingBySupplier();
@@ -42,6 +45,7 @@ namespace eBuy.Controllers
      
         [HttpDelete]
         [Route("Delete")]
+        [Authorize]
         public string DeleteOnlineListingBySupplier(int IdOnlineListingBySupplier)
         {
             clsOnlineListingBySupplier onlineListingBySupplier = new clsOnlineListingBySupplier();

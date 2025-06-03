@@ -12,6 +12,7 @@ namespace eBuy.Controllers
     {
         [HttpGet]
         [Route("List")]
+        [AllowAnonymous]
         public IEnumerable<object> ListOnlineListings()
         {
             try
@@ -27,6 +28,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("GetById")]
+        [AllowAnonymous]
         public IHttpActionResult GetOnlineListingById(int IdOnlineListing)
         {
             try
@@ -47,6 +49,8 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("GetOnlineListingPublisherName")]
+        [AllowAnonymous]
+
         public IHttpActionResult GetOnlineListingPublisherName(int IdOnlineListing)
         {
             try
@@ -67,6 +71,7 @@ namespace eBuy.Controllers
 
         [HttpPut]
         [Route("ActivateAndDeactivate")]
+        [Authorize]
         public IHttpActionResult ActivateAndDeactivateOnlineListing(int IdOnlineListing)
         {
             try
@@ -87,6 +92,7 @@ namespace eBuy.Controllers
 
         [HttpDelete]
         [Route("Delete")]
+        [Authorize]
         public IHttpActionResult DeleteOnlineListing(int IdOnlineListing)
         {
             try

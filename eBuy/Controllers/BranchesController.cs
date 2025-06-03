@@ -14,6 +14,7 @@ namespace eBuy.Controllers
     {
         [HttpPost]
         [Route("Insert")]
+        [Authorize]
         public string InsertBranch([FromBody] Branch branch)
         {
             clsBranch Branch = new clsBranch();
@@ -23,6 +24,7 @@ namespace eBuy.Controllers
 
         [HttpPut]
         [Route("Update")]
+        [Authorize]
         public string UpdateBranch([FromBody] Branch branch)
         {
             clsBranch Branch = new clsBranch();
@@ -32,6 +34,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("Search")]
+        [Authorize]
         public Branch SearchBranch(string name)
         {
             clsBranch Branch = new clsBranch();
@@ -40,6 +43,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("SearchAll")]
+        [Authorize]
         public List<Branch> SearchAllBranches()
         {
             clsBranch Branch = new clsBranch();
@@ -48,6 +52,7 @@ namespace eBuy.Controllers
 
         [HttpDelete]
         [Route("Delete")]
+        [Authorize]
         public string DeleteBranch(string name)
         {
             clsBranch Branch = new clsBranch();
@@ -56,6 +61,7 @@ namespace eBuy.Controllers
 
         [HttpPut]
         [Route("UpdateOrAddItemToInventory")]
+        [Authorize]
         public string UpdateOrAddItemToInventory(string branchName, int IdProduct, int quantity)
         {
             clsBranch Branch = new clsBranch();
@@ -64,6 +70,7 @@ namespace eBuy.Controllers
 
         [HttpPut]
         [Route("UpdateInventory")]
+        [Authorize]
         public string UpdateInventory(string branchName, string productName, int quantity)
         {
             clsBranch Branch = new clsBranch();
@@ -72,6 +79,7 @@ namespace eBuy.Controllers
 
         [HttpPut]
         [Route("MoveEmployeeBetweenBranches")]
+        [Authorize]
 
         public string MoveEmployeeBetweenBranches(int employeeId, string newBranchName)
         {

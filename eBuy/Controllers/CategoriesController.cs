@@ -14,6 +14,7 @@ namespace eBuy.Controllers
     {
         [HttpPost]
         [Route("Insert")]
+        [Authorize]
         public string InsertCategory([FromBody] Category category)
         {
             clsCategory Category = new clsCategory();
@@ -23,6 +24,7 @@ namespace eBuy.Controllers
 
         [HttpPut]
         [Route("Update")]
+        [Authorize]
         public string UpdateCategory([FromBody] Category category)
         {
             clsCategory Category = new clsCategory();
@@ -32,6 +34,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("Search")]
+        [Authorize]
         public Category SearchCategory(string name)
         {
             clsCategory Category = new clsCategory();
@@ -40,6 +43,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("List")]
+        [Authorize]
         public List<Category> ListlCategory()
         {
             clsCategory Category = new clsCategory();
@@ -48,6 +52,7 @@ namespace eBuy.Controllers
 
         [HttpDelete]
         [Route("Delete")]
+        [Authorize]
         public string DeleteCategory(string name)
         {
             clsCategory Category = new clsCategory();

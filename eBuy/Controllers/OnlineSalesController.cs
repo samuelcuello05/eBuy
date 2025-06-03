@@ -14,6 +14,7 @@ namespace eBuy.Controllers
     {
         [HttpPost]
         [Route("Insert")]
+        [Authorize]
         public string InsertOnlineSale([FromBody] clsOnlineSaleDTO onlineSaleRequest)
         {
             clsOnlineSale onlineSale = new clsOnlineSale();

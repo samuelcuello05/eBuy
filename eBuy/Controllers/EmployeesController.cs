@@ -14,6 +14,7 @@ namespace eBuy.Controllers
     {
         [HttpPost]
         [Route("Register")]
+        [AllowAnonymous]
         public string CreateEmployee([FromBody] clsUserEmployeeDTO dto, string branchName)
         {
             clsEmployee employee = new clsEmployee();
@@ -22,6 +23,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("List")]
+        [Authorize]
         public List<Employee> GetAllEmployees()
         {
             clsEmployee employee = new clsEmployee();
@@ -30,6 +32,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("GetById")]
+        [Authorize]
         public Employee GetEmployeeById(int IdEmployee)
         {
             clsEmployee employee = new clsEmployee();

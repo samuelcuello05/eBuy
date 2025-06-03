@@ -14,6 +14,7 @@ namespace eBuy.Controllers
     {
         [HttpPost]
         [Route("Add")]
+        [Authorize]
         public string AddOnlineListingOwn(int IdEmployee, string productName)
         {
             clsOnlineListingOwn onlineListingOwn = new clsOnlineListingOwn();
@@ -23,6 +24,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("List")]
+        [AllowAnonymous]
         public IEnumerable<object> ListOnlineListingOwn()
         {
             clsOnlineListingOwn OnlineListingOwn = new clsOnlineListingOwn();

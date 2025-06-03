@@ -14,6 +14,7 @@ namespace eBuy.Controllers
     {
         [HttpPost]
         [Route("Insert")]
+        [Authorize]
         public string InsertPurchase([FromBody] clsPurchaseRequestDto purchaseRequest)
         {
             clsPurchase purchase = new clsPurchase();

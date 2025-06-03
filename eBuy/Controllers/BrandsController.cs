@@ -25,6 +25,7 @@ namespace eBuy.Controllers
 
         [HttpPut]
         [Route("Update")]
+        [Authorize]
         public string UpdateBrand([FromBody] Brand brand)
         {
             clsBrand Brand = new clsBrand();
@@ -34,6 +35,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("Search")]
+        [Authorize]
         public Brand SearchBrand(string name)
         {
             clsBrand Brand = new clsBrand();
@@ -42,6 +44,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("List")]
+        [Authorize]
         public List<Brand> SearchAllBrands()
         {
             clsBrand Brand = new clsBrand();
@@ -50,6 +53,7 @@ namespace eBuy.Controllers
 
         [HttpDelete]
         [Route("Delete")]
+        [Authorize]
         public string DeleteBrand(string name)
         {
             clsBrand Brand = new clsBrand();

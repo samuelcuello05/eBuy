@@ -14,6 +14,7 @@ namespace eBuy.Controllers
     {
         [HttpPost]
         [Route("Create")]
+        [Authorize]
         public string CreateCart([FromBody] Cart cart, int idCustomer)
         {
             clsCart Cart = new clsCart();
@@ -23,6 +24,7 @@ namespace eBuy.Controllers
 
         [HttpPost]
         [Route("AddItem")]
+        [Authorize]
         public string AddItemToCart(int idCart, int idProduct, string branchName)
         {
             clsCart Cart = new clsCart();
@@ -31,6 +33,7 @@ namespace eBuy.Controllers
 
         [HttpDelete]
         [Route("RemoveItem")]
+        [Authorize]
         public string RemoveItemFromCart(int idCart, int idProduct)
         {
             clsCart Cart = new clsCart();
@@ -39,6 +42,7 @@ namespace eBuy.Controllers
 
         [HttpDelete]
         [Route("Clear")]
+        [Authorize]
         public string ClearCart(int idCart)
         {
             clsCart Cart = new clsCart();
@@ -47,6 +51,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("ListCartProducts")]
+        [Authorize]
         public IEnumerable<object> GetCartProducts(int idCustomer)
         {
             clsCart Cart = new clsCart();

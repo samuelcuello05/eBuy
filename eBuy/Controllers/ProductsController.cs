@@ -14,6 +14,7 @@ namespace eBuy.Controllers
     {
         [HttpPost]
         [Route("Insert")]
+        [Authorize]
         public string InsertProduct([FromBody] Product product)
         {
             clsProduct Product = new clsProduct();
@@ -23,6 +24,7 @@ namespace eBuy.Controllers
 
         [HttpPut]
         [Route("Update")]
+        [Authorize]
         public string UpdateProduct([FromBody] Product product)
         {
             clsProduct Product = new clsProduct();
@@ -32,6 +34,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("Search")]
+        [AllowAnonymous]
         public Product SearchProduct(int id)
         {
             clsProduct Product = new clsProduct();
@@ -40,6 +43,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("List")]
+        [AllowAnonymous]
         public List<Product> SearchAllProduct()
         {
             clsProduct Product = new clsProduct();
@@ -48,6 +52,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("ListByBranchName")]
+        [AllowAnonymous]
         public List<Product> ListProductByBranch(string branchName)
         {
             clsProduct Product = new clsProduct();
@@ -56,6 +61,7 @@ namespace eBuy.Controllers
 
         [HttpDelete]
         [Route("Delete")]
+        [Authorize]
         public string DeleteProduct(int id)
         {
             clsProduct Product = new clsProduct();
