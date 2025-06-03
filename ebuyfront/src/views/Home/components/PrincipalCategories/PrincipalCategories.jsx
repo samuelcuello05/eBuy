@@ -1,40 +1,47 @@
 import Image from 'react-bootstrap/Image';
 import skinCareImage from '../../../../images/skincare.png'
-import consolesImages from '../../../../images/console.png'
+import toys from '../../../../images/toys.png'
 import gadgets from '../../../../images/gadgets.png'
 import Styles from './PrincipalCategories.module.css';
+import clothes from '../../../../images/clothes.png';
+import sports from '../../../../images/sports.png';
+import health from '../../../../images/health.png';
+import { getCategories } from '../../../../helpers/categories/categoriesService';
 import Subtitle from '../../../../components/Subtitle/Subtitle';
+import { use, useEffect, useState } from 'react';
 
-function PrincipalCategories() {
+function PrincipalCategories({categories}) {
+
+
   return (
     <section className={Styles["principal-categories"]}>     
         <Subtitle text="Our Principal Categories" />   
         <div className={Styles["categories-container"]}>
             <div className={Styles["category-item"]}>
-                <Image className={Styles["rounded-image"]} src={skinCareImage} roundedCircle />
-                <p>Category 1</p>
+                <Image className={Styles["rounded-image"]} src={gadgets} roundedCircle />
+                <p>{categories[11]?.Name || "Category"}</p>
             </div>
  
             <div className={Styles["category-item"]}>
-                <Image className={Styles["rounded-image"]} src={consolesImages} roundedCircle />
-                <p>Category 2</p>
-            </div>
-            <div className={Styles["category-item"]}>
                 <Image className={Styles["rounded-image"]} src={skinCareImage} roundedCircle />
-                <p>Category 3</p>
+                <p>{categories[2]?.Name || "Category"}</p>
             </div>
             <div className={Styles["category-item"]}>
-                <Image className={Styles["rounded-image"]} src={gadgets} roundedCircle />
-                <p>Category 4</p>
+                <Image className={Styles["rounded-image"]} src={toys} roundedCircle />
+                <p>{categories[12]?.Name || "Category"}</p>
             </div>
             <div className={Styles["category-item"]}>
-                <Image className={Styles["rounded-image"]} src={skinCareImage} roundedCircle />
-                <p>Category 5</p>
+                <Image className={Styles["rounded-image"]} src={clothes} roundedCircle />
+                <p>{categories[4]?.Name || "Category"}</p>
+            </div>
+            <div className={Styles["category-item"]}>
+                <Image className={Styles["rounded-image"]} src={sports} roundedCircle />
+                <p>{categories[10]?.Name || "Category"}</p>
             </div>
 
             <div className={Styles["category-item"]}>
-                <Image className={Styles["rounded-image"]} src={gadgets} roundedCircle />
-                <p>Category 6</p>
+                <Image className={Styles["rounded-image"]} src={health} roundedCircle />
+                <p>{categories[6]?.Name || "Category"}</p>
             </div>
         </div>
 

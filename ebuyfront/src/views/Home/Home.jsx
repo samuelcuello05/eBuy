@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getProductImages } from '../../helpers/product/productService';
 import { getCart } from '../../helpers/cart/cart';
+import { getCategories } from '../../helpers/categories/categoriesService';
 import { getOnlineListing } from '../../helpers/product/onlineLIsting';
 import TopSellProducts from './components/TopSellProducts/TopSellProducts';
 import PrincipalCategories from './components/PrincipalCategories/PrincipalCategories';
@@ -13,11 +14,12 @@ export default function Home() {
     const [images, setImages] = useState([]);
     const [cart, setCart] = useState([]);
     const [cartItems, setCartItems] = useState(0);
+    const [topSell, setTopSell] = useState([]);
     let token = localStorage.getItem("token");
     let Email = localStorage.getItem("userEmail");
     let Id = localStorage.getItem("Id");
     let role = localStorage.getItem("role");
-
+    const [categories, setCategories] = useState([]);
 useEffect(() => {
     const fetchData = async () => {
         const productsData = await getOnlineListing();
@@ -46,6 +48,20 @@ useEffect(() => {
 
      
         setProducts(combined);
+        
+        function selectThreeProducts(products) {
+            const validProducts = products.filter(Boolean); // Elimina undefined/null
+            if (validProducts.length <= 3) return validProducts;
+
+            const selected = new Set();
+            while (selected.size < 3) {
+                const idx = Math.floor(Math.random() * validProducts.length);
+                selected.add(validProducts[idx]);
+            }
+            return Array.from(selected);
+        }
+
+        setTopSell(selectThreeProducts(combined));
       
     };
 
@@ -63,6 +79,15 @@ if (Email && token && role === "Customer") {
 
 
     fetchData();
+            const fetchCategories = async () => {
+            try {
+                const categoriesData = await getCategories();
+                setCategories(categoriesData);
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
+        fetchCategories();
 
 }, []);
 
@@ -72,8 +97,8 @@ if (Email && token && role === "Customer") {
     return (
         <article className={Styles["home"]}>
             {(Email !== null && token !== null) ? <Topbar Email={Email} token={token} cart={cart} numberOfItems={cartItems}/> : <Topbar numberOfItems={cartItems}/>}
-            <TopSellProducts />
-            <PrincipalCategories />
+            <TopSellProducts topSell={topSell}/>
+            <PrincipalCategories categories={categories} />
             <ProductsInterface 
                 category="home" 
                 title="Featured Products" 

@@ -6,6 +6,9 @@
     align-items: center;
     margin: 0 auto;
 }
+.carousel-item a{ 
+    color: var(--primary-color) !important;
+}
 .carousel{
     width: calc(100% - 185px);
     height: 720px;
@@ -29,5 +32,15 @@
     border-radius: 10px;
     position: relative;
     margin-top: 1.25rem;
-    object-fit: cover;
+        object-fit: contain;
+    background-color: white;
+}
+
+.carousel-caption h3{
+    color: var(--primary-color);
+    font-weight: 700;
+}
+.carousel-caption p{
+    color: var(--accent-color);
+    font-weight: 600;
 }
