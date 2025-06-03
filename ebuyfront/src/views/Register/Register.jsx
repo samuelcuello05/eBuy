@@ -1,5 +1,5 @@
 import Styles from './Register.module.css';
-import { NavLink, resolvePath } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
@@ -7,7 +7,7 @@ import { ReactComponent as BackButton } from '../../images/goback.svg'
 
 export default function Register() {
     const [registerStep, setRegisterStep] = useState(1);
-     const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState({
         name: '',
         bornDate: '',
         phone: '',
@@ -19,6 +19,9 @@ export default function Register() {
         country: '',
         city: '',
     });
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
     function handleChange(e) {
         const { name, value, type, checked } = e.target;
@@ -37,14 +40,15 @@ export default function Register() {
             formData.email &&
             formData.password &&
             formData.accept
-
         ) {
             setRegisterStep(2);
         }
     }
 
-        function handleSubmitSecondStep(e) {
+    async function handleSubmitSecondStep(e) {
         e.preventDefault();
+        setError('');
+        setSuccess('');
         if (
             formData.cc &&
             formData.country &&
@@ -55,84 +59,128 @@ export default function Register() {
             formData.email &&
             formData.password &&
             formData.accept
-
         ) {
-            console.log("Form submitted successfully", formData);
+            setLoading(true);
+            try {
+                const body = {
+                    User: {
+                        Email: formData.email,
+                        Password: formData.password
+                    },
+                    Customer: {
+                        Document: Number(formData.cc),
+                        Name: formData.name,
+                        BornDate: formData.bornDate,
+                        Phone: formData.phone,
+                        Address: formData.address,
+                        City: formData.city,
+                        Country: formData.country
+                    }
+                };
+                const response = await fetch("http://ebuy.runasp.net/api/Customers/Register", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(body)
+                });
+                if (!response.ok) {
+                    const data = await response.json();
+                    throw new Error(data.message || "Registration failed");
+                }
+                setSuccess("Registration successful! You can now log in.");
+                setRegisterStep(1);
+                setFormData({
+                    name: '',
+                    bornDate: '',
+                    phone: '',
+                    email: '',
+                    password: '',
+                    accept: false,
+                    address: '',
+                    cc: '',
+                    country: '',
+                    city: '',
+                });
+            } catch (err) {
+                setError(err.message || "Registration failed");
+            } finally {
+                setLoading(false);
+            }
         }
     }
 
     if (registerStep === 2) {
-        return  (
-        <section className={Styles["register"]}>
-            <Form className={Styles["register-form"]} onSubmit={handleSubmitSecondStep}>
-                <NavLink to={-1} className={Styles["back-link"]}>
-                    <BackButton className={Styles["back-button"]} />
-                </NavLink>
-                <div className={Styles["title"]}>
-                    <h2 className={Styles["register-h2"]}>Final steps</h2>
-                </div>
-                <Form.Group className={`${Styles["input-container"]} mb-3`} controlId="formBasicCountry">
-                    <Form.Label>Country</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter your country"
-                        name="country"
-                        value={formData.country}
-                        onChange={handleChange}
-                        required
-                    />
-                </Form.Group>
-
-                <Form.Group className={`${Styles["input-container"]} mb-3`} controlId="formBasicCity">
-                    <Form.Label>City</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter your city"
-                        name="city"
-                        value={formData.city}
-                        onChange={handleChange}
-                        required
-                    />
-                </Form.Group>
-
-                <Form.Group className={`${Styles["input-container"]} mb-3`} controlId="formBasicAddress">
-                    <Form.Label>Address</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter your Address"
-                        name="address"
-                        value={formData.address}
-                        onChange={handleChange}
-                        required
-                    />
-                </Form.Group>
-
-                <Form.Group className={`${Styles["input-container"]} mb-3`} controlId="formBasicCC">
-                    <Form.Label>CC</Form.Label>
-                    <Form.Control
-                        type="number"
-                        placeholder="CC"
-                        name="cc"
-                        value={formData.cc}
-                        onChange={handleChange}
-                        required
-                    />
-                </Form.Group>
-                <Button variant="primary" type="submit" id={Styles["submit-button"]}>
-                    Register
-                </Button>
-                <Form.Text className={`${Styles["login-text"]} text-muted`} id={Styles["login-text"]}>
-                    ¿Already have an account?
-                    <NavLink to={"/login"}>
-                        Login
+        return (
+            <section className={Styles["register"]}>
+                <Form className={Styles["register-form"]} onSubmit={handleSubmitSecondStep}>
+                    <NavLink to={-1} className={Styles["back-link"]}>
+                        <BackButton className={Styles["back-button"]} />
                     </NavLink>
-                </Form.Text>
-            </Form>
-        </section>
+                    <div className={Styles["title"]}>
+                        <h2 className={Styles["register-h2"]}>Final steps</h2>
+                    </div>
+                    <Form.Group className={`${Styles["input-container"]} mb-3`} controlId="formBasicCountry">
+                        <Form.Label>Country</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter your country"
+                            name="country"
+                            value={formData.country}
+                            onChange={handleChange}
+                            required
+                        />
+                    </Form.Group>
+                    <Form.Group className={`${Styles["input-container"]} mb-3`} controlId="formBasicCity">
+                        <Form.Label>City</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter your city"
+                            name="city"
+                            value={formData.city}
+                            onChange={handleChange}
+                            required
+                        />
+                    </Form.Group>
+                    <Form.Group className={`${Styles["input-container"]} mb-3`} controlId="formBasicAddress">
+                        <Form.Label>Address</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter your Address"
+                            name="address"
+                            value={formData.address}
+                            onChange={handleChange}
+                            required
+                        />
+                    </Form.Group>
+                    <Form.Group className={`${Styles["input-container"]} mb-3`} controlId="formBasicCC">
+                        <Form.Label>CC</Form.Label>
+                        <Form.Control
+                            type="number"
+                            placeholder="CC"
+                            name="cc"
+                            value={formData.cc}
+                            onChange={handleChange}
+                            required
+                        />
+                    </Form.Group>
+                    {error && <div className="text-danger mb-2">{error}</div>}
+                    {success && <div className="text-success mb-2">{success}</div>}
+                    <Button variant="primary" type="submit" id={Styles["submit-button"]} disabled={loading}>
+                        {loading ? "Registering..." : "Register"}
+                    </Button>
+                    <Form.Text className={`${Styles["login-text"]} text-muted`} id={Styles["login-text"]}>
+                        ¿Already have an account?
+                        <NavLink to={"/login"}>
+                            Login
+                        </NavLink>
+                    </Form.Text>
+                </Form>
+            </section>
         );
     }
-    return(
-              <section className={Styles["register"]}>
+    return (
+        <section className={Styles["register"]}>
             <Form className={Styles["register-form"]} onSubmit={handleSubmitFirstStep}>
                 <NavLink to={-1} className={Styles["back-link"]}>
                     <BackButton className={Styles["back-button"]} />
@@ -203,6 +251,8 @@ export default function Register() {
                         required
                     />
                 </Form.Group>
+                {error && <div className="text-danger mb-2">{error}</div>}
+                {success && <div className="text-success mb-2">{success}</div>}
                 <Button variant="primary" type="submit" id={Styles["submit-button"]}>
                     Next step
                 </Button>
@@ -215,12 +265,4 @@ export default function Register() {
             </Form>
         </section>
     );
-
-}
-
-
-
-function SecondRegisterStep() {
-       
-    
 }

@@ -12,11 +12,9 @@ export async function getProducts() {
     }
 }
 
-export async function getProductImages(productName) {
+export async function getProductImages(productId) {
     try {
-        const url = `http://ebuy.runasp.net/api/UploadFiles/GetImagesByProduct?productName=${encodeURIComponent(productName)}`;
-        console.log("📸 Fetching product images:", url);
-
+        const url = `http://ebuy.runasp.net/api/UploadFiles/GetImagesByProductId?IdProduct=${productId}`;
         const response = await fetch(url);
         const data = await response.json();
         return data;
@@ -26,26 +24,48 @@ export async function getProductImages(productName) {
     }
 }
 
+export async function getProductById(id) {
+    const response = await fetch(`${API_BASE_URL}/Search?id=${id}`);
+    const data = await response.json();
+    return data;
+}
 
-export async function getProductByName(name) {
-  const encodedName = encodeURIComponent(name.trim());
-  const url = `${API_BASE_URL}/Search?name=${encodedName}`;
-  console.log('🌐 Fetching product by name:', url);
-
-  try {
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      console.error('❌ Error en la respuesta del servidor:', response.status, response.statusText);
-      return null;
+export async function switchStatusProduct(id) {
+    try {
+        const url = `http://ebuy.runasp.net/api/OnlineListings/ActivateAndDeactivate?IdOnlineListing=${id}`;
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        console.log(data);
+        return data;
+    } catch (error) {
+        console.error('Error switching product status:', error);
+        return null;
     }
+}
 
-    const product = await response.json();
-    console.log('✅ Producto recibido del backend:', product);
+export async function getProductsByBranch(branchName) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/ListByBranchName?branchName=${branchName}`);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching products by branch:', error);
+        return [];
+    }
+}
 
-    return product;
-  } catch (error) {
-    console.error('❌ Error fetching product:', error);
-    return null;
-  }
+export async function getImagesByProductName(productName){
+    const data = await getProducts();
+    const product = data.find(p => p.Name === productName);
+    if (product) {
+        return getProductImages(product.Id);
+    } else {
+        console.error('Product not found:', productName);
+        return [];
+    }
 }

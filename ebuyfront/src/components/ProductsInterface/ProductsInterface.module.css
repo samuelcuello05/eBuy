@@ -7,11 +7,11 @@
 }
 
 .products-container {
-    width: calc(100% - 100px);;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-
+  width: calc(100% - 100px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; 
+  justify-content: center;
 }
 
 .product-card{
@@ -38,9 +38,14 @@
     overflow: hidden;
     text-overflow: ellipsis;
     width: 100%;
+
 }
 .card-body div{
     color: var(--accent-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 36px;
 }
 .price{
     font-size: large;
@@ -58,3 +63,4 @@
     background-color: var(--primary-color) !important;
     color: white !important;
 }
+

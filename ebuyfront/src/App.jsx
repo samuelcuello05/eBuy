@@ -12,34 +12,42 @@ import Cart from './views/Cart/Cart.jsx';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './views/Login/Login.jsx';
 import Register from './views/Register/Register.jsx';
-
+import ProtectedRoute from './views/components/ProtectedRoute/ProtectedRoute.jsx';
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Home/>} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/employee" element={<Employee />}>
-          <Route index element={<Navigate to="home" replace />} />
-          <Route path="home" element={<AdminHome />} />
-          <Route path="publish" element={<PublishProduct />} />
-          <Route path="place-order" element={<PlaceOrder />} />
-          <Route path="register-sale" element={<RegisterSale />} />
-          <Route path="view-products" element={<ViewProducts />} />
-        </Route>
+<Routes>
+  <Route path="/" element={<Home />} />
+  <Route path="/login" element={<Login />} />
+  <Route path="/register" element={<Register />} />
 
-        <Route path="/supplier" element={<Supplier />}>
-          <Route index element={<Navigate to="home" replace />} />
-          <Route path="home" element={<AdminHome />} />
-          <Route path="publish" element={<PublishProduct />} />
-          <Route path="view-products" element={<ViewProducts />} />
-        </Route>
+  {/* Rutas protegidas para EMPLOYEE */}
+  <Route element={<ProtectedRoute allowedRoles={["Employee"]} />}>
+    <Route path="/employee" element={<Employee />}>
+      <Route index element={<Navigate to="home" replace />} />
+      <Route path="home" element={<AdminHome />} />
+      <Route path="publish" element={<PublishProduct />} />
+      <Route path="place-order" element={<PlaceOrder />} />
+      <Route path="register-sale" element={<RegisterSale />} />
+      <Route path="view-products" element={<ViewProducts />} />
+    </Route>
+  </Route>
 
-        <Route path="/product/:name" element={<ProductDetail />} />
-         <Route path="/cart" element={<Cart />} />
-      </Routes>
+  {/* Rutas protegidas para SUPPLIER */}
+    <Route element={<ProtectedRoute allowedRoles={["Supplier"]} />}>
+      <Route path="/supplier" element={<Supplier />}>
+        <Route index element={<Navigate to="home" replace />} />
+        <Route path="home" element={<AdminHome />} />
+        <Route path="publish" element={<PublishProduct />} />
+        <Route path="view-products" element={<ViewProducts />} />
+      </Route>
+    </Route>
+
+  {/* Rutas públicas */}
+      <Route path="/product/:id" element={<ProductDetail />} />
+      <Route path="/cart" element={<Cart />} />
+    </Routes>
   </Router>
   );
 }

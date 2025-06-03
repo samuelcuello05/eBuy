@@ -1,20 +1,54 @@
 import Styles from './ProductInfo.module.css';
 import Button from 'react-bootstrap/esm/Button';
+import { addToCart } from '../../../../helpers/cart/cart';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
-export default function ProductInfo({ product }) {
+export default function ProductInfo({ product, publisherName, role, onAddToCart, productId }) {
+    const customerId = localStorage.getItem("Id");
+    const isDisabled = role !== "Customer";
+
+    const handleAddToCartClick = async () => {
+        try {
+            await addToCart(customerId, productId, publisherName);
+            if (onAddToCart) onAddToCart();
+        } catch (error) {
+            alert("Error adding product to cart");
+        }
+    };
+
     return (
         <div className={Styles["product-info"]}>
             <h1 className={Styles["product-title"]}>{product.name}</h1>
-            <p className={Styles["product-description"]}>{product.description} Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores saepe nemo eius eaque vel voluptas quaerat. Vero quo facilis, voluptatibus saepe repudiandae adipisci iste molestias reprehenderit eos, numquam impedit libero.</p>
+            <p className={Styles["product-description"]}>{product.description}</p>
             
             <div className={Styles["price-container"]}>
-                <h2 className={Styles["price"]}>${product.price}</h2>
-                <p className={Styles["product-seller"]}>Vendido por Daniel Marin</p>
+                <h2 className={Styles["price"]}>${product.Price}</h2>
+                <p className={Styles["product-seller"]}>Sold by {publisherName}</p>
             </div>
 
-            <Button className={Styles["add-to-cart-button"]}  size='lg'>
-                Add to Cart
-            </Button>
+            <OverlayTrigger
+                placement="bottom"
+                overlay={
+                    isDisabled ? (
+                        <Tooltip id="disabled-tooltip">
+                            You must be logged in with a customer account to purchase
+                        </Tooltip>
+                    ) : <></>
+                }
+            >
+                <span className="w-100 d-block">
+                    <Button
+                        className={`w-100 ${Styles["add-to-cart-button"]}`}
+                        size="lg"
+                        disabled={isDisabled}
+                        onClick={handleAddToCartClick}
+                        style={isDisabled ? { pointerEvents: "none" } : {}}
+                    >
+                        Add to Cart
+                    </Button>
+                </span>
+            </OverlayTrigger>
         </div>
     );
 }
