@@ -50,7 +50,7 @@ namespace eBuy.Clases
             return 1;
         }
 
-        public string InsertOnlineSale(int IdCustomer, string shippingAddress,string paymentMethod, string branchName, List<(Product product, int quantity)> productsToSell)
+        public string InsertOnlineSale(int IdCustomer, string shippingAddress, string paymentMethod, List<(Product product, int quantity, string branchName)> productsToSell)
         {
             try
             {
@@ -66,10 +66,6 @@ namespace eBuy.Clases
                     if (string.IsNullOrWhiteSpace(shippingAddress))
                         return "Error: Shipping address is required.";
 
-                    var branch = eBuyDB.Branches.FirstOrDefault(b => b.Name.Equals(branchName, StringComparison.OrdinalIgnoreCase));
-                    if (branch == null)
-                        return "Error: Branch not found.";
-
                     bool matchFound = paymentMethods.Any(method => method.Equals(paymentMethod, StringComparison.OrdinalIgnoreCase));
                     if (!matchFound)
                         return "Error: Invalid payment method.";
@@ -77,8 +73,12 @@ namespace eBuy.Clases
                     decimal totalAmount = 0;
                     clsBranch ClsBranch = new clsBranch();
 
-                    foreach (var (product, quantity) in productsToSell)
+                    foreach (var (product, quantity, branchName) in productsToSell)
                     {
+                        var branch = eBuyDB.Branches.FirstOrDefault(b => b.Name.Equals(branchName, StringComparison.OrdinalIgnoreCase));
+                        if (branch == null)
+                            return $"Error: Branch '{branchName}' not found for product {product.Name}.";
+
                         var productExists = eBuyDB.Products.FirstOrDefault(p => p.Name.Equals(product.Name, StringComparison.OrdinalIgnoreCase));
                         if (productExists == null)
                             return $"Error: Product {product.Name} not found.";
@@ -108,8 +108,9 @@ namespace eBuy.Clases
                     eBuyDB.OnlineSales.Add(onlineSale);
                     eBuyDB.SaveChanges();
 
-                    foreach (var (product, quantity) in productsToSell)
+                    foreach (var (product, quantity, branchName) in productsToSell)
                     {
+                        var branch = eBuyDB.Branches.First(b => b.Name.Equals(branchName, StringComparison.OrdinalIgnoreCase));
                         var productExists = eBuyDB.Products.First(p => p.Name.Equals(product.Name, StringComparison.OrdinalIgnoreCase));
                         productExists.Stock -= quantity;
 

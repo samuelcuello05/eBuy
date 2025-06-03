@@ -9,6 +9,7 @@
 
 namespace eBuy.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -19,7 +20,8 @@ namespace eBuy.Models
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
         public string WarrantyStatus { get; set; }
-    
+
+        [JsonIgnore]
         public virtual InStoreSaleDetail InStoreSaleDetail { get; set; }
     }
 }

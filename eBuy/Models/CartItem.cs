@@ -20,6 +20,7 @@ namespace eBuy.Models
         public int IdProduct { get; set; }
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
+        public string BranchName { get; set; }
 
         [JsonIgnore]
         public virtual Cart Cart { get; set; }

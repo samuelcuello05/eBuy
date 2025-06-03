@@ -1,6 +1,7 @@
 ﻿using eBuy.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -28,7 +29,7 @@ namespace eBuy.Clases
             }
         }
 
-        public string AddItemToCart(int IdCart, int IdProduct, int quantity, double unitPrice)
+        public string AddItemToCart(int IdCart, int IdProduct, string branchName)
         {
             try
             {
@@ -38,11 +39,22 @@ namespace eBuy.Clases
                     return "Error: Cart not found";
                 }
 
-                var existingItem = eBuyDB.CartItems.FirstOrDefault(ci => ci.IdCart == IdCart && ci.IdProduct == IdProduct);
+                var existingBranch = eBuyDB.Branches.FirstOrDefault(b => b.Name.Equals(branchName, StringComparison.OrdinalIgnoreCase));
+                if (existingBranch==null)
+                {
+                    return "Error: Branch not found.";
+                }
 
+                var existingProduct = eBuyDB.Products.FirstOrDefault(p => p.Id == IdProduct);
+                if (existingProduct == null)
+                {
+                    return "Error: Product not found.";
+                }
+
+                var existingItem = eBuyDB.CartItems.FirstOrDefault(ci => ci.IdCart == IdCart && ci.IdProduct == IdProduct);
                 if (existingItem != null)
                 {
-                    existingItem.Quantity += quantity;
+                    existingItem.Quantity += 1;
                 }
                 else
                 {
@@ -50,8 +62,12 @@ namespace eBuy.Clases
                     {
                         IdCart = IdCart,
                         IdProduct = IdProduct,
-                        Quantity = quantity,
-                        UnitPrice = (decimal)unitPrice
+                        Quantity = 1,
+                        UnitPrice = eBuyDB.Products
+                                        .Where(p => p.Id == IdProduct)
+                                        .Select(p => p.SalePrice)
+                                        .FirstOrDefault(),
+                        BranchName = branchName
                     };
                     eBuyDB.CartItems.Add(newItem);
                 }
@@ -127,5 +143,36 @@ namespace eBuy.Clases
                 return "Error: " + ex.Message;
             }
         }
+
+        public IEnumerable<object> GetCartProducts(int IdCart)
+        {
+            try
+            {
+                var cart = eBuyDB.Carts.Find(IdCart);
+                if (cart == null)
+                {
+                    return Enumerable.Empty<object>();
+                }
+
+                var products = eBuyDB.CartItems
+                    .Where(ci => ci.IdCart == IdCart)
+                    .Include(ci => ci.Product)
+                    .Select(ci => new
+                    {
+                        ci.Product.Name,
+                        ci.Quantity,
+                        ci.UnitPrice,
+                        ci.BranchName
+                    })
+                    .ToList();
+
+                return products;
+            }
+            catch (Exception)
+            {
+                return Enumerable.Empty<object>();
+            }
+        }
+
     }
 }

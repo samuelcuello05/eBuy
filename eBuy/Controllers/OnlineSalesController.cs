@@ -24,9 +24,15 @@ namespace eBuy.Controllers
                 {
                     Name = pq.Product.Name
                 },
-                quantity: pq.Quantity
+                quantity: pq.Quantity,
+                branchName: pq.BranchName
             )).ToList();
-            return onlineSale.InsertOnlineSale(onlineSaleRequest.IdCustomer, onlineSaleRequest.ShippingAddress, onlineSaleRequest.PaymentMethod, onlineSaleRequest.BranchName, productsToSell);
+            return onlineSale.InsertOnlineSale(
+                onlineSaleRequest.IdCustomer,
+                onlineSaleRequest.ShippingAddress,
+                onlineSaleRequest.PaymentMethod,
+                productsToSell
+            );
         }
     }
 }

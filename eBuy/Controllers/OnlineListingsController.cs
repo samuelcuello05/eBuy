@@ -66,7 +66,7 @@ namespace eBuy.Controllers
         }
 
         [HttpPut]
-        [Route("Deactivate")]
+        [Route("ActivateAndDeactivate")]
         public IHttpActionResult ActivateAndDeactivateOnlineListing(int IdOnlineListing)
         {
             try

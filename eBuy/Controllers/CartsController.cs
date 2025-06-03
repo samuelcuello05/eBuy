@@ -21,15 +21,15 @@ namespace eBuy.Controllers
             return Cart.CreateCart(idCustomer);
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("AddItem")]
-        public string AddItemToCart(int idCart, int idProduct, int quantity, double unitPrice)
+        public string AddItemToCart(int idCart, int idProduct, string branchName)
         {
             clsCart Cart = new clsCart();
-            return Cart.AddItemToCart(idCart, idProduct, quantity, unitPrice);
+            return Cart.AddItemToCart(idCart, idProduct, branchName);
         }
 
-        [HttpPut]
+        [HttpDelete]
         [Route("RemoveItem")]
         public string RemoveItemFromCart(int idCart, int idProduct)
         {
@@ -44,6 +44,15 @@ namespace eBuy.Controllers
             clsCart Cart = new clsCart();
             return Cart.ClearCart(idCart);
         }
+
+        [HttpGet]
+        [Route("ListCartProducts")]
+        public IEnumerable<object> GetCartProducts(int idCart)
+        {
+            clsCart Cart = new clsCart();
+            return Cart.GetCartProducts(idCart);
+        }
+
 
     }
 }

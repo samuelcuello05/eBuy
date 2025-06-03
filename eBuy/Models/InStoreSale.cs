@@ -9,6 +9,7 @@
 
 namespace eBuy.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -25,12 +26,16 @@ namespace eBuy.Models
         public int IdSale { get; set; }
         public int IdBranch { get; set; }
         public string BranchName { get; set; }
-    
+
+        [JsonIgnore]
         public virtual Branch Branch { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [JsonIgnore]
         public virtual ICollection<InStoreSaleDetail> InStoreSaleDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [JsonIgnore]
         public virtual ICollection<InStoreSaleInvoice> InStoreSaleInvoices { get; set; }
+        [JsonIgnore]
         public virtual Sale Sale { get; set; }
     }
 }
