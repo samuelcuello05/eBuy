@@ -12,7 +12,7 @@ namespace eBuy
         public static void Register(HttpConfiguration config)
         {
             // Habilita CORS globalmente
-            var cors = new EnableCorsAttribute("http://localhost:3000", "*", "*");
+            var cors = new EnableCorsAttribute("https://ebuyfront.netlify.app", "*", "*");
             config.EnableCors(cors);
 
             // Web API configuration and services
