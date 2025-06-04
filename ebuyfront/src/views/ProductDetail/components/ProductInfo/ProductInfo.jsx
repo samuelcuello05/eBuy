@@ -12,6 +12,7 @@ export default function ProductInfo({ product, publisherName, role, onAddToCart,
         try {
             await addToCart(customerId, productId, publisherName);
             if (onAddToCart) onAddToCart();
+            alert("Product added to cart successfully");
         } catch (error) {
             alert("Error adding product to cart");
         }

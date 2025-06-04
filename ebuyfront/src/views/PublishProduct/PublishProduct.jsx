@@ -63,6 +63,7 @@ export default function PublishProduct() {
       const response = await axios.post(url, body, {
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `${localStorage.getItem('token')}`,
         },
       });
 
@@ -113,17 +114,21 @@ export default function PublishProduct() {
 
         {rol === 'Supplier' && (
           <>
-            <Form.Group className="mb-3" controlId="description">
-              <Form.Label>Product Description</Form.Label>
-              <Form.Control
-                type="text"
-                name="description"
-                placeholder="Enter a Description"
-                required
-                value={formData.description}
-                onChange={handleChange}
-              />
-            </Form.Group>
+       <Form.Group className="mb-3" controlId="description">
+  <Form.Label>Product Description</Form.Label>
+  <Form.Control
+    type="text"
+    name="description"
+    placeholder="Enter a Description"
+    required
+    value={formData.description}
+    onChange={handleChange}
+    maxLength={300}
+  />
+  <Form.Text muted>
+    {formData.description.length}/300 characters
+  </Form.Text>
+</Form.Group>
 
             <Form.Group className="mb-3" controlId="price">
               <Form.Label>Price</Form.Label>

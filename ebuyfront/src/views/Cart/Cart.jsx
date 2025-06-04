@@ -4,6 +4,7 @@ import Subtitle from "../../components/Subtitle/Subtitle";
 import CartItem from "./Components/CartItem/CartItem";
 import { getProducts, getProductImages } from "../../helpers/product/productService";
 import { getImagesByProductName } from "../../helpers/product/productService";
+import LoadingSpinner from "../components/Loader/Loading";
 import { useState, useEffect } from "react";
 import { Form, Button, Container } from "react-bootstrap";
 import { getCart } from "../../helpers/cart/cart";
@@ -17,53 +18,56 @@ export default function Cart() {
   let token = localStorage.getItem("token");
   let Email = localStorage.getItem("userEmail");
   let Id = localStorage.getItem("Id");
+  const [loading, setLoading] = useState(true);
 
   const [paymentMethod, setPaymentMethod] = useState("Credit card");
   const [cartProducts, setCartProducts] = useState([]);
   const [customer, setCustomer] = useState([]);
   const [cartItems, setCartItems] = useState(0);
 
-useEffect(() => {
-  if (Email && token) {
-    const fetchCart = async () => {
-      const cartFromDb = await getCart(Id); 
-      const allProducts = await getProducts(); 
+ useEffect(() => {
+    if (Email && token) {
+      const fetchCart = async () => {
+        setLoading(true);
+        const cartFromDb = await getCart(Id); 
+        const allProducts = await getProducts(); 
 
-      const productsWithImages = await Promise.all(
-        cartFromDb.map(async (cartProduct) => {
-          const realProduct = allProducts.find(p => p.Name === cartProduct.Name);
-          if (!realProduct) return null;
-          const imageData = await getProductImages(realProduct.Id);
+        const productsWithImages = await Promise.all(
+          (Array.isArray(cartFromDb) ? cartFromDb : []).map(async (cartProduct) => {
+            const realProduct = allProducts.find(p => p.Name === cartProduct.Name);
+            if (!realProduct) return null;
+            const imageData = await getProductImages(realProduct.Id);
 
-          return {
-            id: realProduct.Id,
-            Name: cartProduct.Name,
-            UnitPrice: Number(cartProduct.UnitPrice) || Number(realProduct.UnitPrice) || 0,
-            Quantity: Number(cartProduct.Quantity) || 1,
-            price: (Number(cartProduct.UnitPrice) || Number(realProduct.UnitPrice) || 0) * (Number(cartProduct.Quantity) || 1),
-            images: imageData?.Images?.map(img => `data:image/jpeg;base64,${img.Content}`) || [],
-            BranchName: cartProduct.BranchName || realProduct.BranchName || "",
-            AvaliableStock: realProduct.Stock
-          };
-        })
-      );
+            return {
+              id: realProduct.Id,
+              Name: cartProduct.Name,
+              UnitPrice: Number(cartProduct.UnitPrice) || Number(realProduct.UnitPrice) || 0,
+              Quantity: Number(cartProduct.Quantity) || 1,
+              price: (Number(cartProduct.UnitPrice) || Number(realProduct.UnitPrice) || 0) * (Number(cartProduct.Quantity) || 1),
+              images: imageData?.Images?.map(img => `data:image/jpeg;base64,${img.Content}`) || [],
+              BranchName: cartProduct.BranchName || realProduct.BranchName || "",
+              AvaliableStock: realProduct.Stock
+            };
+          })
+        );
 
-      setCartProducts(productsWithImages.filter(Boolean));
-    };
+        setCartProducts(productsWithImages.filter(Boolean));
+        setLoading(false);
+      };
 
-    const fetchCustomer = async () => {
-      const customerData = await getCustomerById(Id);
-      if (customerData) {
-        setCustomer(customerData);
-      } else {
-        console.error("No customer found with Id:", Id);
+      const fetchCustomer = async () => {
+        const customerData = await getCustomerById(Id);
+        if (customerData) {
+          setCustomer(customerData);
+        } else {
+          console.error("No customer found with Id:", Id);
+        }
       }
-    }
 
-    fetchCustomer();
-    fetchCart();
-  }
-}, [Email, token, Id]);
+      fetchCustomer();
+      fetchCart();
+    }
+  }, [Email, token, Id]);
 
 // Nuevo useEffect para actualizar cartItems cuando cambie cartProducts
 useEffect(() => {
@@ -119,8 +123,8 @@ const handlePayNow = async () => {
       return;
     }
     console.log("Payload to send:", payload);
-    // await makeOnlineSale(payload);
-    // await clearCart(Id);
+    await makeOnlineSale(payload);
+    await clearCart(Id);
     navigate("/"); // <-- Así es correcto
     alert("Successfully purchased products!");
   } catch (error) {
@@ -129,6 +133,7 @@ const handlePayNow = async () => {
   }
 };
   const total = cartProducts.reduce((sum, p) => sum + (p.price), 0).toFixed(2);
+  if (loading) return <LoadingSpinner text="Loading cart..." />;
 
   return (
     <article className={Styles["cart"]}>

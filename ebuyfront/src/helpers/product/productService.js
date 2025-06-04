@@ -1,9 +1,15 @@
-
+import { token } from "../variables";
 const API_BASE_URL = 'http://ebuy.runasp.net/api/Products';
 
 export async function getProducts() {
     try {
-        const response = await fetch('http://ebuy.runasp.net/api/products/List');
+        const response = await fetch('http://ebuy.runasp.net/api/products/List',{
+            method: 'GET',
+                headers: {
+            "Content-Type": "application/json",
+            "Authorization":`${token}`
+            }
+        });
         const data = await response.json();
         return data;
     } catch (error) {
@@ -15,7 +21,10 @@ export async function getProducts() {
 export async function getProductImages(productId) {
     try {
         const url = `http://ebuy.runasp.net/api/UploadFiles/GetImagesByProductId?IdProduct=${productId}`;
-        const response = await fetch(url);
+        const response = await fetch(url,{
+            method: 'GET',
+         
+        });
         const data = await response.json();
         return data;
     } catch (error) {
@@ -25,7 +34,13 @@ export async function getProductImages(productId) {
 }
 
 export async function getProductById(id) {
-    const response = await fetch(`${API_BASE_URL}/Search?id=${id}`);
+    const response = await fetch(`${API_BASE_URL}/Search?id=${id}`,{
+        method: 'GET',
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization":`${token}`
+            }
+    });
     const data = await response.json();
     return data;
 }
@@ -35,8 +50,9 @@ export async function switchStatusProduct(id) {
         const url = `http://ebuy.runasp.net/api/OnlineListings/ActivateAndDeactivate?IdOnlineListing=${id}`;
         const response = await fetch(url, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
+             headers: {
+            "Content-Type": "application/json",
+            "Authorization":`${token}`
             }
         });
         const data = await response.json();
@@ -50,7 +66,13 @@ export async function switchStatusProduct(id) {
 
 export async function getProductsByBranch(branchName) {
     try {
-        const response = await fetch(`${API_BASE_URL}/ListByBranchName?branchName=${branchName}`);
+        const response = await fetch(`${API_BASE_URL}/ListByBranchName?branchName=${branchName}`,{
+            method: 'GET',
+                headers: {
+            "Content-Type": "application/json",
+            "Authorization":`${token}`
+            }
+        });
         const data = await response.json();
         return data;
     } catch (error) {
