@@ -1,10 +1,13 @@
+import { token } from "../variables";
+
 export const sendInStoreSale = async (payload) => {
   try {
     const response = await fetch("http://ebuy.runasp.net/api/InStoreSales/Insert", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization":`${token}`
+            },
       body: JSON.stringify(payload),
     });
 

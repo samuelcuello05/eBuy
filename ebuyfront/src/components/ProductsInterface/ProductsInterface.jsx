@@ -25,6 +25,7 @@ function Products({category, products}) {
     const [uploading, setUploading] = useState(false);
     const [uploadError, setUploadError] = useState('');
     const [uploadSuccess, setUploadSuccess] = useState('');
+    const token = localStorage.getItem("token");
 
     useEffect(() => {
         setLocalProducts(products);
@@ -81,7 +82,11 @@ function Products({category, products}) {
                 `http://ebuy.runasp.net/api/UploadFiles?Data=${product.IdProduct}&Proccess=Product`,
                 {
                     method: "POST",
-                    body: formData
+                    body: formData,
+                    headers: {
+               
+                                    "Authorization":`${token}`
+                    }
                 }
             );
             if (!response.ok) {

@@ -84,10 +84,14 @@ export default function Register() {
                     },
                     body: JSON.stringify(body)
                 });
+                console.log(JSON.stringify(body));
+                const data = await response.json();
+                        console.log(data);
                 if (!response.ok) {
                     const data = await response.json();
                     throw new Error(data.message || "Registration failed");
                 }
+        
                 setSuccess("Registration successful! You can now log in.");
                 setRegisterStep(1);
                 setFormData({
@@ -102,8 +106,17 @@ export default function Register() {
                     country: '',
                     city: '',
                 });
-            } catch (err) {
-                setError(err.message || "Registration failed");
+               } catch (err) {
+                if (
+                    err.message &&
+                    err.message.includes("An error occurred while updating the entries")
+                ) {
+                    setError("A user with this document or email already exists.");
+                    alert("A user with this document or email already exists.");
+                } else {
+                    setError(err.message || "Registration failed");
+                    alert("Registration failed. Please try again.");
+                }
             } finally {
                 setLoading(false);
             }

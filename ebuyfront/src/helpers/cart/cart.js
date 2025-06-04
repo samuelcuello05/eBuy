@@ -1,8 +1,15 @@
+import { token } from "../variables.js";
 import { API_BASE_URL } from "../variables.js";
 
 export const getCart = async (Id) => {
     try {
-        const response = await fetch(`${API_BASE_URL}Carts/ListCartProducts?idCustomer=${Id}`);
+        const response = await fetch(`${API_BASE_URL}Carts/ListCartProducts?idCustomer=${Id}`, {
+            method: 'GET',
+            headers: {
+            "Content-Type": "application/json",
+            "Authorization":`${token}`
+            }
+        });
         const data = await response.json();
         return data;
     } catch (error) {
@@ -15,9 +22,10 @@ export const makeOnlineSale = async (payload) =>{
     try {
     const response = await fetch(`${API_BASE_URL}OnlineSales/Insert`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization":`${token}`
+            },
       body: JSON.stringify(payload),
     });
 
@@ -36,10 +44,11 @@ export const makeOnlineSale = async (payload) =>{
 
 export async function clearCart(Id) {
     try {
-        const response = await fetch(`${API_BASE_URL}Carts/Clear?idCart=${Id}`, {
+        const response = await fetch(`${API_BASE_URL}Carts/Clear?idCustomer=${Id}`, {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json'
+            "Content-Type": "application/json",
+            "Authorization":`${token}`
             }
         });
 
@@ -56,10 +65,11 @@ export async function clearCart(Id) {
 
 export async function removeItemCart(idCart, idProduct) {
     try {
-        const response = await fetch(`${API_BASE_URL}Carts/RemoveItem?idCart=${idCart}&idProduct=${idProduct}`, {
+        const response = await fetch(`${API_BASE_URL}Carts/RemoveItem?idCustomer=${idCart}&idProduct=${idProduct}`, {
             method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
+              headers: {
+            "Content-Type": "application/json",
+            "Authorization":`${token}`
             }
         });
 
@@ -76,11 +86,12 @@ export async function removeItemCart(idCart, idProduct) {
 
 export const addToCart = async (customerId, productId, branchName) =>{
     try {
-    const response = await fetch(`${API_BASE_URL}Carts/AddItem?idCart=${customerId}&idProduct=${productId}&branchName=${branchName}`, {
+    const response = await fetch(`${API_BASE_URL}Carts/AddItem?idCustomer=${customerId}&idProduct=${productId}&branchName=${branchName}`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `${token}`
+            }
     });
 
     const data = await response.json();

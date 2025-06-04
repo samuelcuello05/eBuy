@@ -6,6 +6,7 @@ import { getOnlineListing } from '../../helpers/product/onlineLIsting';
 import TopSellProducts from './components/TopSellProducts/TopSellProducts';
 import PrincipalCategories from './components/PrincipalCategories/PrincipalCategories';
 import ProductsInterface from '../../components/ProductsInterface/ProductsInterface';
+import LoadingSpinner from '../components/Loader/Loading';
 import Topbar from '../../components/Topbar/Topbar';
 import Styles from './Home.module.css';
 
@@ -15,6 +16,8 @@ export default function Home() {
     const [cart, setCart] = useState([]);
     const [cartItems, setCartItems] = useState(0);
     const [topSell, setTopSell] = useState([]);
+    const [loading, setLoading] = useState(true);
+
     let token = localStorage.getItem("token");
     let Email = localStorage.getItem("userEmail");
     let Id = localStorage.getItem("Id");
@@ -22,8 +25,8 @@ export default function Home() {
     const [categories, setCategories] = useState([]);
 useEffect(() => {
     const fetchData = async () => {
+        setLoading(true);
         const productsData = await getOnlineListing();
-        
         const imagesPromises = productsData.map(async (product) => {
             const imageData = await getProductImages(product.IdProduct);
             return {
@@ -31,9 +34,7 @@ useEffect(() => {
                 images: imageData?.Images || []
             };
         });
-
         const allImages = await Promise.all(imagesPromises);
-
         const combined = productsData.map(product => {
             const matched = allImages.find(img => img.idProduct === product.IdProduct);
             return {
@@ -45,14 +46,11 @@ useEffect(() => {
                 status: true
             };
         });
-
-     
         setProducts(combined);
-        
-        function selectThreeProducts(products) {
-            const validProducts = products.filter(Boolean); // Elimina undefined/null
-            if (validProducts.length <= 3) return validProducts;
 
+        function selectThreeProducts(products) {
+            const validProducts = products.filter(Boolean);
+            if (validProducts.length <= 3) return validProducts;
             const selected = new Set();
             while (selected.size < 3) {
                 const idx = Math.floor(Math.random() * validProducts.length);
@@ -60,38 +58,45 @@ useEffect(() => {
             }
             return Array.from(selected);
         }
-
         setTopSell(selectThreeProducts(combined));
-      
     };
 
-if (Email && token && role === "Customer") {
-    const fetchCart = async () => {
+    const fetchCategories = async () => {
+        try {
+            const categoriesData = await getCategories();
+            setCategories(categoriesData);
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+        }
+    };
+
+const fetchCart = async () => {
+    if (Email && token && role === "Customer") {
         const cartProducts = await getCart(Id);
-        const totalItems = cartProducts.reduce((sum, product) => sum + product.Quantity, 0);
+        const safeCart = Array.isArray(cartProducts) ? cartProducts : [];
+        const totalItems = safeCart.reduce((sum, product) => sum + (product.Quantity || 0), 0);
         setCartItems(totalItems);
-        setCart(cartProducts);
+        setCart(safeCart);
+    } else {
+        setCartItems(0);
+    }
+};
+
+    // Ejecuta todas las funciones y espera a que terminen
+    const fetchAll = async () => {
+        setLoading(true);
+        await Promise.all([
+            fetchData(),
+            fetchCategories(),
+            fetchCart()
+        ]);
+        setLoading(false);
     };
-    fetchCart();
-}else{
-    setCartItems(0);
-}
 
-
-    fetchData();
-            const fetchCategories = async () => {
-            try {
-                const categoriesData = await getCategories();
-                setCategories(categoriesData);
-            } catch (error) {
-                console.error('Error fetching categories:', error);
-            }
-        };
-        fetchCategories();
-
+    fetchAll();
 }, []);
 
-
+    if (loading) return <LoadingSpinner text="Loading..." />;
     console.log(products);
     console.log(images);
     return (

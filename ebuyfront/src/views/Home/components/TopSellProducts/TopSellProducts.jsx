@@ -24,7 +24,7 @@ function TopSellProducts({ topSell }) {
           <Carousel.Item className={Styles["carousel-item"]} key={product.IdProduct || idx}>
             <img
               src={product.images && product.images.length > 0 ? product.images[0] : ""}
-              alt={product.name || product.title || "Producto"}
+              alt={product.name || product.title || "Product"}
               className={Styles["carousel-item-image"]}
             />
             <Carousel.Caption className={Styles["carousel-caption"]}>
