@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Topbar from '../../components/Topbar/Topbar';
 import ProductImage from './components/ProductImages/ProductImages';
 import ProductInfo from './components/ProductInfo/ProductInfo';
+import LoadingSpinner from '../components/Loader/Loading';
 import { getProductById, getProductImages } from '../../helpers/product/productService';
 import { getOnlineListing, getPublisherName } from '../../helpers/product/onlineLIsting';
 import { getCart } from '../../helpers/cart/cart';
@@ -18,11 +19,16 @@ export default function ProductDetail() {
     let Email = localStorage.getItem("userEmail");
     let customerId = localStorage.getItem("Id");
 
-    // Trae el número de productos en el carrito al cargar
     useEffect(() => {
+        setLoading(true); // <-- loading inicia en true
         const fetchProduct = async () => {
             const listenings = await getOnlineListing();
             const productData = listenings.find(product => product.Id === parseInt(id));
+            if (!productData) {
+                setProduct(null);
+                setLoading(false);
+                return;
+            }
             const imageData = await getProductImages(productData.IdProduct);
             const publisher = await getPublisherName(productData.Id);
 
@@ -34,14 +40,15 @@ export default function ProductDetail() {
             };
 
             setProduct(processedProduct);
-            setLoading(false);
             setPublisherName(publisher);
+            setLoading(false); // <-- loading termina cuando todo está listo
         };
 
         const fetchCartItems = async () => {
             if (customerId && role === "Customer") {
                 const cart = await getCart(customerId);
-                const total = cart.reduce((sum, p) => sum + (Number(p.Quantity) || 1), 0);
+                const safeCart = Array.isArray(cart) ? cart : [];
+                const total = safeCart.reduce((sum, p) => sum + (Number(p.Quantity) || 1), 0);
                 setCartItems(total);
             }
         };
@@ -54,7 +61,7 @@ export default function ProductDetail() {
         setCartItems(prev => prev + 1);
     };
 
-    if (loading) return <h1>Loading...</h1>;
+    if (loading) return <LoadingSpinner text="Loading product..." />;
     if (!product) return <h1>Product not found</h1>;
 
     return (
