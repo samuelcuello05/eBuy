@@ -28,6 +28,9 @@ namespace eBuy.Clases
                         return "Error: Branch not found";
                     }
 
+                    if(eBuyDB.Employees.Any(e=>e.Phone == employeeBD.Phone))
+                        return "Error: Employee with this phone number already exists.";
+
                     if (eBuyDB.Users.Any(u => u.Email == userBD.Email))
                         return "Error: User already exists.";
 

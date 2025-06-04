@@ -27,6 +27,9 @@ namespace eBuy.Clases
                     if (eBuyDB.Users.Any(u => u.Email == userBD.Email))
                         return "Error: User already exists.";
 
+                    if(eBuyDB.Customers.Any(c => c.Phone == customerBD.Phone))
+                        return "Error: Customer with this phone number already exists.";
+
                     if (eBuyDB.Customers.Any(c => c.Document == customerBD.Document))
                         return "Error: Customer with this document already exists.";
 
