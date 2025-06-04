@@ -39,12 +39,6 @@ namespace eBuy.Clases
                     return "Error: Cart not found";
                 }
 
-                var existingBranch = eBuyDB.Branches.FirstOrDefault(b => b.Name.Equals(branchName, StringComparison.OrdinalIgnoreCase));
-                if (existingBranch==null)
-                {
-                    return "Error: Branch not found.";
-                }
-
                 var existingProduct = eBuyDB.Products.FirstOrDefault(p => p.Id == IdProduct);
                 if (existingProduct == null)
                 {

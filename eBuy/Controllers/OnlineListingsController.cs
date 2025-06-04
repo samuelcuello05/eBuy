@@ -28,7 +28,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("GetById")]
-        [AllowAnonymous]
+        [Authorize]
         public IHttpActionResult GetOnlineListingById(int IdOnlineListing)
         {
             try

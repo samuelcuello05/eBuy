@@ -9,11 +9,11 @@ using System.Web.Http;
 namespace eBuy.Controllers
 {
     [RoutePrefix("api/login")]
-    [AllowAnonymous]
     public class LoginController : ApiController
     {
         [HttpPost]
         [Route("SignIn")]
+        [AllowAnonymous]
         public LoginRespuesta Login(Login login)
         {
             clsLogin _Login = new clsLogin();

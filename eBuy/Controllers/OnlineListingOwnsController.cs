@@ -24,7 +24,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("List")]
-        [AllowAnonymous]
+        [Authorize]
         public IEnumerable<object> ListOnlineListingOwn()
         {
             clsOnlineListingOwn OnlineListingOwn = new clsOnlineListingOwn();

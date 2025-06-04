@@ -34,7 +34,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("Search")]
-        [Authorize]
+        [AllowAnonymous]
         public Category SearchCategory(string name)
         {
             clsCategory Category = new clsCategory();
@@ -43,8 +43,8 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("List")]
-        [Authorize]
-        public List<Category> ListlCategory()
+        [AllowAnonymous]
+        public List<Category> ListCategories()
         {
             clsCategory Category = new clsCategory();
             return Category.ListCategories();

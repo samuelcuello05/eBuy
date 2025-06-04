@@ -34,7 +34,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("Search")]
-        [AllowAnonymous]
+        [Authorize]
         public Product SearchProduct(int id)
         {
             clsProduct Product = new clsProduct();
@@ -43,7 +43,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("List")]
-        [AllowAnonymous]
+        [Authorize]
         public List<Product> SearchAllProduct()
         {
             clsProduct Product = new clsProduct();
@@ -52,7 +52,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("ListByBranchName")]
-        [AllowAnonymous]
+        [Authorize]
         public List<Product> ListProductByBranch(string branchName)
         {
             clsProduct Product = new clsProduct();

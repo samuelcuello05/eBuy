@@ -13,6 +13,7 @@ namespace eBuy.Controllers
     public class UploadFilesController : ApiController
     {
         [HttpPost]
+        [Authorize]
         public async Task<HttpResponseMessage> UploadFile(HttpRequestMessage Request, string Data, string Proccess)
         {
             clsUpload upload = new clsUpload();
@@ -23,6 +24,7 @@ namespace eBuy.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public HttpResponseMessage Get(string ImageName)
         {
             clsUpload upload = new clsUpload();
@@ -30,6 +32,7 @@ namespace eBuy.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<HttpResponseMessage> UpdateFile(HttpRequestMessage Request, string Data, string Proccess)
         {
             clsUpload upload = new clsUpload();
@@ -40,6 +43,7 @@ namespace eBuy.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         public HttpResponseMessage DeleteFile(string ImageName)
         {
             clsUpload upload = new clsUpload();
@@ -48,6 +52,7 @@ namespace eBuy.Controllers
 
         [HttpGet]
         [Route("GetImagesByProductId")]
+        [AllowAnonymous]
         public IHttpActionResult GetImagesByProduct(int IdProduct)
         {
             clsUpload upload = new clsUpload();
