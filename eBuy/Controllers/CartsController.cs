@@ -25,28 +25,28 @@ namespace eBuy.Controllers
         [HttpPost]
         [Route("AddItem")]
         [Authorize]
-        public string AddItemToCart(int idCart, int idProduct, string branchName)
+        public string AddItemToCart(int idCustomer, int idProduct, string branchName)
         {
             clsCart Cart = new clsCart();
-            return Cart.AddItemToCart(idCart, idProduct, branchName);
+            return Cart.AddItemToCart(idCustomer, idProduct, branchName);
         }
 
         [HttpDelete]
         [Route("RemoveItem")]
         [Authorize]
-        public string RemoveItemFromCart(int idCart, int idProduct)
+        public string RemoveItemFromCart(int idCustomer, int idProduct)
         {
             clsCart Cart = new clsCart();
-            return Cart.RemoveItemFromCart(idCart, idProduct);
+            return Cart.RemoveItemFromCart(idCustomer, idProduct);
         }
 
         [HttpDelete]
         [Route("Clear")]
         [Authorize]
-        public string ClearCart(int idCart)
+        public string ClearCart(int idCustomer)
         {
             clsCart Cart = new clsCart();
-            return Cart.ClearCart(idCart);
+            return Cart.ClearCart(idCustomer);
         }
 
         [HttpGet]

@@ -29,11 +29,11 @@ namespace eBuy.Clases
             }
         }
 
-        public string AddItemToCart(int IdCart, int IdProduct, string branchName)
+        public string AddItemToCart(int idCustomer, int IdProduct, string branchName)
         {
             try
             {
-                var cart = eBuyDB.Carts.Find(IdCart);
+                var cart = eBuyDB.Carts.FirstOrDefault(c => c.IdCustomer == idCustomer);
                 if (cart == null)
                 {
                     return "Error: Cart not found";
@@ -45,7 +45,7 @@ namespace eBuy.Clases
                     return "Error: Product not found.";
                 }
 
-                var existingItem = eBuyDB.CartItems.FirstOrDefault(ci => ci.IdCart == IdCart && ci.IdProduct == IdProduct);
+                var existingItem = eBuyDB.CartItems.FirstOrDefault(ci => ci.IdCart == cart.Id && ci.IdProduct == IdProduct);
                 if (existingItem != null)
                 {
                     existingItem.Quantity += 1;
@@ -54,7 +54,7 @@ namespace eBuy.Clases
                 {
                     CartItem newItem = new CartItem
                     {
-                        IdCart = IdCart,
+                        IdCart = cart.Id,
                         IdProduct = IdProduct,
                         Quantity = 1,
                         UnitPrice = eBuyDB.Products
@@ -78,17 +78,17 @@ namespace eBuy.Clases
             }
         }
 
-        public string RemoveItemFromCart(int IdCart, int IdProduct)
+        public string RemoveItemFromCart(int idCustomer, int IdProduct)
         {
             try
             {
-                var cart = eBuyDB.Carts.Find(IdCart);
+                var cart = eBuyDB.Carts.FirstOrDefault(c => c.IdCustomer == idCustomer);
                 if (cart == null)
                 {
                     return "Error: Cart not found";
                 }
 
-                var itemToRemove = eBuyDB.CartItems.FirstOrDefault(ci => ci.IdCart == IdCart && ci.IdProduct == IdProduct);
+                var itemToRemove = eBuyDB.CartItems.FirstOrDefault(ci => ci.IdCart == cart.Id && ci.IdProduct == IdProduct);
                 if (itemToRemove != null)
                 {
                     if (itemToRemove.Quantity > 1)
@@ -114,16 +114,16 @@ namespace eBuy.Clases
             }
         }
 
-        public string ClearCart(int IdCart)
+        public string ClearCart(int idCustomer)
         {
             try
             {
-                var cart = eBuyDB.Carts.Find(IdCart);
+                var cart = eBuyDB.Carts.FirstOrDefault(c => c.IdCustomer == idCustomer);
                 if (cart == null)
                 {
                     return "Error: Cart not found";
                 }
-                var itemsToRemove = eBuyDB.CartItems.Where(ci => ci.IdCart == IdCart).ToList();
+                var itemsToRemove = eBuyDB.CartItems.Where(ci => ci.IdCart == cart.Id).ToList();
                 foreach (var item in itemsToRemove)
                 {
                     eBuyDB.CartItems.Remove(item);
